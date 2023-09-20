@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 17:48:49 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/11 17:55:14 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/20 15:50:45 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+/*
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	int	i;
@@ -39,30 +40,33 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+*/
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int	i;
-	int	j;
-	int	k;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
 	i = 0;
 	j = ft_strlen(little);
 	if (j == 0)
 		return ((char *)big);
-	while ((i < len) && (i <= (len - j)))
+	while (big[i] && i < len)
 	{
 		if (big[i] == little[0])
 		{
-			k = ft_strncmp(&big[i], little, j);
-			if (k == 0)
+			k = 0;
+			while (i + k < len && big[i + k] == little[k])
 			{
-				return ((char *)&big[i]);
+				if (k == 0)
+					return ((char *)&big[i]);
+				k++;
 			}
 		}
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:57:15 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/11 17:47:46 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/20 15:22:21 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	const char	*str;
-	void	*point;
+	void		*point;
 	size_t		i;
 
 	str = (void *)s;

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:18:07 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/15 13:08:53 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/20 15:23:26 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,29 +84,3 @@ char	**ft_split(char const *s, char c)
 	array[i] = NULL;
 	return (array);
 }
-
-/*
-#include <stdio.h>
-
-int	main(void)
-{
-	char const	*s;
-	char		c;
-	int		i;
-
-	s = "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse";
-	c = ' ';
-	i = 0;
-	char	**result;
-	result = ft_split(s, c);
-	int j = 0;
-	while(result[j])
-	{
-		printf("%s\n", result[j]);
-		free(result[j]);
-		j++;
-	}
-	free(result);
-	return (0);
-}
-*/

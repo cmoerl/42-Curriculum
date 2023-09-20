@@ -6,12 +6,13 @@
 /*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 17:17:42 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/13 18:07:29 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/20 16:20:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdint.h>
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);

@@ -6,46 +6,24 @@
 /*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:39:47 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/11 17:51:27 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/20 16:25:58 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
-#include <stdlib.h>
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	char	*mem;
-	int		i;
-
-	mem = s;
-	i = 0;
-	while (i < n)
-	{
-		mem[i] = c;
-		i++;
-	}
-	return (mem);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, '\0', n);
-}
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*mem;
+	size_t	total;
 
-	if (nmemb == 0 || size == 0)
-		return (0);
-	if (nmemb * size > 2147783647)
+	if (nmemb && SIZE_MAX / nmemb < size)
 		return (0);
 	mem = malloc(nmemb * size);
 	if (!mem)
 		return (0);
-	ft_bzero(mem, nmemb * size);
+	total = nmemb * size;
+	ft_bzero(mem, total);
 	return (mem);
 }
 
