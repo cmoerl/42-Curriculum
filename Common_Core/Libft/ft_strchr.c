@@ -12,33 +12,6 @@
 
 #include "libft.h"
 
-/*
-char	*ft_strchr(const char *s, int c)
-{
-	char	*point;
-	int		i;
-
-	i = 0;
-	if (ft_isascii(c) == 0)
-		return ((char *)s);
-	while (s[i])
-	{
-		if (s[i] == c)
-		{
-			point = (char *)&s[i];
-			return (point);
-		}
-		i++;
-	}
-	if (s[i] == c)
-	{
-		point = (char *)&s[i];
-		return (point);
-	}
-	return (0);
-}
-*/
-
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s != '\0')

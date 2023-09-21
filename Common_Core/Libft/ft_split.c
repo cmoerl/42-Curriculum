@@ -11,36 +11,24 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-
-size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
-	return (i);
-}
 
 char	*ft_makestr(int start, int end, char const *s)
 {
 	char	*str;
+	int		length;
 	int		i;
 
-	i = 0;
-	str = malloc(end - start + 1);
+	length = end - start;
+	str = malloc((length + 1) * sizeof(char));
 	if (!str)
 		return (0);
-	while (start < end)
+	i = 0;
+	while (i < length)
 	{
-		str[i] = s[start];
+		str[i] = s[start + i];
 		i++;
-		start++;
 	}
-	str[i] = '\0';
+	str[length] = '\0';
 	return (str);
 }
 
@@ -50,12 +38,24 @@ void	ft_fillarr(int i, const char *s, char **array, char *str)
 
 	j = 0;
 	array[i] = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (!array[i])
+		return ;
 	while (str[j])
 	{
 		array[i][j] = str[j];
 		j++;
 	}
+	array[i][j] = '\0';
 	free (str);
+}
+
+int	check_deliminator(int start, char const *s, char c)
+{
+	while (s[start] && s[start] == c)
+	{
+		start++;
+	}
+	return (start - 1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -73,6 +73,8 @@ char	**ft_split(char const *s, char c)
 		return (0);
 	while (s[end])
 	{
+		if (s[start] == c)
+			end = check_deliminator(start, s, c);
 		while (s[end] != c && s[end] != '\0')
 			end++;
 		ft_fillarr(i, s, array, ft_makestr(start, end, s));
