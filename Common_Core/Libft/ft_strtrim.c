@@ -15,8 +15,16 @@
 char	*newstring(int end, int start, char const *s1)
 {
 	char	*newstr;
+	char	*empty;
 	int		i;
 
+	if (end < start)
+	{
+		empty = malloc(1);
+		if (empty)
+			*empty = '\0';
+		return (empty);
+	}
 	newstr = malloc(end - start + 2);
 	if (!newstr)
 		return (0);
@@ -75,6 +83,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		start;
 	int		end;
 
+	if (!s1 || !set)
+		return (0);
 	start = find_start(s1, set);
 	end = find_end(s1, set);
 	newstr = newstring(end, start, s1);

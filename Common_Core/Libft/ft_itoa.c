@@ -12,18 +12,6 @@
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
-	return (i);
-}
-
 char	*ft_getstr(char *str, long long num)
 {
 	int	i;
@@ -78,6 +66,8 @@ char	*ft_reversestr(char *str)
 	i = 0;
 	j = ft_strlen(str) - 1;
 	revstr = malloc(ft_strlen(str) + 1);
+	if (!revstr)
+		return (0);
 	while (j >= 0)
 	{
 		revstr[i] = str[j];
@@ -85,6 +75,7 @@ char	*ft_reversestr(char *str)
 		j--;
 	}
 	revstr[i] = '\0';
+	free(str);
 	return (revstr);
 }
 
