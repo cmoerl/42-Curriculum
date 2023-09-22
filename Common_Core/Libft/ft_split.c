@@ -53,25 +53,35 @@ int	ft_findlen(char const *s, char c, int start)
 	return (len);
 }
 
+char	**free_all(char **array, int i)
+{
+	while (i--)
+		free(array[i]);
+	free(array);
+	return (0);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**array;
-	int		words;
-	int		start;
+	size_t	start;
 	int		len;
 	int		i;
 
 	i = 0;
-	words = ft_wordcount(s, c);
-	array = (char **)malloc((words + 1) * sizeof(char *));
+	if (!s)
+		return (0);
 	start = 0;
+	array = (char **)malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
 	if (!array)
 		return (0);
-	while (i < words)
+	while (i < ft_wordcount(s, c))
 	{
 		start = ft_findstart(s, c, start);
 		len = ft_findlen(s, c, start);
 		array[i] = ft_substr(s, start, len);
+		if (!array[i])
+			return (free_all(array, i));
 		start = start + len;
 		i++;
 	}

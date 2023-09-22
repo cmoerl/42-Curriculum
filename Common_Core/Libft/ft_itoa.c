@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*ft_getstr(char *str, long long num)
+void	ft_getstr(char *str, long long num)
 {
 	int	i;
 	int	neg;
@@ -36,10 +36,9 @@ char	*ft_getstr(char *str, long long num)
 		i++;
 	}
 	str[i] = '\0';
-	return (str);
 }
 
-int	ft_digits(unsigned int num)
+int	ft_digits(long long num)
 {
 	int	i;
 
@@ -87,9 +86,11 @@ char	*ft_itoa(int n)
 
 	i = 0;
 	num = n;
-	if (n == 0)
+	if (num == 0)
 	{
 		str = malloc(2);
+		if (!str)
+			return (0);
 		str[i] = '0';
 		str[i + 1] = '\0';
 		return (str);
@@ -97,7 +98,7 @@ char	*ft_itoa(int n)
 	str = malloc(ft_digits(num) + 1);
 	if (!str)
 		return (0);
-	str = ft_getstr(str, num);
+	ft_getstr(str, num);
 	str = ft_reversestr(str);
 	return (str);
 }
@@ -107,7 +108,7 @@ char	*ft_itoa(int n)
 
 int	main(void)
 {
-	printf("%s\n", ft_itoa(-10));
+	printf("%s\n", ft_itoa(-2147483648));
 	return (0);
 }
 */
