@@ -12,75 +12,67 @@
 
 #include "libft.h"
 
-char	*ft_makestr(int start, int end, char const *s)
+int	ft_wordcount(char const *s, char c)
 {
-	char	*str;
-	int		length;
-	int		i;
-
-	length = end - start;
-	str = malloc((length + 1) * sizeof(char));
-	if (!str)
-		return (0);
-	i = 0;
-	while (i < length)
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[length] = '\0';
-	return (str);
-}
-
-void	ft_fillarr(int i, const char *s, char **array, char *str)
-{
+	int	i;
 	int	j;
 
+	i = 0;
 	j = 0;
-	array[i] = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
-	if (!array[i])
-		return ;
-	while (str[j])
+	while (s[i])
 	{
-		array[i][j] = str[j];
-		j++;
+		if (s[i] != c)
+		{
+			j++;
+			while (s[i] != c && s[i])
+				i++;
+		}
+		else
+			i++;
 	}
-	array[i][j] = '\0';
-	free (str);
+	return (j);
 }
 
-int	check_deliminator(int start, char const *s, char c)
+int	ft_findstart(char const *s, char c, int start)
 {
-	while (s[start] && s[start] == c)
+	while (s[start] == c)
+		start++;
+	return (start);
+}
+
+int	ft_findlen(char const *s, char c, int start)
+{
+	int	len;
+
+	len = 0;
+	while (s[start] && s[start] != c)
 	{
+		len++;
 		start++;
 	}
-	return (start - 1);
+	return (len);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**array;
+	int		words;
 	int		start;
-	int		end;
+	int		len;
 	int		i;
 
-	start = 0;
-	end = 0;
 	i = 0;
-	array = (char **)malloc((ft_strlen(s) + 1) * sizeof (char *));
+	words = ft_wordcount(s, c);
+	array = (char **)malloc((words + 1) * sizeof(char *));
+	start = 0;
 	if (!array)
 		return (0);
-	while (s[end])
+	while (i < words)
 	{
-		if (s[start] == c)
-			end = check_deliminator(start, s, c);
-		while (s[end] != c && s[end] != '\0')
-			end++;
-		ft_fillarr(i, s, array, ft_makestr(start, end, s));
-		if (s[end] != '\0')
-			end ++;
-		start = end;
+		start = ft_findstart(s, c, start);
+		len = ft_findlen(s, c, start);
+		array[i] = ft_substr(s, start, len);
+		start = start + len;
 		i++;
 	}
 	array[i] = NULL;
