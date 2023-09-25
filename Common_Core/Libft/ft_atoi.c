@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_whitespace(const char *nptr)
+static int	ft_whitespace(const char *nptr)
 {
 	size_t	i;
 
