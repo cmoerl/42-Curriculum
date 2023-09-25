@@ -1,5 +1,6 @@
 #include "printf.h"
 #include "libft.h"
+#include <stdarg.h>
 
 int ft_count_arg(const char *format)
 {
@@ -32,15 +33,20 @@ int ft_printf(const char *format, ...)
     int i;
 
     i = 0;
-    num_args = ft_count_arg(format);
-    while (i < num_args)
+//    num_args = ft_count_arg(format);
+    while (format[i])
     {
-        while (format[j])
+        if (format[i] != '%')
+            ft_putchar(format[i]);
+        else
         {
-            
+            while (format[i])
+            {
+                i++;
+                if ()
+                ft_choose_next_ft()
+            }
         }
         i++;
     }
-    else
-        return (0);
 }
