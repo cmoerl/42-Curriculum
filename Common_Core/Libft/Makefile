@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+         #
+#    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 15:00:59 by csturm            #+#    #+#              #
-#    Updated: 2023/09/15 09:43:26 by csturm           ###   ########.fr        #
+#    Updated: 2023/09/27 14:39:15 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re:
-	fclean all
+re: fclean all
 
 .PHONY: all clean fclean re
