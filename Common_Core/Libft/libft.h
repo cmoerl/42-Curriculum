@@ -9,11 +9,13 @@
 /*   Updated: 2023/09/20 16:20:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef LIBFT_H
+# define LIBFT_H
 
-#include <stdlib.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <stddef.h>
+# include <stdint.h>
+# include <unistd.h>
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
@@ -49,3 +51,5 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+#endif
