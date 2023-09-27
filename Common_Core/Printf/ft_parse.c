@@ -2,7 +2,7 @@
 #include "Libft/libft.h"
 #include <stdarg.h>
 
-void    ft_parse(const char *format, va_list args)
+void    ft_parse(const char *format_new, va_list args)
 {
     int     i;
     int     j;
@@ -10,21 +10,26 @@ void    ft_parse(const char *format, va_list args)
 
     i = 0;
     va_start(args, format);
-    while (format[i])
+    while (format_new[i])
     {
-        if (format[i] == '%')
+        if (format_new[i] == '%')
         {
-            while ((format[i] != ) && format[i])
+            j = 0;
+            while (format [i] && (format_new[i] != 'c'
+            && format_new[i] != 's' && format_new[i] != 'p'
+            && format_new[i] != 'd' && format_new[i] != 'i'
+            && format_new[i] != 'u' && format_new[i] != 'x'
+            && format_new[i] != 'X' && format_new[i] != '%'))
             {
-                newstr[j] = format[i];
+                newstr[j] = format_new[i];
                 i++;
                 j++;
             }
-            newstr[j] = format[i];
+            newstr[j] = format_new[i];
             newstr[j + 1] = '\0';
             ft_assign_val(newstr, args);
         }
-        if (format[i] != '\0')
+        if (format_new[i] != '\0')
             i++;
     }
     va_end(args);

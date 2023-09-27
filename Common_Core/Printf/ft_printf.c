@@ -5,13 +5,15 @@
 int ft_printf(const char *format, ...)
 {
     va_list args;
-    int     i;
-    char    *str;
-    int     j;
+    va_list args_cpy;
+//    int     i;
+//    char    *str;
+//    int     j;
 
     va_start(args, format);
-    i = 0;
-    ft_parse(format, args);
+    va_copy(args_cpy, args);
+    ft_parse(format, args_cpy);
+/*  i = 0;
     while (format[i])
     {
         if (format[i] != '%')
@@ -64,6 +66,7 @@ int ft_printf(const char *format, ...)
             }
         }
         i++;
-    }
+    }*/
+    va_end(args_cpy);
     va_end(args);
 }
