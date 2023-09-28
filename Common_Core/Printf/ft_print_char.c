@@ -4,5 +4,5 @@
 
 void    ft_print_char(int c)
 {
-    write(1, c, 1);
+    write(1, &c, 1);
 }

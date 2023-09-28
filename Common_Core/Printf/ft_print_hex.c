@@ -90,14 +90,14 @@ void    ft_print_hex(unsigned int n, int up)
 	{
 		str = malloc(2);
 		if (!str)
-			return (0);
+			return ;
 		str[i] = '0';
 		str[i + 1] = '\0';
-		return (str);
+		return ;
 	}
 	str = malloc(ft_digits(num) + 1);
 	if (!str)
-		return (0);
+		return ;
 	ft_getstr(str, num, up);
 	revstr = ft_reversestr(str);
 	free(str);

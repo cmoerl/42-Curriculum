@@ -15,7 +15,7 @@ int ft_printf(const char *format, ...)
         {
             i++;
             if (format[i] == 'c')
-                ft_print_char(va_arg(args, char));
+                ft_print_char(va_arg(args, int));
             else if (format[i] == 's')
                 ft_print_str(va_arg(args, char *));
             else if (format[i] == 'p')
@@ -35,4 +35,16 @@ int ft_printf(const char *format, ...)
             i++;
     }
     va_end(args);
+    return (0);
 }
+
+/*
+#include <stdio.h>
+
+int main(void)
+{
+    ft_printf("%c\n%c", 'c', 'a');
+    printf("%c\n%c", 'c', 'a');
+    return (0);
+}
+*/
