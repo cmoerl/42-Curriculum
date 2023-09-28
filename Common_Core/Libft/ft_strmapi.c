@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:10:58 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/15 13:11:47 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/28 15:20:26 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strmapi(char const *s, char (*f) (unsigned int, char))
 	unsigned int	i;
 	char			*str;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	str = malloc(ft_strlen(s) + 1);
 	if (!str)
