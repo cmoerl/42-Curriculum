@@ -5,68 +5,34 @@
 int ft_printf(const char *format, ...)
 {
     va_list args;
-    va_list args_cpy;
-//    int     i;
-//    char    *str;
-//    int     j;
+    size_t  i;
 
     va_start(args, format);
-    va_copy(args_cpy, args);
-    ft_parse(format, args_cpy);
-/*  i = 0;
+    i = 0;
     while (format[i])
     {
-        if (format[i] != '%')
-            ft_print_char(format[i]);
-        else
+        if (format[i] == '%')
         {
             i++;
-            while (format[i])
-            {
-                if (format[i] == 'c')
-                {
-                    ft_print_char(va_arg(args, int));
-                    break ;
-                }
-                else if (format[i] == 's')
-                {
-                    ft_print_str(va_arg(args, char *));
-                    break ;
-                }
-                else if (format[i] == 'p')
-                {
-                    ft_print_ptr(va_arg(args, void *));
-                    break ;
-                }
-                else if (format[i] == 'd' || format[i] == 'u' || format[i] == 'i')
-                {
-                    ft_print_nb(va_arg(args, int));
-                    break ;
-                }
-                else if (format[i] == 'i')
-                {
-                    ft_print_int(va_arg(args, int));
-                    break ;
-                }
-                else if (format[i] == 'x')
-                {
-                    ft_print_hex(va_arg(args, unsigned int), 0);
-                    break ;
-                }
-                else if (format[i] == 'X')
-                {
-                    ft_print_hex(va_arg(args, unsigned int), 1);
-                }
-                else if (format[i] == '%')
-                {
-                    ft_print_char('%');
-                    break ;
-                }
-                i++;
-            }
+            if (format[i] == 'c')
+                ft_print_char(va_arg(args, char));
+            else if (format[i] == 's')
+                ft_print_str(va_arg(args, char *));
+            else if (format[i] == 'p')
+                ft_print_ptr(va_arg(args, void *));
+            else if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
+                ft_print_int(va_arg(args, int));
+            else if (format[i] == 'x')
+                ft_print_hex(va_arg(args, int), 0);
+            else if (format[i] == 'X')
+                ft_print_hex(va_arg(args, int), 1);
+            else if (format[i] == '%')
+                ft_print_char('%');
         }
-        i++;
-    }*/
-    va_end(args_cpy);
+        else
+            ft_print_char(format[i]);
+        if (format[i] != '\0')
+            i++;
+    }
     va_end(args);
 }

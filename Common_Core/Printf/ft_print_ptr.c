@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 
-char    ft_digit(int d)
+static char    ft_digit(int d)
 {
     if (d >= 0 && d < 10)
         return ('0' + d);
