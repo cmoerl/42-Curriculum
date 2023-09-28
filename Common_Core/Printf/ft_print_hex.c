@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/28 16:59:11 by csturm            #+#    #+#             */
+/*   Updated: 2023/09/28 18:27:06 by csturm           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "printf.h"
 #include "Libft/libft.h"
-#include <unistd.h>
 
 static void	ft_getstr(char *str, long long num, int up)
 {
 	int	i;
 	int	neg;
-    int rem;
+	int	rem;
 
 	neg = 0;
 	i = 0;
@@ -17,16 +28,16 @@ static void	ft_getstr(char *str, long long num, int up)
 	}
 	while (num > 0)
 	{
-        rem = num % 16;
-        if (rem < 10)
-		    str[i] = rem + '0';
-        else
-        {
-            if (up == 0)
-                str[i] = rem - 10 + 'a';
-            else
-                str[i] = rem - 10 + 'A';
-        }
+		rem = num % 16;
+		if (rem < 10)
+			str[i] = rem + '0';
+		else
+		{
+			if (up == 0)
+				str[i] = rem - 10 + 'a';
+			else
+				str[i] = rem - 10 + 'A';
+		}
 		num = num / 16;
 		i++;
 	}
@@ -77,9 +88,9 @@ static char	*ft_reversestr(char *str)
 	return (revstr);
 }
 
-void    ft_print_hex(unsigned int n, int up)
+void	ft_print_hex(unsigned int n, int up)
 {
-    long long	num;
+	long long	num;
 	char		*str;
 	char		*revstr;
 	int			i;
