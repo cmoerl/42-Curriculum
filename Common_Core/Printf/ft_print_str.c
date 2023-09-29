@@ -15,6 +15,12 @@
 
 int	ft_print_str(char *str)
 {
-	write(1, str, ft_strlen(str));
+	if (str == NULL)
+	{
+		ft_print_str("(null)");
+		return (6);
+	}
+	else
+		write(1, str, ft_strlen(str));
 	return (ft_strlen(str));
 }

@@ -58,8 +58,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-    ft_printf("%d\n%d\n", 42, -2147483648);
-    printf("%d\n%d\n", 42, -2147483648);
+    ft_printf(" NULL %s NULL ", NULL);
+    printf(" NULL %s NULL ", NULL);
     return (0);
 }
 */
