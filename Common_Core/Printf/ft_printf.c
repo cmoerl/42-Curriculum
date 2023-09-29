@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 #include "Libft/libft.h"
 
 int	ft_printf(const char *format, ...)
@@ -51,7 +51,7 @@ int	ft_printf(const char *format, ...)
 	return (0);
 }
 
-
+/*
 #include <stdio.h>
 
 int main(void)
@@ -60,4 +60,4 @@ int main(void)
     printf("%d\n%c\n", 42, 'a');
     return (0);
 }
-
+*/

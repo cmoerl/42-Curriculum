@@ -17,10 +17,14 @@ SRC:= ft_printf.c ft_print_char.c ft_print_hex.c ft_print_int.c ft_print_ptr.c f
 OBJ:= $(SRC:.c=.o)
 
 NAME = libftprintf.a
+LIBFT = Libft
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	-C $(LIBFT)
+	cp Libft/libft.a .
+	mv libft.a $(NAME)
 	ar rcs $(NAME) $(OBJ)
 
 %.o: %.c
@@ -28,10 +32,11 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
+	$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re 

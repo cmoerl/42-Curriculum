@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 #include "Libft/libft.h"
 
 static void	ft_getstr(char *str, long long num, int up)
@@ -112,5 +112,5 @@ int	ft_print_hex(unsigned int n, int up)
 	ft_getstr(str, num, up);
 	revstr = ft_reversestr(str);
 	free(str);
-	return (ft_print_str(str));
+	return (ft_print_str(revstr));
 }
