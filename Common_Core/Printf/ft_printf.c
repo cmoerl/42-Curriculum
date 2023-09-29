@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:02:21 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/29 10:46:58 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/29 13:21:46 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_printf(const char *format, ...)
 	size_t	i;
 	size_t	count;
 
+	if (format == NULL)
+		return (-1);
 	va_start(args, format);
 	i = 0;
 	count = 0;
@@ -48,7 +50,7 @@ int	ft_printf(const char *format, ...)
 			i++;
 	}
 	va_end(args);
-	return (0);
+	return (count);
 }
 
 /*
@@ -56,8 +58,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-    ft_printf("%d\n%c\n", 42, 'a');
-    printf("%d\n%c\n", 42, 'a');
+    ft_printf("%d\n%d\n", 42, -2147483648);
+    printf("%d\n%d\n", 42, -2147483648);
     return (0);
 }
 */
