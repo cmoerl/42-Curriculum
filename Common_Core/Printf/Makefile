@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+         #
+#    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/28 17:00:04 by csturm            #+#    #+#              #
-#    Updated: 2023/09/28 17:00:08 by csturm           ###   ########.fr        #
+#    Updated: 2023/09/29 12:24:40 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT = Libft
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	-C $(LIBFT)
+	$(MAKE) -C $(LIBFT)
 	cp Libft/libft.a .
 	mv libft.a $(NAME)
 	ar rcs $(NAME) $(OBJ)
@@ -32,7 +32,7 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
-	$(MAKE) -C $(LIBFT) clean
+	$(MAKE) -C $(LIBFT) fclean
 
 fclean: clean
 	rm -f $(NAME)
