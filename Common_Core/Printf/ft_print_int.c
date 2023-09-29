@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_int.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:02:35 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/28 18:32:54 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/29 10:51:47 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 #include "Libft/libft.h"
 
-void	ft_print_int(int n)
+int	ft_print_int(int n)
 {
 	char	*str;
+	size_t	count;
 
 	str = ft_itoa(n);
-	ft_print_str(str);
+	count = ft_print_str(str);
 	free(str);
+	return (count);
 }

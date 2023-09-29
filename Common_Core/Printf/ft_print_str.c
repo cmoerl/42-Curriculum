@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:59:48 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/28 18:29:05 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/29 10:56:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 #include "Libft/libft.h"
 
-void	ft_print_str(char *str)
+int	ft_print_str(char *str)
 {
 	write(1, &str, ft_strlen(str));
+	return (ft_strlen(str));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_ptr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:03:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/28 18:34:47 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/29 10:56:17 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,21 @@ static char	ft_digit(int d)
 		return ('a' + d - 10);
 }
 
-void	ft_print_ptr(void *ptr)
+int	ft_print_ptr(void *ptr)
 {
 	uintptr_t	p;
 	int			i;
+	size_t		count;
 
 	p = (uintptr_t)ptr;
 	i = (sizeof(p) << 3) - 4;
 	ft_print_str("0x");
+	count = 2;
 	while (i >= 0)
 	{
 		ft_print_char(ft_digit((p >> i) & 0xf));
 		i = i - 4;
+		count++;
 	}
+	return (count);
 }

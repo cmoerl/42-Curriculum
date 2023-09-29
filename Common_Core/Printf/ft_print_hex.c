@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:59:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/28 18:27:06 by csturm           ###   ########.fr       */
+/*   Updated: 2023/09/29 10:59:12 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*ft_reversestr(char *str)
 	return (revstr);
 }
 
-void	ft_print_hex(unsigned int n, int up)
+int	ft_print_hex(unsigned int n, int up)
 {
 	long long	num;
 	char		*str;
@@ -101,16 +101,16 @@ void	ft_print_hex(unsigned int n, int up)
 	{
 		str = malloc(2);
 		if (!str)
-			return ;
+			return (0);
 		str[i] = '0';
 		str[i + 1] = '\0';
-		return ;
+		return (0);
 	}
 	str = malloc(ft_digits(num) + 1);
 	if (!str)
-		return ;
+		return (0);
 	ft_getstr(str, num, up);
 	revstr = ft_reversestr(str);
 	free(str);
-	ft_print_str(str);
+	return (ft_print_str(str));
 }
