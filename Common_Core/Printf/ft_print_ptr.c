@@ -26,6 +26,7 @@ int	ft_print_ptr(void *ptr)
 	uintptr_t	p;
 	int			i;
 	size_t		count;
+	int			c;
 
 	p = (uintptr_t)ptr;
 	i = (sizeof(p) << 3) - 4;
@@ -33,7 +34,9 @@ int	ft_print_ptr(void *ptr)
 	count = 2;
 	while (i >= 0)
 	{
-		ft_print_char(ft_digit((p >> i) & 0xf));
+		c = (p >> i) & 0xf;
+		if (c != 0 && count > 2)
+			ft_print_char(ft_digit(c));
 		i = i - 4;
 		count++;
 	}

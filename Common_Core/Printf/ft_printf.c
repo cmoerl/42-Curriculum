@@ -58,8 +58,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-    ft_printf(" NULL %s NULL ", NULL);
-    printf(" NULL %s NULL ", NULL);
+    ft_printf(" %p ", -1);
+    printf(" %p ", -1);
     return (0);
 }
 */
