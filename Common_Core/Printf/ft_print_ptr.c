@@ -21,14 +21,12 @@ static char	ft_digit(int d)
 		return ('a' + d - 10);
 }
 
-int	ft_print_ptr(void *ptr)
+int	ft_print_ptr(int p)
 {
-	uintptr_t	p;
 	int			i;
 	size_t		count;
 	int			c;
 
-	p = (uintptr_t)ptr;
 	i = (sizeof(p) << 3) - 4;
 	ft_print_str("0x");
 	count = 2;

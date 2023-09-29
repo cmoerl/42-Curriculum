@@ -34,7 +34,7 @@ int	ft_printf(const char *format, ...)
 			else if (format[i] == 's')
 				count += ft_print_str(va_arg(args, char *));
 			else if (format[i] == 'p')
-				count += ft_print_ptr(va_arg(args, void *));
+				count += ft_print_ptr(va_arg(args, int));
 			else if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
 				count += ft_print_int(va_arg(args, int));
 			else if (format[i] == 'x')
