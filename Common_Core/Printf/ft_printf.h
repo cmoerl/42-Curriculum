@@ -6,12 +6,12 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:03:30 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/02 16:13:34 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/02 17:01:11 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
-# define PRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <stdarg.h>
 # include <stdint.h>
