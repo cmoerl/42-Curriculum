@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:03:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/29 10:56:17 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:50:02 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ int	ft_print_ptr(void *ptr)
 	int			i;
 	size_t		count;
 	int			digit;
-
+	
+	if (ptr == NULL)
+	{
+		ft_print_str("(null)");
+		return (6);
+	}
 	p = (uintptr_t)ptr;
 	digit = ft_digit(p);
 	ft_print_str("0x");

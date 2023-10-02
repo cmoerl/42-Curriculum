@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:02:21 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/02 16:12:59 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:50:40 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	ft_printf(const char *format, ...)
 
 int main(void)
 {
-    ft_printf(" %p ", -1);
-    printf(" %p ", -1);
+    ft_printf(" %p %p \n", 0, 0);
+    printf(" %p %p \n", 0, 0);
     return (0);
 }
 */
