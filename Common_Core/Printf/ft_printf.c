@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:02:21 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/29 13:21:46 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:12:59 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_printf(const char *format, ...)
 			else if (format[i] == 'p')
 				count += ft_print_ptr(va_arg(args, void *));
 			else if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
-				count += ft_print_int(va_arg(args, int));
+				count += ft_print_int(va_arg(args, unsigned int));
 			else if (format[i] == 'x')
 				count += ft_print_hex(va_arg(args, int), 0);
 			else if (format[i] == 'X')
