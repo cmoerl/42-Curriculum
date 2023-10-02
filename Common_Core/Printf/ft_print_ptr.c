@@ -13,29 +13,32 @@
 #include "ft_printf.h"
 #include "Libft/libft.h"
 
-static char	ft_digit(int d)
+static int	ft_digit(uintptr_t p)
 {
-	if (d >= 0 && d < 10)
-		return ('0' + d);
-	else
-		return ('a' + d - 10);
+	int	digit;
+
+	digit = 1;
+	while (p >>= 4)
+		digit++;
+	return (digit);
 }
 
-int	ft_print_ptr(int p)
+int	ft_print_ptr(void *ptr)
 {
+	uintptr_t	p;
 	int			i;
 	size_t		count;
-	int			c;
+	int			digit;
 
-	i = (sizeof(p) << 3) - 4;
+	p = (uintptr_t)ptr;
+	digit = ft_digit(p);
 	ft_print_str("0x");
 	count = 2;
+	i = digit -1;
 	while (i >= 0)
 	{
-		c = (p >> i) & 0xf;
-		if (c != 0 && count > 2)
-			ft_print_char(ft_digit(c));
-		i = i - 4;
+		ft_print_char("0123456789abcdef"[(p >> (i * 4)) & 0xf]);
+		i--;
 		count++;
 	}
 	return (count);
