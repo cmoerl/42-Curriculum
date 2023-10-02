@@ -93,9 +93,8 @@ int	ft_print_hex(unsigned int n, int up)
 	long long	num;
 	char		*str;
 	char		*revstr;
-	int			i;
+	int			count;
 
-	i = 0;
 	num = n;
 	if (num == 0)
 	{
@@ -116,5 +115,7 @@ int	ft_print_hex(unsigned int n, int up)
 	ft_getstr(str, num, up);
 	revstr = ft_reversestr(str);
 	free(str);
-	return (ft_print_str(revstr));
+	count = ft_print_str(revstr);
+	free(revstr);
+	return (count);
 }
