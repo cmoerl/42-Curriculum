@@ -14,7 +14,7 @@
 #include "Libft/libft.h"
 #include <stdio.h>
 
-int	ft_print_int(unsigned int n)
+int	ft_print_int(int n)
 {
 	char	*str;
 	size_t	count;
@@ -24,7 +24,7 @@ int	ft_print_int(unsigned int n)
 		count = ft_print_char('0');
 		return (count);
 	}
-	str = ft_utoa(n);
+	str = ft_itoa(n);
 	if (!str)
 		return (0);
 	count = ft_print_str(str);

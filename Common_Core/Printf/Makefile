@@ -13,7 +13,7 @@
 CC:= cc
 CFLAGS:= -Wall -Werror -Wextra -I.
 
-SRC:= ft_printf.c ft_print_char.c ft_print_hex.c ft_print_int.c ft_print_ptr.c ft_print_str.c
+SRC:= ft_printf.c ft_print_char.c ft_print_hex.c ft_print_int.c ft_print_ptr.c ft_print_str.c ft_print_unsigned_int.c
 OBJ:= $(SRC:.c=.o)
 
 NAME = libftprintf.a

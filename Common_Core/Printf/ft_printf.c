@@ -35,8 +35,10 @@ int	ft_printf(const char *format, ...)
 				count += ft_print_str(va_arg(args, char *));
 			else if (format[i] == 'p')
 				count += ft_print_ptr(va_arg(args, void *));
-			else if (format[i] == 'd' || format[i] == 'i' || format[i] == 'u')
-				count += ft_print_int(va_arg(args, unsigned int));
+			else if (format[i] == 'd' || format[i] == 'i')
+				count += ft_print_int(va_arg(args, int));
+			else if (format[i] == 'u')
+				count += ft_print_unsigned_int(va_arg(args, unsigned int));
 			else if (format[i] == 'x')
 				count += ft_print_hex(va_arg(args, int), 0);
 			else if (format[i] == 'X')
