@@ -32,8 +32,8 @@ int	ft_print_ptr(void *ptr)
 	
 	if (ptr == NULL)
 	{
-		ft_print_str("(null)");
-		return (6);
+		ft_print_str("(nil)");
+		return (5);
 	}
 	p = (uintptr_t)ptr;
 	digit = ft_digit(p);
