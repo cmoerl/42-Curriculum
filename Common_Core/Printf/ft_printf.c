@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:02:21 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/03 15:05:41 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/03 16:39:19 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	ft_find_type(va_list args, const char spec)
 		count += ft_print_hex(va_arg(args, int), 1);
 	else if (spec == '%')
 		count += ft_print_char('%');
+	else
+		count += ft_print_char('%');
 	return (count);
 }
 
@@ -52,8 +54,8 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
+			count += ft_find_type(args, format[i + 1]);
 			i++;
-			count += ft_find_type(args, format[i]);
 		}
 		else
 			count += ft_print_char(format[i]);
@@ -63,14 +65,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
-
-/*
-#include <stdio.h>
-
-int main(void)
-{
-    ft_printf(" %p %p \n", 0, 0);
-    printf(" %p %p \n", 0, 0);
-    return (0);
-}
-*/
