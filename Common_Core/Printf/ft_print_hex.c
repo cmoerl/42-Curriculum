@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:59:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/02 17:04:16 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/03 15:04:33 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,9 @@
 static void	ft_getstr(char *str, long long num, int up)
 {
 	int	i;
-	int	neg;
 	int	rem;
 
-	neg = 0;
 	i = 0;
-	if (num < 0)
-	{
-		num = -num;
-		neg = 1;
-	}
 	while (num > 0)
 	{
 		rem = num % 16;
@@ -39,11 +32,6 @@ static void	ft_getstr(char *str, long long num, int up)
 				str[i] = rem - 10 + 'A';
 		}
 		num = num / 16;
-		i++;
-	}
-	if (neg == 1)
-	{
-		str[i] = '-';
 		i++;
 	}
 	str[i] = '\0';
@@ -97,10 +85,7 @@ int	ft_print_hex(unsigned int n, int up)
 
 	num = n;
 	if (num == 0)
-	{
-		ft_print_char('0');
-		return (1);
-	}
+		return (ft_print_char('0'));
 	if (num < 0)
 	{
 		ft_print_char('-');

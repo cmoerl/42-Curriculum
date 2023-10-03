@@ -6,12 +6,36 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:02:21 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/02 16:50:40 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/03 15:05:41 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "Libft/libft.h"
+
+static int	ft_find_type(va_list args, const char spec)
+{
+	int	count;
+
+	count = 0;
+	if (spec == 'c')
+		count += ft_print_char(va_arg(args, int));
+	else if (spec == 's')
+		count += ft_print_str(va_arg(args, char *));
+	else if (spec == 'p')
+		count += ft_print_ptr(va_arg(args, void *));
+	else if (spec == 'd' || spec == 'i')
+		count += ft_print_int(va_arg(args, int));
+	else if (spec == 'u')
+		count += ft_print_unsigned_int(va_arg(args, unsigned int));
+	else if (spec == 'x')
+		count += ft_print_hex(va_arg(args, int), 0);
+	else if (spec == 'X')
+		count += ft_print_hex(va_arg(args, int), 1);
+	else if (spec == '%')
+		count += ft_print_char('%');
+	return (count);
+}
 
 int	ft_printf(const char *format, ...)
 {
@@ -29,22 +53,7 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			if (format[i] == 'c')
-				count += ft_print_char(va_arg(args, int));
-			else if (format[i] == 's')
-				count += ft_print_str(va_arg(args, char *));
-			else if (format[i] == 'p')
-				count += ft_print_ptr(va_arg(args, void *));
-			else if (format[i] == 'd' || format[i] == 'i')
-				count += ft_print_int(va_arg(args, int));
-			else if (format[i] == 'u')
-				count += ft_print_unsigned_int(va_arg(args, unsigned int));
-			else if (format[i] == 'x')
-				count += ft_print_hex(va_arg(args, int), 0);
-			else if (format[i] == 'X')
-				count += ft_print_hex(va_arg(args, int), 1);
-			else if (format[i] == '%')
-				count += ft_print_char('%');
+			count += ft_find_type(args, format[i]);
 		}
 		else
 			count += ft_print_char(format[i]);

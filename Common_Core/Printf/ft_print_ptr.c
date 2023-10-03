@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:03:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/02 17:03:31 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/03 14:45:56 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ static int	ft_digit(uintptr_t p)
 	int	digit;
 
 	digit = 1;
-	while (p >>= 4)
+	while (p > 0)
+	{
+		p >>= 4;
 		digit++;
+	}
 	return (digit);
 }
 

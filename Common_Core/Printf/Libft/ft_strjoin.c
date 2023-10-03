@@ -6,23 +6,17 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:27:35 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/28 15:17:18 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/03 14:24:04 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static char	*ft_make_newstr(char *newstr, char const *s1, char const *s2)
 {
-	char	*newstr;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	if (!s1 || !s2)
-		return (NULL);
-	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!newstr)
-		return (0);
 	i = 0;
 	j = 0;
 	while (s1[i])
@@ -39,6 +33,21 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	newstr[j] = '\0';
+	return (newstr);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*newstr;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!newstr)
+		return (0);
+	ft_make_newstr(newstr, s1, s2);
 	return (newstr);
 }
 
