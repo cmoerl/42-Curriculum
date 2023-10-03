@@ -39,8 +39,6 @@ static char	*ft_make_newstr(char *newstr, char const *s1, char const *s2)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*newstr;
-	int		i;
-	int		j;
 
 	if (!s1 || !s2)
 		return (NULL);

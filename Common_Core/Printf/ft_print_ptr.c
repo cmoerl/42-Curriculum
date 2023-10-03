@@ -17,7 +17,7 @@ static int	ft_digit(uintptr_t p)
 {
 	int	digit;
 
-	digit = 1;
+	digit = 0;
 	while (p > 0)
 	{
 		p >>= 4;
