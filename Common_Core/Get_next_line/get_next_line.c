@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*fill_current_line(int fd, char *buffer, char *next_line)
+char	*fill_current_line(int fd, char *buffer)
 {
 	int		bytes_read;
 	char	*line;
@@ -43,12 +43,13 @@ char	*get_next_line(int fd)
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (0);
-	current_line = fill_current_line(fd, buffer, next_line);
+	current_line = fill_current_line(fd, buffer);
 	next_line = current_line + 1;
 	free(buffer);
 	return (current_line);
 }
 
+/*
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -66,3 +67,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
