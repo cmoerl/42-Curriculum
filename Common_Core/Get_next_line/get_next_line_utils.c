@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:51:02 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/23 18:15:06 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/24 15:08:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-/*
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
@@ -42,7 +41,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	}
 	return (ft_strlen(src));
 }
-*/
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -84,4 +82,17 @@ size_t	ft_strlen(const char *s)
 		i++;
 	}
 	return (i);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dup;
+	int		len;
+
+	len = ft_strlen((char *)s) + 1;
+	dup = malloc(len);
+	if (!dup)
+		return (0);
+	ft_strlcpy(dup, s, len);
+	return (dup);
 }
