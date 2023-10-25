@@ -6,11 +6,12 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/24 16:28:30 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/25 16:18:32 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static char	*next_line;
 
@@ -19,7 +20,10 @@ void	fill_current_line(int fd, char *buffer, struct get_next_line *s)
 	int		bytes_read;
 
 	if (next_line != NULL)
+	{
 		buffer = next_line;
+		next_line = NULL;
+	}
 	else
 	{
 		(*s).current_line = ft_strdup("");
@@ -36,13 +40,18 @@ void	fill_current_line(int fd, char *buffer, struct get_next_line *s)
 				break ;
 			buffer[bytes_read] = '\0';
 			(*s).current_line = ft_strjoin((*s).current_line, buffer);
+			if (ft_strchr(buffer, '\n') != 0)
+			{
+				next_line = ft_strdup(ft_strchr(buffer, '\n') + 1);
+				break ;
+			}
 		}
 	}
-	if (ft_strchr((*s).current_line, '\n') != 0)
-	{
-		(*s).end_line = ft_strchr((*s).current_line, '\n');
-		*(*s).end_line = '\0';
-	}
+//	if (ft_strchr((*s).current_line, '\n') != 0)
+//	{
+//		(*s).end_line = ft_strchr((*s).current_line, '\n');
+//		*(*s).end_line = '\0';
+//	}
 }
 
 char	*get_next_line(int fd)
@@ -52,9 +61,12 @@ char	*get_next_line(int fd)
 	
 	if (!next_line)
 		next_line = ft_strdup("");
+	s.current_line = ft_strdup("");
+	s.end_line = NULL;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (0);
+	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	fill_current_line(fd, buffer, &s);
 	free(buffer);
 	if (s.current_line == NULL)
@@ -62,7 +74,6 @@ char	*get_next_line(int fd)
 	if (s.end_line)
 	{
 		next_line = s.end_line + 1;
-		next_line[ft_strlen(next_line)] = '\0';
 	}
 	else
 		next_line = NULL;

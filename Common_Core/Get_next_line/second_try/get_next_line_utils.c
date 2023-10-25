@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:51:02 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/25 15:40:52 by csturm           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:41:35 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,6 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char *)s);
 	return (NULL);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size > 0)
-	{
-		while (i < size - 1 && src[i])
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return (ft_strlen(src));
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -82,32 +65,4 @@ size_t	ft_strlen(const char *s)
 		i++;
 	}
 	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dup;
-	int		len;
-
-	len = ft_strlen((char *)s) + 1;
-	dup = malloc(len);
-	if (!dup)
-		return (0);
-	ft_strlcpy(dup, s, len);
-	return (dup);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t	i;
-	char	*mem;
-
-	mem = s;
-	i = 0;
-	while (i < n)
-	{
-		mem[i] = c;
-		i++;
-	}
-	return (mem);
 }
