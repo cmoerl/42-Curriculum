@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+
+static char *next_line;
 
 static void handle_error(t_gnl *s)
 {
@@ -43,7 +46,13 @@ void    fill_line(int fd, t_gnl *s)
             return ;
         }
         if (ft_strchr(s->line, '\n') != NULL)
+        {
+            s->end_line = ft_strchr(s->line, '\n');
+            *s->end_line = '\0';
+            s->end_line++;
+            next_line = s->end_line;
             return ;
+        }
     }
 }
 
@@ -61,21 +70,21 @@ char    *get_next_line(int fd)
         return (NULL);
     }
     s.line[0] = '\0';
+    if (next_line != NULL)
+    {
+        while (next_line)
+        {
+            *s.buffer++ = *next_line++;
+            next_line = NULL;
+        }
+        printf("buffer: %s\n", s.buffer);
+//        s.buffer = next_line;
+//        next_line = NULL;
+    }
     fill_line(fd, &s);
     free(s.buffer);
     if (s.line == NULL)
         return (NULL);
-    if (next_line)
-    {
-        s.end_line = ft_strchr(s.line, '\n');
-        if (s.end_line != NULL)
-        {
-            *s.end_line = '\0';
-            next_line = s.end_line + 1;
-        }
-        else
-            next_line = NULL;
-    }
     return (s.line);
 }
 
@@ -89,7 +98,7 @@ int	main(void)
 
 	i = 0;
 	file_des = open ("testfile.txt", O_RDONLY);
-	while (i < 3)
+	while (i < 2)
 	{
 		printf("%s", get_next_line(file_des));
 		i++;
