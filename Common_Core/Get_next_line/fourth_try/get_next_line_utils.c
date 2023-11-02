@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:51:02 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/30 18:20:11 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:46:42 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,3 @@ size_t	ft_strlen(const char *s)
 	}
 	return (i);
 }
-
-/*
-char	*ft_strcpy(char *dst, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-*/
