@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:54:34 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/03 11:17:23 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/03 14:28:34 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ typedef struct get_next_line
 	char	*line;
 	char	*end_line;
 	char	*buffer;
+	char	*tmp;
 }t_gnl;
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 char	*get_next_line(int fd);
+void	ft_strcpy(char *s1, char *s2);
 
 
 #endif

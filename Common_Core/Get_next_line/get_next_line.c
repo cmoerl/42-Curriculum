@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/03 13:25:12 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/03 14:29:32 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 		if (bytes_read <= 0)
 			return ;
 		if (s->buffer == NULL)
-			break ;
-		s->buffer[bytes_read] = '\0';
-		s->line = ft_strjoin(s->line, s->buffer);
-		if (s->line == NULL)
 		{
+			free(s->line);
+			free(*left_over);
+			break ;
+		}
+		s->buffer[bytes_read] = '\0';
+		s->tmp = ft_strjoin(s->line, s->buffer);
+		if (s->tmp == NULL)
+		{
+			free(s->buffer);
+			free(s->line);
 			free(left_over);
 			return ;
 		}
+		ft_strcpy(s->tmp, s->line);
+		free(s->tmp);
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
@@ -78,14 +86,16 @@ char	*get_next_line(int fd)
 	s.line[0] = '\0';
 	if (left_over != NULL)
 	{
-		s.line = ft_strjoin(s.line, left_over);
-		if (!s.line)
+		s.tmp = ft_strjoin(s.line, left_over);
+		if (!s.tmp)
 		{
 			free(s.line);
 			free(s.buffer);
 			free(left_over);
 			return (NULL);
 		}
+		ft_strcpy(s.tmp, s.line);
+		free(s.tmp);
 		free(left_over);
 		left_over = NULL;
 	}
@@ -94,7 +104,7 @@ char	*get_next_line(int fd)
 	return (s.line);
 }
 
-/*
+
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -105,7 +115,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile4.txt", O_RDONLY);
+	file_des = open ("testfile.txt", O_RDONLY);
 	while (i < 6)
 	{
 		line = get_next_line(file_des);
@@ -118,4 +128,4 @@ int	main(void)
 	}
 	return (0);
 }
-*/
+
