@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/03 12:04:55 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/03 13:25:12 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*get_next_line(int fd)
 		left_over = NULL;
 	}
 	fill_line(fd, &s, &left_over);
+	free(s.buffer);
 	return (s.line);
 }
 
@@ -101,12 +102,18 @@ int	main(void)
 {
 	int	file_des;
 	int	i;
+	char	*line;
 
 	i = 0;
-	file_des = open ("testfile.txt", O_RDONLY);
-	while (i < 5)
+	file_des = open ("testfile4.txt", O_RDONLY);
+	while (i < 6)
 	{
-		printf("%s", get_next_line(file_des));
+		line = get_next_line(file_des);
+		if (line)
+		{
+			printf("%s", line);
+			free(line);
+		}
 		i++;
 	}
 	return (0);
