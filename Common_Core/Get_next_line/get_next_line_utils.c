@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:51:02 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/30 18:20:11 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/03 11:03:08 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,11 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+static char	*ft_make_newstr(char *newstr, char const *s1, char const *s2)
 {
-	char	*newstr;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	if (!s1 || !s2)
-		return (NULL);
-	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!newstr)
-		return (0);
 	i = 0;
 	j = 0;
 	while (s1[i])
@@ -55,6 +49,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (newstr);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*newstr;
+
+	if (!s1 || !s2)
+		return (NULL);
+	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!newstr)
+		return (0);
+	ft_make_newstr(newstr, s1, s2);
+	return (newstr);
+}
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -66,19 +73,3 @@ size_t	ft_strlen(const char *s)
 	}
 	return (i);
 }
-
-/*
-char	*ft_strcpy(char *dst, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-*/

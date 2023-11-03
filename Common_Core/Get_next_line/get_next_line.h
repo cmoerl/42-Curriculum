@@ -6,20 +6,21 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:54:34 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/02 17:46:50 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/03 11:17:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
-#define GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#include <stdlib.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct get_next_line
 {
-    char    *line;
-    char    *end_line;
+	char	*line;
+	char	*end_line;
+	char	*buffer;
 }t_gnl;
 
 char	*ft_strchr(const char *s, int c);
