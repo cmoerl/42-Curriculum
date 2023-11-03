@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-void	fill_line(int fd, t_gnl *s, char **left_over)
+static void	fill_line(int fd, t_gnl *s, char **left_over)
 {
 	char	*newline_pos;
 	int		bytes_read;
@@ -29,7 +29,10 @@ void	fill_line(int fd, t_gnl *s, char **left_over)
 		s->buffer[bytes_read] = '\0';
 		s->line = ft_strjoin(s->line, s->buffer);
 		if (s->line == NULL)
+		{
+			free(left_over);
 			return ;
+		}
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
@@ -76,6 +79,13 @@ char	*get_next_line(int fd)
 	if (left_over != NULL)
 	{
 		s.line = ft_strjoin(s.line, left_over);
+		if (!s.line)
+		{
+			free(s.line);
+			free(s.buffer);
+			free(left_over);
+			return (NULL);
+		}
 		free(left_over);
 		left_over = NULL;
 	}
