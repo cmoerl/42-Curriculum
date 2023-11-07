@@ -56,6 +56,11 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
+	if (buffer[0] == '\0')
+	{
+		free(buffer);
+		return (0);
+	}
 	new_line = ft_strjoin(s->line, buffer);
 	if (new_line == NULL)
 	{
@@ -107,6 +112,10 @@ char	*get_next_line(int fd)
 	static char	*left_over;	
 	t_gnl		s;
 
+    if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+        return (NULL);
+	}
 	s.line = malloc(1);
 	if (!s.line)
 	{
