@@ -45,7 +45,10 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buffer == NULL)
+	{
+		free(s->line);
 		return (0);
+	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 		return (0);
