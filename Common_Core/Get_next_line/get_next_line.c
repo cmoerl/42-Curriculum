@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/07 15:34:56 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/07 16:12:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
 {
-	int	bytes_read;
+	char	*new_line;
+	int		bytes_read;
 
 	bytes_read = read(fd, s->buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
@@ -51,14 +52,16 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 		return (0);
 	}
 	s->buffer[bytes_read] = '\0';
-	s->line = ft_strjoin(s->line, s->buffer);
-	if (s->line == NULL)
+	new_line = ft_strjoin(s->line, s->buffer);
+	if (new_line == NULL)
 	{
 		free(s->buffer);
 		free(s->line);
-		free(left_over);
+		free(*left_over);
 		return (0);
 	}
+	free(s->line);
+	s->line = new_line;
 	return (bytes_read);
 }
 
@@ -130,7 +133,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile2.txt", O_RDONLY);
+	file_des = open ("testfile.txt", O_RDONLY);
 	while (i < 6)
 	{
 		line = get_next_line(file_des);
