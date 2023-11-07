@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/06 18:50:15 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/07 14:43:16 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,14 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 			break ;
 		}
 		s->buffer[bytes_read] = '\0';
-		s->tmp = ft_strjoin(s->line, s->buffer);
-		if (s->tmp == NULL)
+		s->line = ft_strjoin(s->line, s->buffer);
+		if (s->line == NULL)
 		{
 			free(s->buffer);
 			free(s->line);
 			free(left_over);
 			return ;
 		}
-		ft_strcpy(s->tmp, s->line);
-		free(s->tmp);
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
@@ -86,16 +84,14 @@ char	*get_next_line(int fd)
 	s.line[0] = '\0';
 	if (left_over != NULL)
 	{
-		s.tmp = ft_strjoin(s.line, left_over);
-		if (!s.tmp)
+		s.line = ft_strjoin(s.line, left_over);
+		if (!s.line)
 		{
 			free(s.line);
 			free(s.buffer);
 			free(left_over);
 			return (NULL);
 		}
-		ft_strcpy(s.tmp, s.line);
-		free(s.tmp);
 		free(left_over);
 		left_over = NULL;
 	}
