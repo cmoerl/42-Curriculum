@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/07 16:12:53 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/07 17:41:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
-	int	i;
+	char	*end_line;
+	int		i;
 
 	i = 0;
 	if (*left_over == NULL)
@@ -22,46 +23,50 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 		*left_over = malloc(BUFFER_SIZE + 1);
 		if (*left_over == NULL)
 		{
-			free(s->buffer);
 			free(s->line);
 			return ;
 		}
 	}
-	s->end_line = newline_pos + 1;
-	while (s->end_line[i] != '\0')
+	end_line = newline_pos + 1;
+	while (end_line[i] != '\0')
 	{
-		(*left_over)[i] = s->end_line[i];
+		(*left_over)[i] = end_line[i];
 		i++;
 	}
 	(*left_over)[i] = '\0';
-	*s->end_line = '\0';
+	*end_line = '\0';
 }
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
 {
 	char	*new_line;
+	char	*buffer;
 	int		bytes_read;
 
-	bytes_read = read(fd, s->buffer, BUFFER_SIZE);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (buffer == NULL)
+		return (0);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 		return (0);
-	if (s->buffer == NULL)
+	if (buffer == NULL)
 	{
 		free(s->line);
 		free(*left_over);
 		return (0);
 	}
-	s->buffer[bytes_read] = '\0';
-	new_line = ft_strjoin(s->line, s->buffer);
+	buffer[bytes_read] = '\0';
+	new_line = ft_strjoin(s->line, buffer);
 	if (new_line == NULL)
 	{
-		free(s->buffer);
+		free(buffer);
 		free(s->line);
 		free(*left_over);
 		return (0);
 	}
 	free(s->line);
 	s->line = new_line;
+	free(buffer);
 	return (bytes_read);
 }
 
@@ -90,7 +95,6 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 	if (!s->line)
 	{
 		free(s->line);
-		free(s->buffer);
 		free(*left_over);
 		return ;
 	}
@@ -103,14 +107,9 @@ char	*get_next_line(int fd)
 	static char	*left_over;	
 	t_gnl		s;
 
-	s.buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (s.buffer == NULL)
-		return (NULL);
-	s.buffer[0] = '\0';
 	s.line = malloc(1);
 	if (!s.line)
 	{
-		free(s.buffer);
 		free(left_over);
 		return (NULL);
 	}
@@ -118,7 +117,6 @@ char	*get_next_line(int fd)
 	if (left_over != NULL)
 		left_over_to_line(&s, &left_over);
 	fill_line(fd, &s, &left_over);
-	free(s.buffer);
 	return (s.line);
 }
 
@@ -133,7 +131,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile.txt", O_RDONLY);
+	file_des = open ("testfile2.txt", O_RDONLY);
 	while (i < 6)
 	{
 		line = get_next_line(file_des);
