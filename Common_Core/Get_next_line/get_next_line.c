@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/07 17:41:23 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/07 18:32:47 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,8 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
-		return (0);
-	if (buffer == NULL)
 	{
-		free(s->line);
-		free(*left_over);
+		free(buffer);
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
@@ -134,7 +131,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile2.txt", O_RDONLY);
+	file_des = open ("testfile4.txt", O_RDONLY);
 	while (i < 6)
 	{
 		line = get_next_line(file_des);
@@ -145,6 +142,7 @@ int	main(void)
 		}
 		i++;
 	}
+	close(file_des);
 	return (0);
 }
 */
