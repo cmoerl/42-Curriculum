@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/08 15:27:46 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/08 16:46:20 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile4.txt", O_RDONLY);
+	file_des = open ("testfile2.txt", O_RDONLY);
 	while (i < 6)
 	{
 		line = get_next_line(file_des);
