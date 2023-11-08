@@ -44,7 +44,7 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	int		bytes_read;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer == NULL)
+	if (buffer == NULL)
 	{
 		free(s->line);
 		return (0);
@@ -85,6 +85,8 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 		bytes_read = read_line(fd, s, left_over);
 		if (bytes_read == 0)
 			return ;
+		if (s->line[ft_strlen(s->line)] != '\0')
+			s->line[ft_strlen(s->line)] = '\0';
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
