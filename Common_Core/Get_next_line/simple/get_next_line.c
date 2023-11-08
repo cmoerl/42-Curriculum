@@ -12,32 +12,24 @@
 
 #include "get_next_line.h"
 
-static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
+static void	find_end_line(t_gnl *s, char *newline_pos)
 {
 	char	*end_line;
-	int		i;
+	char	*new_line;
 
-	i = 0;
-	if (*left_over == NULL)
-	{
-		*left_over = malloc(BUFFER_SIZE + 1);
-		if (*left_over == NULL)
-		{
-			free(s->line);
-			return ;
-		}
-	}
 	end_line = newline_pos + 1;
-	while (end_line[i] != '\0')
+	if (!s->line)
+		s->line = ft_strdup(end_line);
+	else
 	{
-		(*left_over)[i] = end_line[i];
-		i++;
+		new_line = ft_strdup(end_line);
+		free(s->line);
+		s->line = new_line;
 	}
-	(*left_over)[i] = '\0';
-	*end_line = '\0';
+	*newline_pos = '\0';
 }
 
-static int	read_line(int fd, t_gnl *s, char **left_over)
+static int	read_line(int fd, t_gnl *s)
 {
 	char	*new_line;
 	char	*buffer;
@@ -45,55 +37,22 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buffer == NULL)
-	{
-		free(s->line);
-		return (0);
-	}
+		return (-1);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
 		free(buffer);
-		return (0);
+		return (bytes_read);
 	}
 	buffer[bytes_read] = '\0';
-	if (buffer[0] == '\0')
-	{
-		free(buffer);
-		return (0);
-	}
 	new_line = ft_strjoin(s->line, buffer);
+	free(buffer);
 	if (new_line == NULL)
-	{
-		free(buffer);
-		free(s->line);
-		free(*left_over);
-		return (0);
-	}
+		return (-1);
 	free(s->line);
 	s->line = new_line;
 	free(buffer);
 	return (bytes_read);
-}
-
-static void	fill_line(int fd, t_gnl *s, char **left_over)
-{
-	char	*newline_pos;
-	int		bytes_read;
-
-	while (1)
-	{
-		bytes_read = read_line(fd, s, left_over);
-		if (bytes_read == 0)
-			return ;
-		if (s->line[ft_strlen(s->line)] != '\0')
-			s->line[ft_strlen(s->line)] = '\0';
-		newline_pos = ft_strchr(s->line, '\n');
-		if (newline_pos != NULL)
-		{
-			find_end_line(s, left_over, newline_pos);
-			return ;
-		}
-	}
 }
 
 static void	left_over_to_line(t_gnl *s, char **left_over)
@@ -117,7 +76,10 @@ char	*get_next_line(int fd)
 {
 	static char	*left_over;	
 	t_gnl		s;
+	int			bytes_read;
+	char		*newline_pos;
 
+//	s.line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	s.line = malloc(1);
@@ -128,12 +90,30 @@ char	*get_next_line(int fd)
 	}
 	s.line[0] = '\0';
 	if (left_over != NULL)
+	{
 		left_over_to_line(&s, &left_over);
-	fill_line(fd, &s, &left_over);
-	return (s.line);
+		return (s.line);
+	}
+	while (1)
+	{
+		bytes_read = read_line(fd, &s);
+		if (bytes_read <= 0)
+		{
+			free(left_over);
+			return (s.line);
+		}
+		newline_pos = ft_strchr(s.line, '\n');
+		if (newline_pos)
+		{
+			find_end_line(&s, newline_pos);
+			free(left_over);
+			left_over = ft_strdup(newline_pos + 1);
+			return (s.line);
+		}
+	}
 }
 
-/*
+
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -158,4 +138,4 @@ int	main(void)
 	close(file_des);
 	return (0);
 }
-*/
+
