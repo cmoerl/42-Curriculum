@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/07 18:32:47 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/08 15:27:46 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	int		bytes_read;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (buffer == NULL)
+	if (!buffer == NULL)
 	{
 		free(s->line);
 		return (0);
@@ -112,10 +112,8 @@ char	*get_next_line(int fd)
 	static char	*left_over;	
 	t_gnl		s;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-        return (NULL);
-	}
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	s.line = malloc(1);
 	if (!s.line)
 	{
