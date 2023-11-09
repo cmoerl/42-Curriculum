@@ -14,8 +14,8 @@
 
 static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
-	char	*end_line;
 	int		i;
+	int		len;
 
 	i = 0;
 	if (*left_over == NULL)
@@ -27,14 +27,15 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 			return ;
 		}
 	}
-	end_line = newline_pos + 1;
-	while (end_line[i] != '\0')
+	newline_pos++;
+	len = newline_pos - s->line;
+	while (newline_pos[i] != '\0')
 	{
-		(*left_over)[i] = end_line[i];
+		(*left_over)[i] = newline_pos[i];
 		i++;
 	}
 	(*left_over)[i] = '\0';
-	*end_line = '\0';
+	s->line[len] = '\0';
 }
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
@@ -135,7 +136,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("get_next_line.h", O_RDONLY);
+	file_des = open ("testfile2.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
