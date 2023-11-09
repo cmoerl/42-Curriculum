@@ -6,14 +6,16 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/09 15:03:00 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/09 18:19:27 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
+printf("find_end_line");
 	int		i;
 	int		len;
 
@@ -36,10 +38,12 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 	}
 	(*left_over)[i] = '\0';
 	s->line[len] = '\0';
+printf("find_end_line end");
 }
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
 {
+printf("read_line");
 	char	*buffer;
 	int		bytes_read;
 
@@ -47,28 +51,33 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	if (buffer == NULL)
 	{
 		free(s->line);
+		printf("error 1");
 		return (0);
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
 		free(buffer);
+		printf("error 2");
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
 	if (buffer[0] == '\0')
 	{
 		free(buffer);
+		printf("error 3");
 		return (0);
 	}
 	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
 	free(buffer);
+	printf("read_line end");
 	return (bytes_read);
 }
 
 static void	fill_line(int fd, t_gnl *s, char **left_over)
 {
+printf("fill_line");
 	char	*newline_pos;
 	int		bytes_read;
 
@@ -90,6 +99,7 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 
 static void	left_over_to_line(t_gnl *s, char **left_over)
 {
+printf("left_over_to_line");
 	char	*new_line;
 
 	new_line = ft_strjoin(s->line, *left_over);
@@ -107,6 +117,7 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 
 char	*get_next_line(int fd)
 {
+printf("get_next_line");
 	static char	*left_over;	
 	t_gnl		s;
 
@@ -122,32 +133,75 @@ char	*get_next_line(int fd)
 	if (left_over != NULL)
 		left_over_to_line(&s, &left_over);
 	fill_line(fd, &s, &left_over);
+printf("get_next_line end");
 	return (s.line);
 }
 
-/*
 #include <stdio.h>
 #include <fcntl.h>
 
 int	main(void)
 {
+printf("main");
 	int	file_des;
 	int	i;
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile2.txt", O_RDONLY);
+	file_des = open ("testfile3.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
 		if (line)
 		{
 			printf("%s", line);
+			printf("main end");
 			free(line);
 		}
 		i++;
 	}
 	close(file_des);
 	return (0);
+}
+
+/*
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include "get_next_line.h"
+
+int main(void)
+{
+    int file_des;
+//    int new_file_des;
+    char *line;
+
+	file_des = open ("testfile3.txt", O_RDONLY);
+    // Duplicate file descriptor 1000 to a valid file descriptor (e.g., 0).
+    if ((dup2(file_des, 1000)) < 0)
+    {
+        perror("Failed to duplicate file descriptor");
+        return 1;
+    }
+
+	close(file_des);
+
+    // Call get_next_line with the duplicated file descriptor.
+    line = get_next_line(-1);
+    if (line)
+    {
+        printf("Test Case 1 (file descriptor 1000): %s\n", line);
+        free(line);
+    }
+    else
+    {
+        printf("Test Case 1 (file descriptor 1000): Returned NULL, as expected.\n");
+    }
+
+    // Close the duplicated file descriptor.
+    close(1000);
+
+    return 0;
 }
 */
