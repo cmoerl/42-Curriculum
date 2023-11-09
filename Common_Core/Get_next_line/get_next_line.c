@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/08 16:46:20 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/09 15:03:00 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
 {
-	char	*new_line;
 	char	*buffer;
 	int		bytes_read;
 
@@ -61,16 +60,8 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 		free(buffer);
 		return (0);
 	}
-	new_line = ft_strjoin(s->line, buffer);
-	if (new_line == NULL)
-	{
-		free(buffer);
-		free(s->line);
-		free(*left_over);
+	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
-	}
-	free(s->line);
-	s->line = new_line;
 	free(buffer);
 	return (bytes_read);
 }
@@ -144,8 +135,8 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile2.txt", O_RDONLY);
-	while (i < 6)
+	file_des = open ("get_next_line.h", O_RDONLY);
+	while (i < 100)
 	{
 		line = get_next_line(file_des);
 		if (line)
