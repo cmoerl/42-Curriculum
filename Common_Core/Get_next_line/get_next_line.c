@@ -82,8 +82,8 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 		bytes_read = read_line(fd, s, left_over);
 		if (bytes_read == 0)
 			return ;
-		if (s->line[ft_strlen(s->line)] != '\0')
-			s->line[ft_strlen(s->line)] = '\0';
+//		if (s->line[ft_strlen(s->line)] != '\0')
+//			s->line[ft_strlen(s->line)] = '\0';
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
@@ -130,7 +130,7 @@ char	*get_next_line(int fd)
 	return (s.line);
 }
 
-/*
+
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -141,7 +141,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile.txt", O_RDONLY);
+	file_des = open ("testfile4.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
@@ -156,6 +156,7 @@ int	main(void)
 	return (0);
 }
 
+/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
