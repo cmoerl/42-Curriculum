@@ -31,13 +31,8 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 	len = newline_pos - s->line;
 	while (newline_pos[i] != '\0')
 	{
-//		if (i < BUFFER_SIZE)
-//		{
-			(*left_over)[i] = newline_pos[i];
-			i++;
-//		}
-//		else
-//			break ;
+		(*left_over)[i] = newline_pos[i];
+		i++;
 	}
 	(*left_over)[i] = '\0';
 	s->line[len] = '\0';
@@ -82,8 +77,6 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 		bytes_read = read_line(fd, s, left_over);
 		if (bytes_read == 0)
 			return ;
-//		if (s->line[ft_strlen(s->line)] != '\0')
-//			s->line[ft_strlen(s->line)] = '\0';
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
@@ -155,9 +148,7 @@ int	main(void)
 	close(file_des);
 	return (0);
 }
-*/
 
-/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
