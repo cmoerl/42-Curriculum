@@ -20,7 +20,7 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 	i = 0;
 	if (*left_over == NULL)
 	{
-		*left_over = malloc(BUFFER_SIZE + 1);
+		*left_over = malloc(ft_strlen(s->line));
 		if (*left_over == NULL)
 		{
 			free(s->line);
@@ -31,13 +31,13 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 	len = newline_pos - s->line;
 	while (newline_pos[i] != '\0')
 	{
-		if (i < BUFFER_SIZE)
-		{
+//		if (i < BUFFER_SIZE)
+//		{
 			(*left_over)[i] = newline_pos[i];
 			i++;
-		}
-		else
-			break ;
+//		}
+//		else
+//			break ;
 	}
 	(*left_over)[i] = '\0';
 	s->line[len] = '\0';
@@ -124,13 +124,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	s.line[0] = '\0';
-	if (left_over != NULL)
+	if (left_over != NULL && left_over[0] != '\0')
 		left_over_to_line(&s, &left_over);
 	fill_line(fd, &s, &left_over);
 	return (s.line);
 }
 
-
+/*
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -141,7 +141,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile4.txt", O_RDONLY);
+	file_des = open ("testfile2.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
@@ -155,6 +155,7 @@ int	main(void)
 	close(file_des);
 	return (0);
 }
+*/
 
 /*
 #include <stdio.h>
