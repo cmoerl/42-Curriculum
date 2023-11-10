@@ -11,11 +11,9 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
-printf("find_end_line");
 	int		i;
 	int		len;
 
@@ -33,17 +31,20 @@ printf("find_end_line");
 	len = newline_pos - s->line;
 	while (newline_pos[i] != '\0')
 	{
-		(*left_over)[i] = newline_pos[i];
-		i++;
+		if (i < BUFFER_SIZE)
+		{
+			(*left_over)[i] = newline_pos[i];
+			i++;
+		}
+		else
+			break ;
 	}
 	(*left_over)[i] = '\0';
 	s->line[len] = '\0';
-printf("find_end_line end");
 }
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
 {
-printf("read_line");
 	char	*buffer;
 	int		bytes_read;
 
@@ -51,33 +52,28 @@ printf("read_line");
 	if (buffer == NULL)
 	{
 		free(s->line);
-		printf("error 1");
 		return (0);
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
 		free(buffer);
-		printf("error 2");
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
 	if (buffer[0] == '\0')
 	{
 		free(buffer);
-		printf("error 3");
 		return (0);
 	}
 	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
 	free(buffer);
-	printf("read_line end");
 	return (bytes_read);
 }
 
 static void	fill_line(int fd, t_gnl *s, char **left_over)
 {
-printf("fill_line");
 	char	*newline_pos;
 	int		bytes_read;
 
@@ -99,7 +95,6 @@ printf("fill_line");
 
 static void	left_over_to_line(t_gnl *s, char **left_over)
 {
-printf("left_over_to_line");
 	char	*new_line;
 
 	new_line = ft_strjoin(s->line, *left_over);
@@ -117,7 +112,6 @@ printf("left_over_to_line");
 
 char	*get_next_line(int fd)
 {
-printf("get_next_line");
 	static char	*left_over;	
 	t_gnl		s;
 
@@ -133,29 +127,27 @@ printf("get_next_line");
 	if (left_over != NULL)
 		left_over_to_line(&s, &left_over);
 	fill_line(fd, &s, &left_over);
-printf("get_next_line end");
 	return (s.line);
 }
 
+/*
 #include <stdio.h>
 #include <fcntl.h>
 
 int	main(void)
 {
-printf("main");
 	int	file_des;
 	int	i;
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile3.txt", O_RDONLY);
+	file_des = open ("testfile.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
 		if (line)
 		{
 			printf("%s", line);
-			printf("main end");
 			free(line);
 		}
 		i++;
@@ -164,7 +156,6 @@ printf("main");
 	return (0);
 }
 
-/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
