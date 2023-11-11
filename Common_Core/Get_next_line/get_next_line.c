@@ -120,12 +120,6 @@ char	*get_next_line(int fd)
 	if (left_over != NULL && left_over[0] != '\0')
 		left_over_to_line(&s, &left_over);
 	fill_line(fd, &s, &left_over);
-	if (!s.line || (s.line[0] == '0' && s.line[1] == '\0'))
-	{
-		free(s.line);
-		s.line = NULL;
-		return (NULL);
-	}
 	return (s.line);
 }
 
