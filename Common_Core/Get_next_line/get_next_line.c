@@ -69,7 +69,7 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	return (bytes_read);
 }
 
-static int	fill_line(int fd, t_gnl *s, char **left_over)
+static int	fill_line(int fd, t_gnl *s, char **left_over, int *end_of)
 {
 	char	*newline_pos;
 	int		bytes_read;
@@ -77,14 +77,20 @@ static int	fill_line(int fd, t_gnl *s, char **left_over)
 	while (1)
 	{
 		bytes_read = read_line(fd, s, left_over);
-		if (bytes_read == 0)
+		if (bytes_read <= 0)
+		{
+			if (s->line[0] != '\0')
+			{
+				*end_of = 1;
+				return (1);
+			}
 			return (0);
-		else if (bytes_read == -1)
-			return (0);
+		}
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
 			find_end_line(s, left_over, newline_pos);
+			*end_of = 1;
 			return (1);
 		}
 	}
@@ -115,6 +121,7 @@ char	*get_next_line(int fd)
 {
 	static char	*left_over;	
 	t_gnl		s;
+	int			end_of;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -128,14 +135,20 @@ char	*get_next_line(int fd)
 	s.line[0] = '\0';
 	if (left_over != NULL && left_over[0] != '\0')
 		left_over_to_line(&s, &left_over);
-	if (!fill_line(fd, &s, &left_over))
+	end_of = 0;
+	while(!end_of)
 	{
-		free(s.line);
-		if (left_over != NULL)
-			free(left_over);
-		return (NULL);
+		if (!fill_line(fd, &s, &left_over, &end_of))
+		{
+			free(s.line);
+			if (left_over != NULL)
+				free(left_over);
+			return (NULL);
+		}
+		if (end_of || s.line[0] != '\0')
+			return (s.line);
 	}
-	return (s.line);
+	return (NULL);
 }
 
 /*
