@@ -84,6 +84,7 @@ int	add_buffer_to_line(t_gnl *s, char **left_over, char *buffer)
 		free(buffer);
 		free(s->line);
 		free(*left_over);
+		left_over = NULL;
 		return (0);
 	}
 	free(s->line);

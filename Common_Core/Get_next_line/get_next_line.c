@@ -53,6 +53,8 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	if (bytes_read <= 0)
 	{
 		free(buffer);
+		if (bytes_read == -1)
+			return (-1);
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
@@ -67,7 +69,7 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	return (bytes_read);
 }
 
-static void	fill_line(int fd, t_gnl *s, char **left_over)
+static int	fill_line(int fd, t_gnl *s, char **left_over)
 {
 	char	*newline_pos;
 	int		bytes_read;
@@ -76,12 +78,14 @@ static void	fill_line(int fd, t_gnl *s, char **left_over)
 	{
 		bytes_read = read_line(fd, s, left_over);
 		if (bytes_read == 0)
-			return ;
+			return (0);
+		else if (bytes_read == -1)
+			return (0);
 		newline_pos = ft_strchr(s->line, '\n');
 		if (newline_pos != NULL)
 		{
 			find_end_line(s, left_over, newline_pos);
-			return ;
+			return (1);
 		}
 	}
 }
@@ -94,13 +98,17 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 	if (!new_line)
 	{
 		free(s->line);
-		free(*left_over);
+		if (left_over != NULL)
+			free(*left_over);
 		return ;
 	}
 	free(s->line);
 	s->line = new_line;
-	free(*left_over);
-	*left_over = NULL;
+	if (left_over != NULL)
+	{
+		free(*left_over);
+		*left_over = NULL;
+	}
 }
 
 char	*get_next_line(int fd)
@@ -113,13 +121,20 @@ char	*get_next_line(int fd)
 	s.line = malloc(1);
 	if (!s.line)
 	{
-		free(left_over);
+		if (left_over != NULL)
+			free(left_over);
 		return (NULL);
 	}
 	s.line[0] = '\0';
 	if (left_over != NULL && left_over[0] != '\0')
 		left_over_to_line(&s, &left_over);
-	fill_line(fd, &s, &left_over);
+	if (!fill_line(fd, &s, &left_over))
+	{
+		free(s.line);
+		if (left_over != NULL)
+			free(left_over);
+		return (NULL);
+	}
 	return (s.line);
 }
 
