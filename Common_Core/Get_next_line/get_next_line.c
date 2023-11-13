@@ -14,13 +14,13 @@
 
 static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
-	int		i;
-	int		len;
+	size_t		i;
+	size_t		len;
 
 	i = 0;
 	if (*left_over == NULL)
 	{
-		*left_over = malloc(ft_strlen(s->line));
+		*left_over = malloc(ft_strlen(s->line) + 3);
 		if (*left_over == NULL)
 		{
 			free(s->line);
@@ -30,13 +30,19 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 	}
 	newline_pos++;
 	len = newline_pos - s->line;
-	while (newline_pos[i] != '\0')
+	while (newline_pos[i] != '\0' && newline_pos != NULL && i < ft_strlen(s->line))
 	{
 		(*left_over)[i] = newline_pos[i];
 		i++;
 	}
 	(*left_over)[i] = '\0';
-	s->line[len] = '\0';
+	if (len < ft_strlen(s->line))
+		s->line[len] = '\0';
+	if (*left_over[0] == '\0')
+	{
+		free(*left_over);
+		*left_over = NULL;
+	}
 }
 
 static int	read_line(int fd, t_gnl *s, char **left_over)
@@ -137,7 +143,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	s.line[0] = '\0';
-	if (left_over != NULL && left_over[0] != '\0')
+	if (left_over != NULL && *left_over != '\0')
 		left_over_to_line(&s, &left_over);
 	end_of = 0;
 	while(!end_of)
