@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/13 16:54:35 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/13 17:27:41 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ int	main(void)
 
 	i = 0;
 	file_des = open ("testfile4.txt", O_RDONLY);
-	while (i < 100)
+	while (i < 1)
 	{
 		line = get_next_line(file_des);
 		if (line)
