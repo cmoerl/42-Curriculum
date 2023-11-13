@@ -61,12 +61,6 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
-/*	if (buffer[0] == '\0')
-	{
-		free(buffer);
-		buffer = NULL;
-		return (0);
-	}*/
 	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
 	free(buffer);
@@ -158,7 +152,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-/*
+
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -170,7 +164,7 @@ int	main(void)
 
 	i = 0;
 	file_des = open ("testfile4.txt", O_RDONLY);
-	while (i < 100)
+	while (i < 3)
 	{
 		line = get_next_line(file_des);
 		if (line)
@@ -185,6 +179,7 @@ int	main(void)
 	return (0);
 }
 
+/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
