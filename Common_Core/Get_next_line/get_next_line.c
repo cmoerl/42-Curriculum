@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/13 15:17:09 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/13 15:32:06 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 		return (0);
 	}
 	buffer[bytes_read] = '\0';
-	if (buffer[0] == '\0')
+/*	if (buffer[0] == '\0')
 	{
 		free(buffer);
 		buffer = NULL;
 		return (0);
-	}
+	}*/
 	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
 	free(buffer);
@@ -131,8 +131,11 @@ char	*get_next_line(int fd)
 	s.line = malloc(1);
 	if (!s.line)
 	{
-		free(left_over);
-		left_over = NULL;
+		if (left_over != NULL)
+		{
+			free(left_over);
+			left_over = NULL;
+		}
 		return (NULL);
 	}
 	s.line[0] = '\0';
