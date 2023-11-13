@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/13 17:27:41 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/13 19:02:54 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int	fill_line(int fd, t_gnl *s, char **left_over, int *end_of)
 	}
 }
 
-static void	left_over_to_line(t_gnl *s, char **left_over)
+static int	left_over_to_line(t_gnl *s, char **left_over)
 {
 	char	*new_line;
 	char	*newline_pos;
@@ -113,7 +113,7 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 		s->line = NULL;
 		free(*left_over);
 		*left_over = NULL;
-		return ;
+		return (0);
 	}
 	free(s->line);
 	s->line = new_line;
@@ -121,7 +121,11 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 	*left_over = NULL;	
 	newline_pos = ft_strchr(s->line, '\n');
 	if (newline_pos != NULL)
+	{
 		find_end_line(s, left_over, newline_pos);
+		return (1);
+	}
+	return (0);
 }
 
 char	*get_next_line(int fd)
@@ -144,7 +148,10 @@ char	*get_next_line(int fd)
 	}
 	s.line[0] = '\0';
 	if (left_over != NULL && *left_over != '\0')
-		left_over_to_line(&s, &left_over);
+	{
+		if (left_over_to_line(&s, &left_over))
+			return (s.line);
+	}
 	end_of = 0;
 	while(!end_of)
 	{
@@ -173,8 +180,8 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile4.txt", O_RDONLY);
-	while (i < 1)
+	file_des = open ("testfile3.txt", O_RDONLY);
+	while (i < 100)
 	{
 		line = get_next_line(file_des);
 		if (line)
