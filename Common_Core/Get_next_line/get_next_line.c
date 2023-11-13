@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/09 18:19:27 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/13 15:12:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 		if (*left_over == NULL)
 		{
 			free(s->line);
+			s->line = NULL;
 			return ;
 		}
 	}
@@ -47,12 +48,14 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	if (buffer == NULL)
 	{
 		free(s->line);
+		s->line = NULL;
 		return (0);
 	}
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
 		free(buffer);
+		buffer = NULL;
 		if (bytes_read == -1)
 			return (-1);
 		return (0);
@@ -61,11 +64,13 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	if (buffer[0] == '\0')
 	{
 		free(buffer);
+		buffer = NULL;
 		return (0);
 	}
 	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
 	free(buffer);
+	buffer = NULL;
 	return (bytes_read);
 }
 
@@ -104,17 +109,15 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 	if (!new_line)
 	{
 		free(s->line);
-		if (left_over != NULL)
-			free(*left_over);
+		s->line = NULL;
+		free(*left_over);
+		*left_over = NULL;
 		return ;
 	}
 	free(s->line);
 	s->line = new_line;
-	if (left_over != NULL)
-	{
-		free(*left_over);
-		*left_over = NULL;
-	}
+	free(*left_over);
+	*left_over = NULL;
 }
 
 char	*get_next_line(int fd)
@@ -128,8 +131,8 @@ char	*get_next_line(int fd)
 	s.line = malloc(1);
 	if (!s.line)
 	{
-		if (left_over != NULL)
-			free(left_over);
+		free(left_over);
+		left_over = NULL;
 		return (NULL);
 	}
 	s.line[0] = '\0';
@@ -141,8 +144,9 @@ char	*get_next_line(int fd)
 		if (!fill_line(fd, &s, &left_over, &end_of))
 		{
 			free(s.line);
-			if (left_over != NULL)
-				free(left_over);
+			s.line = NULL;
+			free(left_over);
+			left_over = NULL;
 			return (NULL);
 		}
 		if (end_of || s.line[0] != '\0')
@@ -151,7 +155,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-/*
+
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -162,7 +166,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile4.txt", O_RDONLY);
+	file_des = open ("testfile3.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
@@ -170,6 +174,7 @@ int	main(void)
 		{
 			printf("%s", line);
 			free(line);
+			line = NULL;
 		}
 		i++;
 	}
@@ -177,6 +182,7 @@ int	main(void)
 	return (0);
 }
 
+/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
