@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/13 15:32:06 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/13 16:54:35 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ static int	fill_line(int fd, t_gnl *s, char **left_over, int *end_of)
 static void	left_over_to_line(t_gnl *s, char **left_over)
 {
 	char	*new_line;
+	char	*newline_pos;
 
 	new_line = ft_strjoin(s->line, *left_over);
 	if (!new_line)
@@ -111,7 +112,10 @@ static void	left_over_to_line(t_gnl *s, char **left_over)
 	free(s->line);
 	s->line = new_line;
 	free(*left_over);
-	*left_over = NULL;
+	*left_over = NULL;	
+	newline_pos = ft_strchr(s->line, '\n');
+	if (newline_pos != NULL)
+		find_end_line(s, left_over, newline_pos);
 }
 
 char	*get_next_line(int fd)
@@ -152,7 +156,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-
+/*
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -164,7 +168,7 @@ int	main(void)
 
 	i = 0;
 	file_des = open ("testfile4.txt", O_RDONLY);
-	while (i < 3)
+	while (i < 100)
 	{
 		line = get_next_line(file_des);
 		if (line)
@@ -179,7 +183,6 @@ int	main(void)
 	return (0);
 }
 
-/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
