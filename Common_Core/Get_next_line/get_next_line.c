@@ -84,6 +84,8 @@ static int	fill_line(int fd, t_gnl *s, char **left_over, int *end_of)
 		bytes_read = read_line(fd, s, left_over);
 		if (bytes_read <= 0)
 		{
+			if (bytes_read == -1)
+				return (0);
 			if (s->line[0] != '\0')
 			{
 				*end_of = 1;
