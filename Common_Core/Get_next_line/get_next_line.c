@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/13 15:12:53 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/13 15:17:09 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-
+/*
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -166,7 +166,7 @@ int	main(void)
 	char	*line;
 
 	i = 0;
-	file_des = open ("testfile3.txt", O_RDONLY);
+	file_des = open ("testfile4.txt", O_RDONLY);
 	while (i < 100)
 	{
 		line = get_next_line(file_des);
@@ -182,7 +182,6 @@ int	main(void)
 	return (0);
 }
 
-/*
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
