@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:51:02 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/09 15:02:01 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/14 15:58:48 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,25 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-static char	*ft_make_newstr(char *newstr, char const *s1, char const *s2)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		newstr[j] = s1[i];
-		i++;
-		j++;
-	}
-	i = 0;
-	while (s2[i])
-	{
-		newstr[j] = s2[i];
-		i++;
-		j++;
-	}
-	newstr[j] = '\0';
-	return (newstr);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*newstr;
+	size_t	i;
+	size_t	j;
 
 	if (!s1 || !s2)
 		return (NULL);
 	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
-		return (0);
-	ft_make_newstr(newstr, s1, s2);
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		newstr[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		newstr[j++] = s2[i++];
+	newstr[j] = '\0';
 	return (newstr);
 }
 
@@ -72,6 +57,25 @@ size_t	ft_strlen(const char *s)
 		i++;
 	}
 	return (i);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dup;
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(s) + 1;
+	dup = malloc(len);
+	if (!dup)
+		return (0);
+	i = 0;
+	while (i < len)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	return (dup);
 }
 
 int	add_buffer_to_line(t_gnl *s, char **left_over, char *buffer)

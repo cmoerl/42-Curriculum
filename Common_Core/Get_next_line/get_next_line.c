@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/13 19:37:26 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/14 16:15:03 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,20 @@
 
 static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
-	size_t		i;
 	size_t		len;
 
-	i = 0;
+	if (*left_over == NULL)
+		*left_over = ft_strdup(newline_pos + 1);
 	if (*left_over == NULL)
 	{
-		*left_over = malloc(ft_strlen(s->line) + 3);
-		if (*left_over == NULL)
-		{
-			free(s->line);
-			s->line = NULL;
-			return ;
-		}
+		free(s->line);
+		s->line = NULL;
+		return ;
 	}
-	newline_pos++;
 	len = newline_pos - s->line;
-	while (newline_pos[i] != '\0' && newline_pos != NULL
-		&& i < ft_strlen(s->line))
-	{
-		(*left_over)[i] = newline_pos[i];
-		i++;
-	}
-	(*left_over)[i] = '\0';
 	if (len < ft_strlen(s->line))
 		s->line[len] = '\0';
-	if (*left_over[0] == '\0')
+	if ((*left_over)[0] == '\0')
 	{
 		free(*left_over);
 		*left_over = NULL;
@@ -71,7 +59,6 @@ static int	read_line(int fd, t_gnl *s, char **left_over)
 	if (!add_buffer_to_line(s, left_over, buffer))
 		return (0);
 	free(buffer);
-	buffer = NULL;
 	return (bytes_read);
 }
 
@@ -137,36 +124,24 @@ char	*get_next_line(int fd)
 	t_gnl		s;
 	int			end_of;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
 	s.line = malloc(1);
-	if (!s.line)
+	if (!s.line || fd < 0 || BUFFER_SIZE <= 0)
 	{
-		if (left_over != NULL)
-		{
-			free(left_over);
-			left_over = NULL;
-		}
+		free(left_over);
+		left_over = NULL;
 		return (NULL);
 	}
 	s.line[0] = '\0';
-	if (left_over != NULL && *left_over != '\0')
-	{
-		if (left_over_to_line(&s, &left_over))
-			return (s.line);
-	}
+	if (left_over && *left_over && left_over_to_line(&s, &left_over))
+		return (s.line);
 	end_of = 0;
 	while (!end_of)
 	{
 		if (!fill_line(fd, &s, &left_over, &end_of))
 		{
-			free(s.line);
-			s.line = NULL;
-			free(left_over);
-			left_over = NULL;
-			return (NULL);
+			return (free(s.line), free(left_over), NULL);
 		}
-		if (end_of || s.line[0] != '\0')
+		if (end_of || s.line[0])
 			return (s.line);
 	}
 	return (NULL);
