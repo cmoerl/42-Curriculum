@@ -129,7 +129,7 @@ char	*get_next_line(int fd)
 	{
 		free(left_over);
 		left_over = NULL;
-		return (NULL);
+		return (free(s.line), NULL);
 	}
 	s.line[0] = '\0';
 	if (left_over && *left_over && left_over_to_line(&s, &left_over))
