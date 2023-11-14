@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 12:16:05 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/14 16:15:03 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/14 16:33:55 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 {
 	size_t		len;
 
-	if (*left_over == NULL)
+	if (*left_over == NULL )
 		*left_over = ft_strdup(newline_pos + 1);
 	if (*left_over == NULL)
 	{
@@ -24,7 +24,7 @@ static void	find_end_line(t_gnl *s, char **left_over, char *newline_pos)
 		s->line = NULL;
 		return ;
 	}
-	len = newline_pos - s->line;
+	len = newline_pos - s->line + 1;
 	if (len < ft_strlen(s->line))
 		s->line[len] = '\0';
 	if ((*left_over)[0] == '\0')
