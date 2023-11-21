@@ -6,14 +6,19 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/20 16:35:57 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/21 15:32:13 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct  s_stack t_stack;
+#ifndef PUSH_SWAP_H
+#define PUSH_SWAP_H
 
-struct s_stack;
+#include <stdlib.h>
+
+struct s_stack
 {
-    int             number;
-    struct t_stack         *next;
+    int                    number;
+    struct s_stack         *next;
 };
+
+#endif
