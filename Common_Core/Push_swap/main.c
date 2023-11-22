@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/21 18:47:32 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/22 16:13:13 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,28 @@ struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **
 
 void    fill_struct(int argc, char **argv, struct s_stack **stack_a, struct s_stack **stack_b)
 {
-    int i;
+    struct s_stack  *tmp;
+    int             i;
 
     i = 1;
     while (i < argc)
     {
         if (check_arg(argv[i]))
             error(stack_a, stack_b);
-        if (i < argc - 1)
+        if (i == 1)
+        {
+            *stack_a = create_node(ft_atoi(argv[i]), stack_a, stack_b);
+            tmp = *stack_a;
+        }
+        else if (i < argc)
             (*stack_a)->next = create_node(ft_atoi(argv[i]), stack_a, stack_b);
         else
             (*stack_a)->next = NULL;
-        *stack_a = (*stack_a)->next;
+        if ((*stack_a)->next != NULL)
+            *stack_a = (*stack_a)->next;
         i++;
     }
+    *stack_a = tmp;
 }
 
 int main(int argc, char **argv)
@@ -50,11 +58,11 @@ int main(int argc, char **argv)
     stack_a = NULL;
     stack_b = NULL;
     if (argc < 2)
-        error(stack_a, stack_b);
+        error(&stack_a, &stack_b);
     fill_struct(argc, argv, &stack_a, &stack_b);
     find_dup(&stack_a, &stack_b);
-    sort_stack(stack_a, stack_b);
-    free_stack(stack_a);
-    free_stack(stack_b);
+    sort_stack(&stack_a, &stack_b);
+    free_stack(&stack_a);
+    free_stack(&stack_b);
     return 0;
 }

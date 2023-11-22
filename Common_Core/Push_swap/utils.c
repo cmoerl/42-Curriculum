@@ -6,21 +6,12 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/21 18:50:55 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/22 16:40:27 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    find_dup(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
-{
-    int tmp;
-    
-    while ((*stack_a)->next != NULL)
-    {
-        
-    }
-}
 
 void    free_stack(struct s_stack **stack)
 {
@@ -35,6 +26,36 @@ void    free_stack(struct s_stack **stack)
         current = next;
     }
     *stack = NULL;
+}
+
+void    error(struct s_stack **stack_a, struct s_stack **stack_b)
+{
+//    ft_printf("Error\n");
+    free_stack(stack_a);
+    free_stack(stack_b);
+    exit (1);
+}
+
+void    find_dup(struct s_stack **stack_a, struct s_stack **stack_b)
+{
+    struct s_stack  *begin;
+    struct s_stack  *tmp;
+    int             dup;
+
+    begin = *stack_a;
+    while ((*stack_a)->next != NULL)
+    {
+        dup = (*stack_a)->number;
+        *stack_a = (*stack_a)->next;
+        tmp = *stack_a;
+        while (tmp != NULL)
+        {
+            if (tmp->number == dup)
+                error(stack_a, stack_b);
+            tmp = tmp->next;
+        }
+    }
+    *stack_a = begin;
 }
 
 int check_arg(char *str)
