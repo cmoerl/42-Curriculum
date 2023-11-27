@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/22 16:48:24 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/27 18:41:54 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,11 @@ void    free_stack(struct s_stack **stack);
 void    print_stack(struct s_stack **stack_a, struct s_stack **stack_b);
 int	ft_atoi(const char *nptr);
 struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b);
+void    sort_four_five(int argc, struct s_stack **stack_a, struct s_stack **stack_b);
+void    sort_three(struct s_stack **stack);
+void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b);
+void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b);
+int is_sorted(struct s_stack **stack);
+void    min_to_top(struct s_stack **stack);
 
 #endif

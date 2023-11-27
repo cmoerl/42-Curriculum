@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/22 17:46:55 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/27 18:41:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
             swap(stack_a);
         else if (argc == 4)
             sort_three(stack_a);
-        else if (argc == 5)
-            sort_four(stack_a, stack_b);
         else
-            sort_five(stack_a, stack_b);
+            sort_four_five(argc, stack_a, stack_b);
     }
     else
-        sort_more(stack_a, stack_b);
+        return ;
+//        sort_more(stack_a, stack_b);
 }
 
+/*
 void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
 {
     int pivot;
@@ -51,7 +51,7 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
             rotate(stack_a);
     }
     if (!is_rev_sorted(stack_b))
-        sort_three(stack_b);
+        sort_three_rev(stack_b);
     while (next_to_top(stack_a, pivot))
     {
         max_to_top(stack_b);
@@ -61,19 +61,25 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
     while (*stack_b != NULL)
         push(stack_b, stack_a);
 }
+*/
 
 void    print_stack(struct s_stack **stack_a, struct s_stack **stack_b)
 {
-    printf("stack a:\n");
-    while (*stack_a != NULL)
+    struct s_stack  *tmp_a;
+    struct s_stack  *tmp_b;
+    
+    tmp_a = *stack_a;
+    tmp_b = *stack_b;
+    printf("\nstack a:\n");
+    while (tmp_a != NULL)
     {
-        printf("%d\n", (*stack_a)->number);
-        *stack_a = (*stack_a)->next;
+        printf("%d\n", tmp_a->number);
+        tmp_a = tmp_a->next;
     }
     printf("\nstack b:\n");
-    while (*stack_b != NULL)
+    while (tmp_b != NULL)
     {
-        printf("%d\n", (*stack_b)->number);
-        *stack_b = (*stack_b)->next;
+        printf("%d\n", tmp_b->number);
+        tmp_b = tmp_b->next;
     }
 }

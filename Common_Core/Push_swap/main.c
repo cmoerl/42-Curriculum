@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/22 16:13:13 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/27 18:22:07 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int main(int argc, char **argv)
         error(&stack_a, &stack_b);
     fill_struct(argc, argv, &stack_a, &stack_b);
     find_dup(&stack_a, &stack_b);
+    print_stack(&stack_a, &stack_b);
+    sort_stack(argc, &stack_a, &stack_b);
     print_stack(&stack_a, &stack_b);
     free_stack(&stack_a);
     free_stack(&stack_b);
