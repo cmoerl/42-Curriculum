@@ -30,7 +30,7 @@ int check_arg(char *str);
 void    find_dup(struct s_stack **stack_a, struct s_stack **stack_b);
 void    error(struct s_stack **stack_a, struct s_stack **stack_b);
 void    free_stack(struct s_stack **stack);
-void    sort_stack(struct s_stack **stack_a, struct s_stack **stack_b);
+void    print_stack(struct s_stack **stack_a, struct s_stack **stack_b);
 int	ft_atoi(const char *nptr);
 struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b);
 

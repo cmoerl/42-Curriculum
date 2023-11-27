@@ -61,7 +61,7 @@ int main(int argc, char **argv)
         error(&stack_a, &stack_b);
     fill_struct(argc, argv, &stack_a, &stack_b);
     find_dup(&stack_a, &stack_b);
-    sort_stack(&stack_a, &stack_b);
+    print_stack(&stack_a, &stack_b);
     free_stack(&stack_a);
     free_stack(&stack_b);
     return 0;
