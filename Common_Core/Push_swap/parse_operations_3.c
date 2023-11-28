@@ -1,43 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_utils.c                                       :+:      :+:    :+:   */
+/*   parse_operations_3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 15:18:01 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/28 15:03:02 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    min_to_top(struct s_stack **stack_a)
+void    rra(struct s_stack **stack_a)
 {
-    struct s_stack  *tmp;
-    int             min;
-    int             index;
-    int             min_index;
+    ft_printf("rra\n");
+    rev_rotate(stack_a);
+}
 
-    tmp = *stack_a;
-    min = tmp->number;
-    index = 0;
-    while (tmp != NULL)
-    {
-        if (tmp->number <= min)
-        {
-            min = tmp->number;
-            min_index = index;
-        }
-        tmp = tmp->next;
-        index++;
-    }
-    while ((*stack_a)->number != min)
-    {
-        if (min_index < index / 2)
-            ra(stack_a);
-        else
-            rra(stack_a);
-    }
-    
+void    rrb(struct s_stack **stack_b)
+{
+    ft_printf("rrb\n");
+    rev_rotate(stack_b);
+}
+
+void    rrr(struct s_stack **stack_a, struct s_stack **stack_b)
+{
+    ft_printf("rrr\n");
+    rev_rotate(stack_a);
+    rev_rotate(stack_b);
 }

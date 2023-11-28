@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/27 18:41:39 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/28 15:12:07 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ int is_sorted(struct s_stack **stack)
     return (1);
 }
 
-void    sort_three(struct s_stack **stack)
+void    sort_three(struct s_stack **stack_a)
 {
-    while(!is_sorted(stack))
+    while(!is_sorted(stack_a))
     {
-        if ((*stack)->number > (*stack)->next->number && (*stack)->number > (*stack)->next->next->number)
-            rotate(stack);
-        else if ((*stack)->number > (*stack)->next->number && (*stack)->number < (*stack)->next->next->number)
-            swap(stack);
+        if ((*stack_a)->number > (*stack_a)->next->number && (*stack_a)->number > (*stack_a)->next->next->number)
+            ra(stack_a);
+        else if ((*stack_a)->number > (*stack_a)->next->number && (*stack_a)->number < (*stack_a)->next->next->number)
+            sa(stack_a);
         else
-            rev_rotate(stack);
+            rra(stack_a);
     }
 }
 
@@ -44,15 +44,15 @@ void    sort_four_five(int argc, struct s_stack **stack_a, struct s_stack **stac
     min_to_top(stack_a);
     if (!is_sorted(stack_a))
     {
-        push(stack_a, stack_b);
+        pb(stack_a, stack_b);
         if (argc == 6)
         {
             min_to_top(stack_a);
-            push(stack_a, stack_b);
+            pb(stack_a, stack_b);
         }
         sort_three(stack_a);
-        push(stack_b, stack_a);
+        pa(stack_a, stack_b);
         if (argc == 6)
-            push(stack_b, stack_a);
+            pa(stack_a, stack_b);
     }
 }

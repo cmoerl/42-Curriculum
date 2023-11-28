@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/27 18:41:31 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/28 15:08:45 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
         if (argc == 2)
             return ;
         else if (argc == 3)
-            swap(stack_a);
+            sa(stack_a);
         else if (argc == 4)
             sort_three(stack_a);
         else
