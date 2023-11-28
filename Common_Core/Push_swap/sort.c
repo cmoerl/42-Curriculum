@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 15:08:45 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/28 18:17:06 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
             sort_four_five(argc, stack_a, stack_b);
     }
     else
-        return ;
-//        sort_more(stack_a, stack_b);
+        sort_more(stack_a, stack_b);
 }
 
-/*
+
 void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
 {
     int pivot;
@@ -44,11 +43,11 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
     {
         if ((*stack_a)->number < pivot)
         {
-            push(stack_a, stack_b);
+            pb(stack_a, stack_b);
             i++;
         }
         else
-            rotate(stack_a);
+            ra(stack_a);
     }
     if (!is_rev_sorted(stack_b))
         sort_three_rev(stack_b);
@@ -61,7 +60,7 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
     while (*stack_b != NULL)
         push(stack_b, stack_a);
 }
-*/
+
 
 void    print_stack(struct s_stack **stack_a, struct s_stack **stack_b)
 {

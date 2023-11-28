@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 15:47:09 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/28 18:22:10 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 #include "Printf/ft_printf.h"
 #include "Printf/Libft/libft.h"
 
@@ -51,5 +52,8 @@ void    rr(struct s_stack **stack_a, struct s_stack **stack_b);
 void    rra(struct s_stack **stack_a);
 void    rrb(struct s_stack **stack_b);
 void    rrr(struct s_stack **stack_a, struct s_stack **stack_b);
+int find_pivot(struct s_stack **stack);
+int is_rev_sorted(struct s_stack **stack);
+void    sort_three_rev(struct s_stack **stack_b);
 
 #endif
