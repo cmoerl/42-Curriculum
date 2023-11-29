@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 18:17:06 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/29 17:48:52 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
         sort_more(stack_a, stack_b);
 }
 
+void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b)
+{
+    while (!is_sorted(stack_a) && !is_rev_sorted(stack_b))
+    {
+        if ((*stack_a)->number > (*stack_a)->next->number && (*stack_b)->number < (*stack_b)->next->number)
+            ss(stack_a, stack_b);
+        else if(rot_or_rev_a(stack_a) && rot_or_rev_b(stack_b))
+            rr(stack_a, stack_b);
+        else
+            rrr(stack_a, stack_b);
+    }
+//    if (!is_sorted(stack_a))
+//        sort_stack_a(stack_a);
+//    else if (!is_rev_sorted(stack_b))
+//        sort_stack_b(stack_b);
+}
+
 
 void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
 {
@@ -39,26 +56,23 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
 
     i = 0;
     pivot = find_pivot(stack_a);
+    printf("pivot: %d\n", pivot);
     while(i < 3)
     {
-        if ((*stack_a)->number < pivot)
-        {
-            pb(stack_a, stack_b);
-            i++;
-        }
-        else
-            ra(stack_a);
+        next_to_top(stack_a, pivot);
+        pb(stack_a, stack_b);
+        i++;
     }
     if (!is_rev_sorted(stack_b))
         sort_three_rev(stack_b);
     while (next_to_top(stack_a, pivot))
     {
         max_to_top(stack_b);
-        push(stack_a, stack_b);
+        pb(stack_a, stack_b);
     }
     sort_both_stacks(stack_a, stack_b);
-    while (*stack_b != NULL)
-        push(stack_b, stack_a);
+//    while (*stack_b != NULL)
+//        pa(stack_a, stack_b);
 }
 
 

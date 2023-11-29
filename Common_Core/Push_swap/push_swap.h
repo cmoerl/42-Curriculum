@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 18:22:10 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/29 16:53:55 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,11 @@ void    rrr(struct s_stack **stack_a, struct s_stack **stack_b);
 int find_pivot(struct s_stack **stack);
 int is_rev_sorted(struct s_stack **stack);
 void    sort_three_rev(struct s_stack **stack_b);
+int    next_to_top(struct s_stack **stack_a, int pivot);
+void    move_to_top(struct s_stack **stack_a, int index_first, int index_last, int index);
+void    max_to_top(struct s_stack **stack_b);
+void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b);
+int rot_or_rev_a(struct s_stack **stack_a);
+int rot_or_rev_b(struct s_stack **stack_b);
 
 #endif
