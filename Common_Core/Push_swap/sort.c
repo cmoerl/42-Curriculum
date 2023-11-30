@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/29 17:48:52 by csturm           ###   ########.fr       */
+/*   Updated: 2023/11/30 15:16:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,18 @@ void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b)
             ss(stack_a, stack_b);
         else if(rot_or_rev_a(stack_a) && rot_or_rev_b(stack_b))
             rr(stack_a, stack_b);
-        else
+        else if (!rot_or_rev_a(stack_a) && !rot_or_rev_b(stack_b))
             rrr(stack_a, stack_b);
+        else if(rot_or_rev_a(stack_a) && !rot_or_rev_b(stack_b))
+        {
+            ra(stack_a);
+            rrb(stack_b);
+        }
+        else 
+        {
+            rra(stack_a);
+            rb(stack_b);
+        }
     }
 //    if (!is_sorted(stack_a))
 //        sort_stack_a(stack_a);
