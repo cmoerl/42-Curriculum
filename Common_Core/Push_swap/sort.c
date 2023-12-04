@@ -6,20 +6,20 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/30 15:16:23 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:33:59 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
-{ printf("unsorted_to_top\n");
+{
     int rot_moves;
     int rev_moves;
 
     rot_moves = unsorted_rot(stack_a, stack_b);
     rev_moves = unsorted_rev(stack_a, stack_b);
-    if ((rot_moves >= 0 && rev_moves < 0) || rot_moves <= rev_moves)
+    if (rot_moves >= 0 && (rev_moves < 0 || rot_moves <= rev_moves))
     {
         while (rot_moves > 0)
         {
@@ -27,7 +27,7 @@ void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
             rot_moves--;
         }
     }
-    else if ((rot_moves < 0 && rev_moves >= 0) || rot_moves > rev_moves)
+    else if (rev_moves > 0 && (rot_moves < 0 || rot_moves > rev_moves))
     {
         while (rev_moves > 0)
         {
@@ -40,18 +40,22 @@ void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
 }
 
 void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b)
-{ printf("sort_both_stacks\n");
+{
     while (!is_sorted(stack_a) && !is_rev_sorted(stack_b))
     {
-        if ((*stack_a)->number < (*stack_a)->next->number || (*stack_b)->number > (*stack_b)->next->number)
+        if (almost_sorted_a(stack_a))
+            min_to_top(stack_a);
+        else if (almost_sorted_b(stack_b))
+            max_to_top(stack_b);
+        else if ((*stack_a)->number < (*stack_a)->next->number || (*stack_b)->number > (*stack_b)->next->number)
             unsorted_to_top(stack_a, stack_b);
         else
             ss(stack_a, stack_b);
     }
-//    if (!is_sorted(stack_a))
-//        sort_stack_a(stack_a);
-//    else if (!is_rev_sorted(stack_b))
-//        sort_stack_b(stack_b);
+    if (!is_sorted(stack_a))
+        sort_stack_a(stack_a);
+    else if (!is_rev_sorted(stack_b))
+        sort_stack_b(stack_a, stack_b);
 }
 
 

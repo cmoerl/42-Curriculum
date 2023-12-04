@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core_operations.c                                  :+:      :+:    :+:   */
+/*   unsorted_to_top.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 14:50:14 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/04 17:55:14 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int get_size(struct s_stack **stack)
 }
 
 int unsorted_rot(struct s_stack **stack_a, struct s_stack **stack_b)
-{ printf("unsorted_rot\n");
+{
     struct s_stack  *tmp_a;
     struct s_stack  *tmp_b;
     int             index;
@@ -39,8 +39,8 @@ int unsorted_rot(struct s_stack **stack_a, struct s_stack **stack_b)
     while (tmp_a->next != NULL && tmp_b->next != NULL)
     {
         if (tmp_a->number > tmp_a->next->number && tmp_b->number < tmp_b->next->number
-            &&(!is_max(tmp_a->number, stack_a) && !is_min(tmp_a->next->number, stack_a))
-            &&(!is_min(tmp_b->number, stack_b) && !is_max(tmp_b->next->number, stack_b)))
+            &&(!is_max(tmp_a->number, stack_a) || !is_min(tmp_a->next->number, stack_a))
+            &&(!is_min(tmp_b->number, stack_b) || !is_max(tmp_b->next->number, stack_b)))
             return (index);
         tmp_a = tmp_a->next;
         tmp_b = tmp_b->next;
@@ -50,13 +50,15 @@ int unsorted_rot(struct s_stack **stack_a, struct s_stack **stack_b)
 }
 
 int unsorted_rev(struct s_stack **stack_a, struct s_stack **stack_b)
-{ printf("unsorted_rev\n");
+{
     struct s_stack  *tmp_a;
     struct s_stack  *tmp_b;
     int             size_a;
     int             size_b;
     int             index;
 
+    tmp_a = *stack_a;
+    tmp_b = *stack_b;
     size_a = get_size(stack_a);
     size_b = get_size(stack_b);
     while (size_a > size_b)
@@ -73,41 +75,33 @@ int unsorted_rev(struct s_stack **stack_a, struct s_stack **stack_b)
     while (tmp_a->next != NULL && tmp_b->next != NULL)
     {
         if (tmp_a->number > tmp_a->next->number && tmp_b->number < tmp_b->next->number
-            && (!is_max(tmp_a->number, stack_a) && !is_min(tmp_a->next->number, stack_a))
-            && (!is_min(tmp_b->number, stack_b) && !is_max(tmp_b->next->number, stack_b)))
+            && (!is_max(tmp_a->number, stack_a) || !is_min(tmp_a->next->number, stack_a))
+            && (!is_min(tmp_b->number, stack_b) || !is_max(tmp_b->next->number, stack_b)))
             index = size_a;
         size_a--;
         tmp_a = tmp_a->next;
         tmp_b = tmp_b->next;
     }
+    if (tmp_a->number > (*stack_a)->number && tmp_b->number < (*stack_b)->number
+            && (!is_max(tmp_a->number, stack_a) || !is_min((*stack_a)->number, stack_a))
+            && (!is_min(tmp_b->number, stack_b) || !is_max((*stack_b)->number, stack_b)))
+        return (1);
     return (index);
 }
 
 void    separate_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
-{ printf("separate_to_top\n");
+{
     int move_a;
     int move_b;
 
     move_a = rot_or_rev_a(stack_a);
     move_b = rot_or_rev_b(stack_b);
-    while (move_a > 0)
-    {
+    if (move_a > 0)
         ra(stack_a);
-        move_a--;
-    }
-    while (move_a < 0)
-    {
+    else if (move_a < 0)
         rra(stack_a);
-        move_a++;
-    }
-    while (move_b > 0)
-    {
+    if (move_b > 0)
         rb(stack_b);
-        move_b--;
-    }
-    while (move_b < 0)
-    {
+    else if (move_b < 0)
         rrb(stack_b);
-        move_b++;
-    }
 }

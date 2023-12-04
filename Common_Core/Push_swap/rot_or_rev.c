@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   core_operations.c                                  :+:      :+:    :+:   */
+/*   rot_or_rev.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/28 14:50:14 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:33:24 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ int rot_or_rev_a(struct s_stack **stack_a)
 
     tmp = *stack_a;
     index = 0;
-    while (tmp->number < tmp->next->number && (!is_min(tmp->number, stack_a) && !is_max(tmp->next->number, stack_a)))
+    while (tmp->number < tmp->next->number && (!is_min(tmp->number, stack_a) || !is_max(tmp->next->number, stack_a)))
     {
         tmp = tmp->next;
         index++;
     }
     index_first = index;
+    index_last = index;
     while (tmp->next != NULL)
     {
-        if (tmp->number > tmp->next->number && (!is_max(tmp->number, stack_a) && !is_min(tmp->next->number, stack_a)))
+        if (tmp->number > tmp->next->number && (!is_max(tmp->number, stack_a) || !is_min(tmp->next->number, stack_a)))
             index_last = index;
         tmp = tmp->next;
         index++;
     }
-    if (index_first <= index - index_last)
+    if (index_first > 1 && tmp->number > (*stack_a)->number && (!is_max(tmp->number, stack_a) || !is_min((*stack_a)->number, stack_a)))
+        return (-1);
+    else if (index_first <= index - index_last)
         return (index_first);
     else
         return ((index - index_last) * (-1));
@@ -77,20 +80,23 @@ int rot_or_rev_b(struct s_stack **stack_b)
 
     tmp = *stack_b;
     index = 0;
-    while (tmp->number > tmp->next->number && (!is_max(tmp->number, stack_b) && !is_min(tmp->next->number, stack_b)))
+    while (tmp->number > tmp->next->number && (!is_max(tmp->number, stack_b) || !is_min(tmp->next->number, stack_b)))
     {
         tmp = tmp->next;
         index++;
     }
     index_first = index;
+    index_last = index;
     while (tmp->next != NULL)
     {
-        if (tmp->number < tmp->next->number && (!is_min(tmp->number, stack_b) && !is_max(tmp->next->number, stack_b)))
+        if (tmp->number < tmp->next->number && (!is_min(tmp->number, stack_b) || !is_max(tmp->next->number, stack_b)))
             index_last = index;
         tmp = tmp->next;
         index++;
     }
-    if (index_first <= index - index_last)
+    if (index_first > 1 && tmp->number < (*stack_b)->number && (!is_min(tmp->number, stack_b) || !is_max((*stack_b)->number, stack_b)))
+        return (-1);
+    else if (index_first <= index - index_last)
         return (index_first);
     else
         return ((index - index_last) * (-1));

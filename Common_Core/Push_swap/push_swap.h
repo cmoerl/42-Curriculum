@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/29 16:53:55 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:18:42 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,9 @@ int rot_or_rev_a(struct s_stack **stack_a);
 int rot_or_rev_b(struct s_stack **stack_b);
 int is_max(int max, struct s_stack **stack);
 int is_min(int min, struct s_stack **stack);
+int almost_sorted_a(struct s_stack **stack_a);
+int almost_sorted_b(struct s_stack **stack_b);
+void    sort_stack_a(struct s_stack **stack_a);
+void    sort_stack_b(struct s_stack **stack_a, struct s_stack **stack_b);
 
 #endif

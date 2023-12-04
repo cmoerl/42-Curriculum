@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/11/29 17:31:22 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:58:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,22 @@ void    max_to_top(struct s_stack **stack_b)
         tmp = tmp->next;
         index++;
     }
-    while ((*stack_b)->number != max)
+    if (max_index <= index - max_index)
     {
-        if (max_index < index / 2)
+        while (max_index > 0)
+        {
             rb(stack_b);
-        else
-            rrb(stack_b);
+            max_index--;
+        }
     }
+    else
+    {
+        while (index - max_index > 0)
+        {
+            rrb(stack_b);
+            max_index++;
+        }
+    }            
 }
 
 int find_pivot(struct s_stack **stack)
@@ -132,6 +141,7 @@ int    next_to_top(struct s_stack **stack_a, int pivot)
     if (tmp->next == NULL && tmp->number >= pivot)
         return (0);
     index_first = index;
+    index_last = index;
     while (tmp->next != NULL)
     {
         if (tmp->number < pivot)
