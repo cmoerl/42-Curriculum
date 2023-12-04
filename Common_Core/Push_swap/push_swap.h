@@ -59,7 +59,13 @@ int    next_to_top(struct s_stack **stack_a, int pivot);
 void    move_to_top(struct s_stack **stack_a, int index_first, int index_last, int index);
 void    max_to_top(struct s_stack **stack_b);
 void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b);
+int get_size(struct s_stack **stack);
+int unsorted_rot(struct s_stack **stack_a, struct s_stack **stack_b);
+int unsorted_rev(struct s_stack **stack_a, struct s_stack **stack_b);
+void    separate_to_top(struct s_stack **stack_a, struct s_stack **stack_b);
 int rot_or_rev_a(struct s_stack **stack_a);
 int rot_or_rev_b(struct s_stack **stack_b);
+int is_max(int max, struct s_stack **stack);
+int is_min(int min, struct s_stack **stack);
 
 #endif

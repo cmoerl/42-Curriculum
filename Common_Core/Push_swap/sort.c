@@ -12,45 +12,41 @@
 
 #include "push_swap.h"
 
-void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
-{
-    if (is_sorted(stack_a))
-        return ;
-    if (argc <= 6)
+void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
+{ printf("unsorted_to_top\n");
+    int rot_moves;
+    int rev_moves;
+
+    rot_moves = unsorted_rot(stack_a, stack_b);
+    rev_moves = unsorted_rev(stack_a, stack_b);
+    if ((rot_moves >= 0 && rev_moves < 0) || rot_moves <= rev_moves)
     {
-        if (argc == 2)
-            return ;
-        else if (argc == 3)
-            sa(stack_a);
-        else if (argc == 4)
-            sort_three(stack_a);
-        else
-            sort_four_five(argc, stack_a, stack_b);
+        while (rot_moves > 0)
+        {
+            rr(stack_a, stack_b);
+            rot_moves--;
+        }
+    }
+    else if ((rot_moves < 0 && rev_moves >= 0) || rot_moves > rev_moves)
+    {
+        while (rev_moves > 0)
+        {
+            rrr(stack_a, stack_b);
+            rev_moves--;
+        }
     }
     else
-        sort_more(stack_a, stack_b);
+        separate_to_top(stack_a, stack_b);
 }
 
 void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b)
-{
+{ printf("sort_both_stacks\n");
     while (!is_sorted(stack_a) && !is_rev_sorted(stack_b))
     {
-        if ((*stack_a)->number > (*stack_a)->next->number && (*stack_b)->number < (*stack_b)->next->number)
+        if ((*stack_a)->number < (*stack_a)->next->number || (*stack_b)->number > (*stack_b)->next->number)
+            unsorted_to_top(stack_a, stack_b);
+        else
             ss(stack_a, stack_b);
-        else if(rot_or_rev_a(stack_a) && rot_or_rev_b(stack_b))
-            rr(stack_a, stack_b);
-        else if (!rot_or_rev_a(stack_a) && !rot_or_rev_b(stack_b))
-            rrr(stack_a, stack_b);
-        else if(rot_or_rev_a(stack_a) && !rot_or_rev_b(stack_b))
-        {
-            ra(stack_a);
-            rrb(stack_b);
-        }
-        else 
-        {
-            rra(stack_a);
-            rb(stack_b);
-        }
     }
 //    if (!is_sorted(stack_a))
 //        sort_stack_a(stack_a);
@@ -85,6 +81,24 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
 //        pa(stack_a, stack_b);
 }
 
+void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b)
+{
+    if (is_sorted(stack_a))
+        return ;
+    if (argc <= 6)
+    {
+        if (argc == 2)
+            return ;
+        else if (argc == 3)
+            sa(stack_a);
+        else if (argc == 4)
+            sort_three(stack_a);
+        else
+            sort_four_five(argc, stack_a, stack_b);
+    }
+    else
+        sort_more(stack_a, stack_b);
+}
 
 void    print_stack(struct s_stack **stack_a, struct s_stack **stack_b)
 {
