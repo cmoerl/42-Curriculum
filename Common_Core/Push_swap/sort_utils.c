@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/04 18:58:53 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/05 17:46:41 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int    next_to_top(struct s_stack **stack_a, int pivot)
         tmp = tmp->next;
         index++;
     }
+    index++;
     move_to_top(stack_a, index_first, index_last, index);
     return (1);
 }

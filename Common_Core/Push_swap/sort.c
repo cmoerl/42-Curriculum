@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/04 18:33:59 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/05 18:12:09 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
 {
     int rot_moves;
     int rev_moves;
+    int moves_a;
+    int moves_b;
 
     rot_moves = unsorted_rot(stack_a, stack_b);
     rev_moves = unsorted_rev(stack_a, stack_b);
-    if (rot_moves >= 0 && (rev_moves < 0 || rot_moves <= rev_moves))
+    moves_a = moves_to_swap_a(stack_a);
+    moves_b = moves_to_swap_b(stack_b);
+    if (rot_moves >= 0 && (rev_moves < 0 || rot_moves <= rev_moves) && rot_moves <= moves_a + moves_b)
     {
         while (rot_moves > 0)
         {
@@ -27,7 +31,7 @@ void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
             rot_moves--;
         }
     }
-    else if (rev_moves > 0 && (rot_moves < 0 || rot_moves > rev_moves))
+    else if (rev_moves > 0 && (rot_moves < 0 || rot_moves > rev_moves) && rev_moves <= moves_a + moves_b)
     {
         while (rev_moves > 0)
         {
@@ -52,10 +56,10 @@ void    sort_both_stacks(struct s_stack **stack_a, struct s_stack **stack_b)
         else
             ss(stack_a, stack_b);
     }
-    if (!is_sorted(stack_a))
-        sort_stack_a(stack_a);
-    else if (!is_rev_sorted(stack_b))
-        sort_stack_b(stack_a, stack_b);
+//    if (!is_sorted(stack_a))
+//        sort_stack_a(stack_a);
+//    else if (!is_rev_sorted(stack_b))
+//        sort_stack_b(stack_a, stack_b);
 }
 
 
@@ -67,9 +71,8 @@ void    sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
     i = 0;
     pivot = find_pivot(stack_a);
     printf("pivot: %d\n", pivot);
-    while(i < 3)
+    while(i < 3 && next_to_top(stack_a, pivot))
     {
-        next_to_top(stack_a, pivot);
         pb(stack_a, stack_b);
         i++;
     }

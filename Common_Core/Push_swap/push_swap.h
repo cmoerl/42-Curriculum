@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/04 18:18:42 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/05 18:07:58 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ struct s_stack
     struct s_stack         *next;
 };
 
+int moves_to_swap_a(struct s_stack **stack_a);
+int moves_to_swap_b(struct s_stack **stack_b);
 void    rev_rotate(struct s_stack **stack);
 void    rotate(struct s_stack **stack);
 void    push(struct s_stack **src, struct s_stack **dst);
