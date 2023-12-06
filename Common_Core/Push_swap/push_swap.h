@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/05 18:07:58 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/06 15:14:47 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 struct s_stack
 {
     int                    number;
+    int                    index;
     struct s_stack         *next;
 };
 
@@ -36,7 +37,7 @@ void    find_dup(struct s_stack **stack_a, struct s_stack **stack_b);
 void    error(struct s_stack **stack_a, struct s_stack **stack_b);
 void    free_stack(struct s_stack **stack);
 void    print_stack(struct s_stack **stack_a, struct s_stack **stack_b);
-struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b);
+struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, int index);
 void    sort_four_five(int argc, struct s_stack **stack_a, struct s_stack **stack_b);
 void    sort_three(struct s_stack **stack);
 void    sort_stack(int argc, struct s_stack **stack_a, struct s_stack **stack_b);

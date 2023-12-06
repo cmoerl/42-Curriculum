@@ -6,13 +6,13 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/06 15:14:06 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/06 18:22:56 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, int index)
+struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, long index)
 {
     struct s_stack* new_node;
 
@@ -20,7 +20,7 @@ struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **
     if (!new_node)
         error(stack_a, stack_b);
     new_node->number = arg;
-    new_node->index = index - 1;
+    new_node->index = index;
     new_node->next = NULL;
     return (new_node);
 }
@@ -37,11 +37,11 @@ void    fill_struct(int argc, char **argv, struct s_stack **stack_a, struct s_st
             error(stack_a, stack_b);
         if (i == 1)
         {
-            *stack_a = create_node(ft_atoi(argv[i]), stack_a, stack_b, i);
+            *stack_a = create_node(ft_atoi(argv[i]), stack_a, stack_b, -1);
             tmp = *stack_a;
         }
         else if (i < argc)
-            (*stack_a)->next = create_node(ft_atoi(argv[i]), stack_a, stack_b, i);
+            (*stack_a)->next = create_node(ft_atoi(argv[i]), stack_a, stack_b, -1);
         else
             (*stack_a)->next = NULL;
         if ((*stack_a)->next != NULL)

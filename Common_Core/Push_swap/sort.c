@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/05 18:12:09 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/06 15:47:35 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
 {
     int rot_moves;
     int rev_moves;
-    int moves_a;
-    int moves_b;
+    int moves_ab;
 
     rot_moves = unsorted_rot(stack_a, stack_b);
     rev_moves = unsorted_rev(stack_a, stack_b);
-    moves_a = moves_to_swap_a(stack_a);
-    moves_b = moves_to_swap_b(stack_b);
-    if (rot_moves >= 0 && (rev_moves < 0 || rot_moves <= rev_moves) && rot_moves <= moves_a + moves_b)
+    moves_ab = moves_to_swap_a(stack_a) + moves_to_swap_b(stack_b);
+    if (rot_moves >= 0 && (rev_moves < 0 || rot_moves <= rev_moves) && rot_moves <= moves_ab)
     {
         while (rot_moves > 0)
         {
@@ -31,7 +29,7 @@ void    unsorted_to_top(struct s_stack **stack_a, struct s_stack **stack_b)
             rot_moves--;
         }
     }
-    else if (rev_moves > 0 && (rot_moves < 0 || rot_moves > rev_moves) && rev_moves <= moves_a + moves_b)
+    else if (rev_moves > 0 && (rot_moves < 0 || rot_moves > rev_moves) && rev_moves <= moves_ab)
     {
         while (rev_moves > 0)
         {
