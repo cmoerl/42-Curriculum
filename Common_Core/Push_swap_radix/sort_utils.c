@@ -12,6 +12,30 @@
 
 #include "push_swap.h"
 
+int longest_index(struct s_stack **stack_a)
+{
+    struct s_stack  *tmp;
+    int             first_one;
+    int             i;
+    
+    tmp = *stack_a;
+    first_one = 32;
+    while (tmp != NULL)
+    {
+        i = 0;
+        while (tmp->index_s[i])
+        {
+            if (tmp->index_s[i] == '1')
+                break;
+            i++;
+        }
+        if (first_one > i)
+            first_one = i;
+        tmp = tmp->next;
+    }
+    return (first_one);
+}
+
 int get_size(struct s_stack **stack)
 {
     struct s_stack  *tmp;

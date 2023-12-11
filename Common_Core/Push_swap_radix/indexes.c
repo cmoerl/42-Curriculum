@@ -15,57 +15,54 @@
 void    convert_indexes(struct s_stack **stack_a)
 {
     struct s_stack  *tmp;
-    long            new_index;
+    char            *index_bin;
     int             i;
 
     tmp = *stack_a;
     while (tmp != NULL)
     {
-        i = 0;
-        new_index = 0;
-        while (i < 32)
+        i = 31;
+        index_bin = malloc(32 + 1);
+        if (!index_bin)
+            return ;
+        while (i >= 0)
         {
-            new_index <<= 1;
-            if (tmp->index & (1 << i))
-                new_index |= 1;
-            i++;
+            index_bin[i] = (tmp->index_n & 1) + '0';
+            tmp->index_n >>= 1;
+            i--;
         }
-        tmp->index = new_index;
-        if (tmp->next != NULL)
-            tmp = tmp->next;
+        index_bin[32] = '\0';
+        tmp->index_s = index_bin;
+        tmp = tmp->next;
     }
 }
 
-static void    implement_index(struct s_stack **stack_a, int value, long index)
+static void    implement_index(struct s_stack **stack_a, int value, int index)
 {
     struct s_stack  *tmp;
 
     tmp = *stack_a;
-    while (tmp->next != NULL)
+    while (tmp != NULL)
     {
         if (tmp->number == value)
-            tmp->index = index;
+            tmp->index_n = index;
         tmp = tmp->next;
     }
-    if (tmp->number == value)
-        tmp->index = index;
 }
 
-static int     find_min(struct s_stack **stack_a, long old_min)
+static long     find_min(struct s_stack **stack_a, long old_min)
 {
     struct s_stack  *tmp;
     long             new_min;
     
     tmp = *stack_a;
     new_min = 2147483648;
-    while (tmp->next != NULL)
+    while (tmp != NULL)
     {
-        if (tmp->number < new_min && tmp->number > old_min)
-            new_min = tmp->number;
+        if ((long)tmp->number < new_min && (long)tmp->number > old_min)
+            new_min = (long)tmp->number;
         tmp = tmp->next;
     }
-    if (tmp->number < new_min && tmp->number > old_min)
-        new_min = tmp->number;
     return (new_min);
 }
 
@@ -76,11 +73,11 @@ static int     all_indexes_given(struct s_stack **stack_a)
     tmp = *stack_a;
     while (tmp->next != NULL)
     {
-        if (tmp->index < 0)
+        if (tmp->index_n < 0)
             return (0);
         tmp = tmp->next;
     }
-    if (tmp->index < 0)
+    if (tmp->index_n < 0)
         return (0);
     else
         return (1);
@@ -89,7 +86,7 @@ static int     all_indexes_given(struct s_stack **stack_a)
 void    give_indexes(struct s_stack **stack_a)
 {
     long    min;
-    long    index;
+    int    index;
     
     min = -2147483649;
     index = 0;

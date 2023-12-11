@@ -34,7 +34,7 @@ void    push(struct s_stack **src, struct s_stack **dst)
     
     if (src != NULL && *src != NULL)
     {
-        new_node = create_node((*src)->number, dst, NULL, (*src)->index);
+        new_node = create_node((*src)->number, dst, NULL, (*src)->index_n, (*src)->index_s);
         new_node->next = *dst;
         *dst = new_node;
         tmp = (*src)->next;

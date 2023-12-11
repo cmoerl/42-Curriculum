@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, long index)
+struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, int index_n, char *index_s)
 {
     struct s_stack* new_node;
 
@@ -20,7 +20,8 @@ struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **
     if (!new_node)
         error(stack_a, stack_b);
     new_node->number = arg;
-    new_node->index = index;
+    new_node->index_n = index_n;
+    new_node->index_s = index_s;
     new_node->next = NULL;
     return (new_node);
 }
@@ -37,11 +38,11 @@ void    fill_struct(int argc, char **argv, struct s_stack **stack_a, struct s_st
             error(stack_a, stack_b);
         if (i == 1)
         {
-            *stack_a = create_node(ft_atoi(argv[i]), stack_a, stack_b, -1);
+            *stack_a = create_node(ft_atoi(argv[i]), stack_a, stack_b, -1, NULL);
             tmp = *stack_a;
         }
         else if (i < argc)
-            (*stack_a)->next = create_node(ft_atoi(argv[i]), stack_a, stack_b, -1);
+            (*stack_a)->next = create_node(ft_atoi(argv[i]), stack_a, stack_b, -1, NULL);
         else
             (*stack_a)->next = NULL;
         if ((*stack_a)->next != NULL)

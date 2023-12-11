@@ -27,7 +27,7 @@ struct s_stack
     struct s_stack         *next;
 };
 
-struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, long index);
+struct s_stack* create_node(int arg, struct s_stack **stack_a, struct s_stack **stack_b, int index_n, char *index_s);
 void            rev_rotate(struct s_stack **stack);
 void            rotate(struct s_stack **stack);
 void            push(struct s_stack **src, struct s_stack **dst);
@@ -54,6 +54,7 @@ void            rrr(struct s_stack **stack_a, struct s_stack **stack_b);
 void            min_to_top(struct s_stack **stack_a);
 void            give_indexes(struct s_stack **stack_a);
 void            convert_indexes(struct s_stack **stack_a);
+int             longest_index(struct s_stack **stack_a);
 int             check_arg(char *str);
 int             is_sorted(struct s_stack **stack);
 int             get_size(struct s_stack **stack);
