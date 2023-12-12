@@ -6,75 +6,78 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/06 16:38:31 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/12 16:12:33 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    swap(struct s_stack **stack)
+void	swap(struct s_stack **stack)
 {
-    struct s_stack    *one;
-    struct s_stack    *two;
+	struct s_stack	*one;
+	struct s_stack	*two;
 
-    if (stack != NULL && *stack != NULL && (*stack)->next != NULL)    
-    {
-        one = *stack;
-        two = (*stack)->next;
-        one->next = two->next;
-        two->next = one;
-        *stack = two;
-    }
+	if (stack != NULL && *stack != NULL && (*stack)->next != NULL)
+	{
+		one = *stack;
+		two = (*stack)->next;
+		one->next = two->next;
+		two->next = one;
+		*stack = two;
+	}
 }
 
-void    push(struct s_stack **src, struct s_stack **dst)
+void	push(struct s_stack **src, struct s_stack **dst)
 {
-    struct s_stack  *new_node;
-    struct s_stack  *tmp;
-    
-    if (src != NULL && *src != NULL)
-    {
-        new_node = create_node((*src)->number, dst, NULL, (*src)->index_n, (*src)->index_s);
-        new_node->next = *dst;
-        *dst = new_node;
-        tmp = (*src)->next;
-        free(*src);
-        *src = tmp;
-    }
+	struct s_stack	*new_node;
+	struct s_stack	*tmp;
+
+	if (src != NULL && *src != NULL)
+	{
+		new_node = create_node((*src)->number,
+				(*src)->index_n, (*src)->index_s);
+		if (!new_node)
+			error(src, dst);
+		new_node->next = *dst;
+		*dst = new_node;
+		tmp = (*src)->next;
+		free(*src);
+		*src = tmp;
+	}
 }
 
-void    rotate(struct s_stack **stack)
+void	rotate(struct s_stack **stack)
 {
-    struct s_stack     *tmp;
+	struct s_stack	*tmp;
 
-    if (stack != NULL && *stack != NULL && (*stack)->next != NULL)
-    {
-        tmp = *stack;
-        while (tmp->next != NULL)
-            tmp = tmp->next;
-        tmp->next = *stack;
-        *stack = (*stack)->next;
-        tmp->next->next = NULL;
-    }
+	if (stack != NULL && *stack != NULL && (*stack)->next != NULL)
+	{
+		tmp = *stack;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = *stack;
+		*stack = (*stack)->next;
+		tmp->next->next = NULL;
+	}
 }
 
-void    rev_rotate(struct s_stack **stack)
+void	rev_rotate(struct s_stack **stack)
 {
-    struct s_stack     *begin;
-    struct s_stack     *end;
-    struct s_stack     *new;
+	struct s_stack	*begin;
+	struct s_stack	*end;
+	struct s_stack	*new;
 
-    if (stack != NULL && *stack != NULL && (*stack)->next != NULL)
-    {
-        begin = *stack;
-        end = *stack;
-        while (end->next != NULL)
-        {
-            new = end;
-            end = end->next;
-        }
-        new->next = NULL;
-        end->next = begin;
-        *stack = end;
-    }
+	if (stack != NULL && *stack != NULL && (*stack)->next != NULL)
+	{
+		begin = *stack;
+		end = *stack;
+		while (end->next != NULL)
+		{
+			new = end;
+			end = end->next;
+		}
+		new->next = NULL;
+		end->next = begin;
+		*stack = end;
+	}
 }
