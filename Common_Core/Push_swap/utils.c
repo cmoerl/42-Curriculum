@@ -22,6 +22,7 @@ void    free_stack(struct s_stack **stack)
     while (current != NULL)
     {
         next = current->next;
+        free(current->index_s);
         free(current);
         current = next;
     }

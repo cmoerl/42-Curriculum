@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/20 15:36:49 by csturm            #+#    #+#              #
-#    Updated: 2023/12/05 18:04:34 by csturm           ###   ########.fr        #
+#    Updated: 2023/12/06 16:27:43 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC:= cc
 CFLAGS:= -Wall -Werror -Wextra -I.
 
-SRC:= core_operations.c main.c parse_operations_1.c parse_operations_2.c parse_operations_3.c simple_sort.c sort_utils.c sort.c utils.c moves.c
+SRC:= core_operations.c main.c parse_operations_1.c parse_operations_2.c parse_operations_3.c simple_sort.c sort_utils.c sort.c utils.c indexes.c
 OBJ:= $(SRC:.c=.o)
 
 NAME = libftpushswap.a
