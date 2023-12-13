@@ -13,7 +13,7 @@
 CC:= cc
 CFLAGS:= -Wall -Werror -Wextra -I.
 
-SRC:= core_operations.c main.c parse_operations_1.c parse_operations_2.c parse_operations_3.c simple_sort.c sort_utils.c sort.c utils.c indexes.c one_arg.c
+SRC:= core_operations.c push_swap.c parse_operations_1.c parse_operations_2.c parse_operations_3.c simple_sort.c sort_utils.c sort.c utils.c indexes.c one_arg.c
 OBJ:= $(SRC:.c=.o)
 
 NAME = libftpushswap.a
