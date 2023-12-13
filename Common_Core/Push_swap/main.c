@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/12 17:28:41 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/13 16:40:25 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,33 @@ struct s_stack	*create_node(int arg, int index_n, char *index_s)
 	return (new_node);
 }
 
-struct s_stack	*handle_node(struct s_stack **stack_a, struct s_stack **stack_b, int arg)
+struct s_stack	*handle_node(struct s_stack **stack_a,
+					struct s_stack **stack_b, int arg)
 {
 	struct s_stack	*new_node;
 
 	new_node = create_node(arg, -1, NULL);
 	if (!new_node)
 		error(stack_a, stack_b);
-	if ((*stack_a)->next == NULL)
-	{
-		(*stack_a)->next = new_node;
-		new_node->next = NULL;
-	}
-	else
-		(*stack_a)->next = new_node;
 	return (new_node);
+}
+
+void	fill_struct_arr(int argc, char **argv, struct s_stack **stack_a,
+				struct s_stack **stack_b)
+{
+	struct s_stack	*tmp;
+	int				i;
+
+	i = argc - 1;
+	while (i >= 0)
+	{
+		if (check_arg(argv[i]))
+			error(stack_a, stack_b);
+		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
+		tmp->next = *stack_a;
+		*stack_a = tmp;
+		i--;
+	}
 }
 
 void	fill_struct(int argc, char **argv, struct s_stack **stack_a,
@@ -49,23 +61,16 @@ void	fill_struct(int argc, char **argv, struct s_stack **stack_a,
 	struct s_stack	*tmp;
 	int				i;
 
-	i = 1;
-	while (i < argc)
+	i = argc - 1;
+	while (i >= 1)
 	{
 		if (check_arg(argv[i]))
 			error(stack_a, stack_b);
-		if (i == 1)
-		{
-			*stack_a = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
-			tmp = *stack_a;
-		}
-		else
-			*stack_a = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
-		if ((*stack_a)->next != NULL)
-			*stack_a = (*stack_a)->next;
-		i++;
+		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
+		tmp->next = *stack_a;
+		*stack_a = tmp;
+		i--;
 	}
-	*stack_a = tmp;
 }
 
 int	main(int argc, char **argv)
@@ -78,7 +83,10 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		error(&stack_a, &stack_b);
 	else if (argc == 2)
+	{
 		fill_struct_one_arg(argv, &stack_a, &stack_b);
+		argc = get_size(&stack_a) + 1;
+	}
 	else
 		fill_struct(argc, argv, &stack_a, &stack_b);
 	find_dup(&stack_a, &stack_b);
