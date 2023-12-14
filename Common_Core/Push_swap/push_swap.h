@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/13 16:38:29 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/14 18:22:44 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <limits.h>
-# include "Printf/ft_printf.h"
-# include "Printf/Libft/libft.h"
+# include "Libft/libft.h"
 
 struct s_stack
 {
@@ -57,15 +56,14 @@ void			rrr(struct s_stack **stack_a, struct s_stack **stack_b);
 void			min_to_top(struct s_stack **stack_a);
 void			give_indexes(struct s_stack **stack_a);
 void			convert_indexes(struct s_stack **stack_a);
-void			fill_struct_one_arg(char **argv, struct s_stack **stack_a,
-					struct s_stack **stack_b);
-void			check_limits(struct s_stack **stack_a,
-					struct s_stack **stack_b);
 void			fill_struct_arr(int argc, char **argv, struct s_stack **stack_a,
 					struct s_stack **stack_b);
+void			free_array(char **array);
 int				longest_index(struct s_stack **stack_a);
 int				check_arg(char *str);
 int				is_sorted(struct s_stack **stack);
 int				get_size(struct s_stack **stack);
-
+int				only_space(char *str);
+int				fill_struct_one_arg(char **argv, struct s_stack **stack_a,
+					struct s_stack **stack_b);
 #endif

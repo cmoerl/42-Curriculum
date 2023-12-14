@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/13 16:44:31 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/14 18:12:29 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	check_one_arg(char *str)
 	int	i;
 
 	i = 0;
+	if (only_space(str))
+		return (0);
 	while (str[i])
 	{
 		if (str[i] != ' ' && str[i] != '-' && str[i] != '+'
@@ -38,10 +40,12 @@ static int	check_one_arg(char *str)
 			return (0);
 		i++;
 	}
+	if (i == 0)
+		return (0);
 	return (1);
 }
 
-static void	free_array(char **array)
+void	free_array(char **array)
 {
 	int	i;
 
@@ -64,7 +68,7 @@ int	size_of_array(char **array)
 	return (i);
 }
 
-void	fill_struct_one_arg(char **argv, struct s_stack **stack_a,
+int	fill_struct_one_arg(char **argv, struct s_stack **stack_a,
 			struct s_stack **stack_b)
 {
 	char	**args;
@@ -73,11 +77,17 @@ void	fill_struct_one_arg(char **argv, struct s_stack **stack_a,
 	if (!check_one_arg(argv[1]))
 		error(stack_a, stack_b);
 	if (one_nb(argv[1]))
-		return ;
+	{
+		if (check_arg(argv[1]))
+			error(stack_a, stack_b);
+		else
+			return (0);
+	}
 	args = ft_split(argv[1], ' ');
 	if (!args)
 		error(stack_a, stack_b);
 	size = size_of_array(args);
 	fill_struct_arr(size, args, stack_a, stack_b);
 	free_array(args);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/13 16:40:25 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/14 18:11:55 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	fill_struct_arr(int argc, char **argv, struct s_stack **stack_a,
 	while (i >= 0)
 	{
 		if (check_arg(argv[i]))
+		{
+			free_array(argv);
 			error(stack_a, stack_b);
+		}
 		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
 		tmp->next = *stack_a;
 		*stack_a = tmp;
@@ -81,16 +84,16 @@ int	main(int argc, char **argv)
 	stack_a = NULL;
 	stack_b = NULL;
 	if (argc < 2)
-		error(&stack_a, &stack_b);
+		return (1);
 	else if (argc == 2)
 	{
-		fill_struct_one_arg(argv, &stack_a, &stack_b);
+		if (!fill_struct_one_arg(argv, &stack_a, &stack_b))
+			return (0);
 		argc = get_size(&stack_a) + 1;
 	}
 	else
 		fill_struct(argc, argv, &stack_a, &stack_b);
 	find_dup(&stack_a, &stack_b);
-	check_limits(&stack_a, &stack_b);
 	sort_stack(argc, &stack_a, &stack_b);
 	free_stack(&stack_a);
 	free_stack(&stack_b);
