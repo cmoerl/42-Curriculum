@@ -6,13 +6,13 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/12 15:33:59 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:15:10 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	convert_indexes(struct s_stack **stack_a)
+int	convert_indexes(struct s_stack **stack_a)
 {
 	struct s_stack	*tmp;
 	char			*index_bin;
@@ -24,7 +24,7 @@ void	convert_indexes(struct s_stack **stack_a)
 		i = 31;
 		index_bin = malloc(32 + 1);
 		if (!index_bin)
-			return ;
+			return (1);
 		while (i >= 0)
 		{
 			index_bin[i] = (tmp->index_n & 1) + '0';
@@ -35,6 +35,7 @@ void	convert_indexes(struct s_stack **stack_a)
 		tmp->index_s = index_bin;
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
 static void	implement_index(struct s_stack **stack_a, int value, int index)

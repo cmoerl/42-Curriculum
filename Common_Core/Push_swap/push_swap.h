@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:27 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/14 18:22:44 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:19:25 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ struct s_stack
 
 struct s_stack	*create_node(int arg, int index_n, char *index_s);
 struct s_stack	*handle_node(struct s_stack **stack_a,
-					struct s_stack **stack_b, int arg);
+					struct s_stack **stack_b, int arg, int flag);
 void			rev_rotate(struct s_stack **stack);
 void			rotate(struct s_stack **stack);
 void			push(struct s_stack **src, struct s_stack **dst);
@@ -55,7 +55,6 @@ void			rrb(struct s_stack **stack_b);
 void			rrr(struct s_stack **stack_a, struct s_stack **stack_b);
 void			min_to_top(struct s_stack **stack_a);
 void			give_indexes(struct s_stack **stack_a);
-void			convert_indexes(struct s_stack **stack_a);
 void			fill_struct_arr(int argc, char **argv, struct s_stack **stack_a,
 					struct s_stack **stack_b);
 void			free_array(char **array);
@@ -66,4 +65,6 @@ int				get_size(struct s_stack **stack);
 int				only_space(char *str);
 int				fill_struct_one_arg(char **argv, struct s_stack **stack_a,
 					struct s_stack **stack_b);
+int				convert_indexes(struct s_stack **stack_a);
+
 #endif

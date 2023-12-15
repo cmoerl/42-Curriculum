@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/14 18:11:55 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:14:32 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@ struct s_stack	*create_node(int arg, int index_n, char *index_s)
 }
 
 struct s_stack	*handle_node(struct s_stack **stack_a,
-					struct s_stack **stack_b, int arg)
+					struct s_stack **stack_b, int arg, int flag)
 {
 	struct s_stack	*new_node;
 
 	new_node = create_node(arg, -1, NULL);
 	if (!new_node)
-		error(stack_a, stack_b);
+	{
+		if (flag == 1)
+			return (NULL);
+		else
+			error(stack_a, stack_b);
+	}
 	return (new_node);
 }
 
@@ -51,7 +56,12 @@ void	fill_struct_arr(int argc, char **argv, struct s_stack **stack_a,
 			free_array(argv);
 			error(stack_a, stack_b);
 		}
-		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
+		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]), 1);
+		if (!tmp)
+		{
+			free_array(argv);
+			error(stack_a, stack_b);
+		}
 		tmp->next = *stack_a;
 		*stack_a = tmp;
 		i--;
@@ -69,7 +79,7 @@ void	fill_struct(int argc, char **argv, struct s_stack **stack_a,
 	{
 		if (check_arg(argv[i]))
 			error(stack_a, stack_b);
-		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]));
+		tmp = handle_node(stack_a, stack_b, ft_atoi(argv[i]), 0);
 		tmp->next = *stack_a;
 		*stack_a = tmp;
 		i--;

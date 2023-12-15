@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/13 16:27:18 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/15 15:19:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	sort_more(struct s_stack **stack_a, struct s_stack **stack_b)
 	int	size;
 
 	give_indexes(stack_a);
-	convert_indexes(stack_a);
+	if (convert_indexes(stack_a))
+		error(stack_a, stack_b);
 	last_digit = longest_index(stack_a);
 	digit = 31;
 	while (digit >= last_digit)
