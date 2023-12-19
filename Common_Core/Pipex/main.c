@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/18 18:04:57 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/19 18:01:57 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,27 @@ void	pipex(const char *infile, const char *outfile,
 	wait(NULL);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*infile;
 	char	*outfile;
 	t_cmd	*cmd1;
 	t_cmd	*cmd2;
+	char	**paths;
 
+	paths = find_paths(envp);
+	if (!paths)
+		error;
 	if (argc == 5)
 	{
 		infile = argv[1];
 		outfile = argv[4];
-		parse_cmd(argv[2], &cmd1);
-		parse_cmd(argv[3], &cmd2);
+		parse_cmd1(argv[2], cmd1);
+		parse_cmd2(argv[3], cmd2);
+		select_path1(paths, cmd1);
+		select_path2(paths, cmd2);
 		pipex(infile, outfile, cmd1, cmd2);
 	}
+	free_array(paths);
 	return (0);
 }

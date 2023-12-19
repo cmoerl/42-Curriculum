@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_print_unsigned_int.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/19 17:48:48 by csturm           ###   ########.fr       */
+/*   Created: 2023/09/28 17:02:35 by csturm            #+#    #+#             */
+/*   Updated: 2023/12/14 16:24:15 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# define STDOUT_FILENO 1
-# include "Libft/libft.h"
-
-typedef struct command
+int	ft_print_unsigned_int(unsigned int n)
 {
-	char	*cmd;
-	char	*flag;
-	char	*path;
-}	t_cmd;
+	char	*str;
+	size_t	count;
 
-char	**find_paths(char **envp);
-void	parse_cmd1(char *cmd, t_cmd *cmd1);
-void	parse_cmd2(char *cmd, t_cmd *cmd2);
-
-# endif
+	if (n == 0)
+	{
+		count = ft_print_char('0');
+		return (count);
+	}
+	str = ft_utoa(n);
+	if (!str)
+		return (0);
+	count = ft_print_str(str);
+	free(str);
+	return (count);
+}
