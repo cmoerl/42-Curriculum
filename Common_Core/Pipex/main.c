@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/19 18:01:57 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/20 16:03:28 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child_process(t_cmd *cmd1, int *read_end)
 	close(read_end[1]);
 	dup2(read_end[0], STDIN_FILENO);
 	close(read_end[0]);
-	cmd_arr[0] = cmd1->path;
+	cmd_arr[0] = cmd1->cmd;
 	cmd_arr[1] = cmd1->flag;
 	cmd_arr[2] = NULL;
 	execve(cmd1->path, cmd_arr, NULL);
@@ -44,7 +44,7 @@ void	parent_process(t_cmd *cmd2, int *write_end)
 	close(write_end[0]);
 	dup2(write_end[1], STDOUT_FILENO);
 	close(write_end[1]);
-	cmd_arr[0] = cmd2->path;
+	cmd_arr[0] = cmd2->cmd;
 	cmd_arr[1] = cmd2->flag;
 	cmd_arr[2] = NULL;
 	execve(cmd2->path, cmd_arr, NULL);

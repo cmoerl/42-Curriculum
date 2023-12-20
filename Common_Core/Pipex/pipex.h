@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/19 17:48:48 by csturm           ###   ########.fr       */
+/*   Updated: 2023/12/20 15:21:02 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ typedef struct command
 char	**find_paths(char **envp);
 void	parse_cmd1(char *cmd, t_cmd *cmd1);
 void	parse_cmd2(char *cmd, t_cmd *cmd2);
+void	select_path1(char **paths, t_cmd *cmd1);
+void	select_path2(char **paths, t_cmd *cmd2);
 
 # endif
