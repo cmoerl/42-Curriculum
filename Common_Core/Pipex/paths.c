@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/20 15:20:40 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/05 16:35:57 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,12 @@ char	**find_paths(char **envp)
 		return (NULL);
 	j = 0;
 	while (paths[j] != NULL)
+	{
 		ft_strjoin(paths[j], "/");
+		j++;
+	}
+	ft_strtrim(paths[0], "PATH=");
 	return (paths);
-}
-
-void	parse_cmd2(char *cmd, t_cmd *cmd2)
-{
-	char	**arr;
-
-	arr = ft_split(cmd, ' ');
-	if (!arr)
-		return ;
-	cmd2->cmd = arr[0];
-	if (arr[1] != NULL)
-		cmd2->flag = arr[1];
-	else
-		cmd2->flag = NULL;
-}
-
-void	parse_cmd1(char *cmd, t_cmd *cmd1)
-{
-	char	**arr;
-
-	arr = ft_split(cmd, ' ');
-	if (!arr)
-		return ;
-	cmd1->cmd = arr[0];
-	if (arr[1] != NULL)
-		cmd1->flag = arr[1];
-	else
-		cmd1->flag = NULL;
 }
 
 void	select_path1(char **paths, t_cmd *cmd1)
