@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/05 17:15:07 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/08 18:04:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ void	pipex(const char *infile, const char *outfile,
 			t_cmd *cmd1, t_cmd *cmd2, char **envp);
 void	make_pipe(int fd[2]);
 void	free_array(char **arr);
+void	fill_cmd_struct(char **argv, char **paths, t_cmd *cmd1, t_cmd *cmd2);
+void	free_everything(char **paths, t_cmd *cmd1, t_cmd *cmd2);
 
 # endif

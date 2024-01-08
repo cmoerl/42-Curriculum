@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/05 16:35:57 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/08 17:27:51 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ char	**find_paths(char **envp)
 	j = 0;
 	while (paths[j] != NULL)
 	{
-		ft_strjoin(paths[j], "/");
+		paths[j] = ft_strjoin(paths[j], "/");
 		j++;
 	}
-	ft_strtrim(paths[0], "PATH=");
+	paths[0] = ft_strtrim(paths[0], "PATH=");
 	return (paths);
 }
 

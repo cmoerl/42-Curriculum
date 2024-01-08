@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/05 17:18:03 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/08 18:04:17 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	pipex(const char *infile, const char *outfile,
 {
 	pid_t	pid;
 	int		pipe[2];
+	int		status;
 
 	make_pipe(pipe);
 	pid = fork ();
@@ -70,51 +71,45 @@ void	pipex(const char *infile, const char *outfile,
 	if (pid == 0)
 		child_process(cmd1, pipe, infile, envp);
 	else
+	{
 		parent_process(cmd2, pipe, outfile, envp);
-	close(pipe[1]);
-	wait(NULL);
+		close(pipe[1]);
+	}
+	if (waitpid(pid, &status, 0) == -1)
+	{
+		perror("waitpid failed");
+		exit(EXIT_FAILURE);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*infile;
-	char	*outfile;
 	t_cmd	*cmd1;
 	t_cmd	*cmd2;
 	char	**paths;
 
-	cmd1 = malloc(sizeof(t_cmd));
-	cmd2 = malloc(sizeof(t_cmd));
-	if (!cmd1 || !cmd2)
+	if (argc != 5)
 	{
-		perror("Not enough memory");
+		perror("Wrong number of arguments");
 		exit(EXIT_FAILURE);
 	}
-	ft_printf("1\n");
+	cmd1 = malloc(sizeof(t_cmd));
+	cmd2 = malloc(sizeof(t_cmd));
+	if (!cmd1)
+		exit(-1);
+	if (!cmd2)
+	{
+		free_everything(cmd1, NULL, NULL);
+		exit(-1);
+	}
 	paths = find_paths(envp);
 	if (!paths)
 	{
-		perror("Not enough memory");
-		exit(EXIT_FAILURE);
+		free_everything(cmd1, cmd2, NULL);
+		exit(-1);
 	}
-	ft_printf("2\n");
-	if (argc == 5)
-	{
-		ft_printf("3\n");
-		infile = argv[1];
-		outfile = argv[4];
-		parse_cmd1(argv[2], cmd1);
-		parse_cmd2(argv[3], cmd2);
-		ft_printf("4\n");
-		select_path1(paths, cmd1);
-		select_path2(paths, cmd2);
-		ft_printf("5\n");
-		pipex(infile, outfile, cmd1, cmd2, envp);
-	}
-	ft_printf("6\n");
-	free_array(paths);
-	free(cmd1);
-	free(cmd2);
-	ft_printf("7\n");
+	fill_cmd_struct(argv, paths, cmd1, cmd2);
+	pipex(argv[1], argv[4], cmd1, cmd2, envp);
+	free_everything(cmd1, cmd2, paths);
 	return (0);
 }
