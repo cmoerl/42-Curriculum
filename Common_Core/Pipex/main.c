@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/08 18:04:17 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/09 18:57:08 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	make_pipe(int fd[2])
 	}
 }
 
-void	child_process(t_cmd *cmd1, int *pipe, const char *infile, char **envp)
+void	child_process(t_cmd *cmd1, int *pipe, const char *infile)
 {
 	char	*cmd_arr[3];
 
@@ -33,12 +33,12 @@ void	child_process(t_cmd *cmd1, int *pipe, const char *infile, char **envp)
 	cmd_arr[0] = cmd1->cmd;
 	cmd_arr[1] = cmd1->flag;
 	cmd_arr[2] = NULL;
-	execve(cmd1->path, cmd_arr, envp);
+	execve(cmd1->path, cmd_arr, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
 }
 
-void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile, char **envp)
+void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile)
 {
 	char	*cmd_arr[3];
 
@@ -49,13 +49,13 @@ void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile, char **envp)
 	cmd_arr[0] = cmd2->cmd;
 	cmd_arr[1] = cmd2->flag;
 	cmd_arr[2] = NULL;
-	execve(cmd2->path, cmd_arr, envp);
+	execve(cmd2->path, cmd_arr, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
 }
 
 void	pipex(const char *infile, const char *outfile,
-			t_cmd *cmd1, t_cmd *cmd2, char **envp)
+			t_cmd *cmd1, t_cmd *cmd2)
 {
 	pid_t	pid;
 	int		pipe[2];
@@ -69,10 +69,10 @@ void	pipex(const char *infile, const char *outfile,
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
-		child_process(cmd1, pipe, infile, envp);
+		child_process(cmd1, pipe, infile);
 	else
 	{
-		parent_process(cmd2, pipe, outfile, envp);
+		parent_process(cmd2, pipe, outfile);
 		close(pipe[1]);
 	}
 	if (waitpid(pid, &status, 0) == -1)
@@ -93,23 +93,18 @@ int	main(int argc, char **argv, char **envp)
 		perror("Wrong number of arguments");
 		exit(EXIT_FAILURE);
 	}
-	cmd1 = malloc(sizeof(t_cmd));
-	cmd2 = malloc(sizeof(t_cmd));
-	if (!cmd1)
-		exit(-1);
-	if (!cmd2)
-	{
-		free_everything(cmd1, NULL, NULL);
-		exit(-1);
-	}
+	allocate_cmds(&cmd1, &cmd2);
 	paths = find_paths(envp);
 	if (!paths)
 	{
-		free_everything(cmd1, cmd2, NULL);
+		free(cmd1);
+		free(cmd2);
 		exit(-1);
 	}
 	fill_cmd_struct(argv, paths, cmd1, cmd2);
-	pipex(argv[1], argv[4], cmd1, cmd2, envp);
-	free_everything(cmd1, cmd2, paths);
+	pipex(argv[1], argv[4], cmd1, cmd2);
+	free(cmd1);
+	free(cmd2);
+	free_array(paths);
 	return (0);
 }
