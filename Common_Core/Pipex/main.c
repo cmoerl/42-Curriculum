@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/09 18:57:08 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/11 18:15:37 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,16 @@ void	make_pipe(int fd[2])
 
 void	child_process(t_cmd *cmd1, int *pipe, const char *infile)
 {
-	char	*cmd_arr[3];
+	char	*cmd_arr[4];
 
 	close(pipe[0]);
 	dup2(pipe[1], STDOUT_FILENO);
 	close(pipe[1]);
 	freopen(infile, "r", stdin);
 	cmd_arr[0] = cmd1->cmd;
-	cmd_arr[1] = cmd1->flag;
-	cmd_arr[2] = NULL;
+	cmd_arr[1] = cmd1->flag1;
+	cmd_arr[2] = cmd1->flag2;
+	cmd_arr[3] = NULL;
 	execve(cmd1->path, cmd_arr, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
@@ -40,15 +41,16 @@ void	child_process(t_cmd *cmd1, int *pipe, const char *infile)
 
 void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile)
 {
-	char	*cmd_arr[3];
+	char	*cmd_arr[4];
 
 	close(pipe[1]);
 	dup2(pipe[0], STDIN_FILENO);
 	close(pipe[0]);
 	freopen(outfile, "w", stdout);
 	cmd_arr[0] = cmd2->cmd;
-	cmd_arr[1] = cmd2->flag;
-	cmd_arr[2] = NULL;
+	cmd_arr[1] = cmd2->flag1;
+	cmd_arr[2] = cmd2->flag2;
+	cmd_arr[3] = NULL;
 	execve(cmd2->path, cmd_arr, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);

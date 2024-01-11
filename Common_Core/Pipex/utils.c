@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/09 19:24:38 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/11 18:16:55 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ void	parse_cmd2(char *cmd, t_cmd *cmd2)
 		return ;
 	cmd2->cmd = arr[0];
 	if (arr[1] != NULL)
-		cmd2->flag = arr[1];
+		cmd2->flag1 = arr[1];
 	else
-		cmd2->flag = NULL;
+		cmd2->flag1 = NULL;
+	if (arr[2] != NULL)
+		cmd2->flag2 = arr[2];
+	else
+		cmd2->flag2 = NULL;
 }
 
 void	parse_cmd1(char *cmd, t_cmd *cmd1)
@@ -48,9 +52,13 @@ void	parse_cmd1(char *cmd, t_cmd *cmd1)
 		return ;
 	cmd1->cmd = arr[0];
 	if (arr[1] != NULL)
-		cmd1->flag = arr[1];
+		cmd1->flag1 = arr[1];
 	else
-		cmd1->flag = NULL;
+		cmd1->flag1 = NULL;
+	if (arr[2] != NULL)
+		cmd1->flag2 = arr[2];
+	else
+		cmd1->flag2 = NULL;
 }
 
 void	fill_cmd_struct(char **argv, char **paths, t_cmd *cmd1, t_cmd *cmd2)
