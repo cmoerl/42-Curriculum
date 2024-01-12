@@ -6,12 +6,11 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/11 18:15:37 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/12 11:53:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <unistd.h>
 
 void	make_pipe(int fd[2])
 {
@@ -29,7 +28,11 @@ void	child_process(t_cmd *cmd1, int *pipe, const char *infile)
 	close(pipe[0]);
 	dup2(pipe[1], STDOUT_FILENO);
 	close(pipe[1]);
-	freopen(infile, "r", stdin);
+	if (freopen(infile, "r", stdin) == NULL)
+	{
+		perror("Could not open infile");
+		exit(EXIT_FAILURE);
+	}
 	cmd_arr[0] = cmd1->cmd;
 	cmd_arr[1] = cmd1->flag1;
 	cmd_arr[2] = cmd1->flag2;
@@ -46,7 +49,11 @@ void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile)
 	close(pipe[1]);
 	dup2(pipe[0], STDIN_FILENO);
 	close(pipe[0]);
-	freopen(outfile, "w", stdout);
+	if (freopen(outfile, "w", stdout) == NULL)
+	{
+		perror("Could not open outfile");
+		exit(EXIT_FAILURE);
+	}
 	cmd_arr[0] = cmd2->cmd;
 	cmd_arr[1] = cmd2->flag1;
 	cmd_arr[2] = cmd2->flag2;
@@ -70,11 +77,12 @@ void	pipex(const char *infile, const char *outfile,
 		perror("Could not fork");
 		exit(EXIT_FAILURE);
 	}
-	if (pid == 0)
+	if (pid == 0 && cmd1->exit_status == 0)
 		child_process(cmd1, pipe, infile);
 	else
 	{
-		parent_process(cmd2, pipe, outfile);
+		if (cmd2->exit_status == 0)
+			parent_process(cmd2, pipe, outfile);
 		close(pipe[1]);
 	}
 	if (waitpid(pid, &status, 0) == -1)
@@ -104,9 +112,15 @@ int	main(int argc, char **argv, char **envp)
 		exit(-1);
 	}
 	fill_cmd_struct(argv, paths, cmd1, cmd2);
+	if (cmd1->exit_status != 0 && cmd2->exit_status != 0)
+		exit (cmd1->exit_status);
 	pipex(argv[1], argv[4], cmd1, cmd2);
 	free(cmd1);
 	free(cmd2);
 	free_array(paths);
+	if (cmd1->exit_status != 0)
+		exit (cmd1->exit_status);
+	else if (cmd2->exit_status != 0)
+		exit (cmd2->exit_status);
 	return (0);
 }

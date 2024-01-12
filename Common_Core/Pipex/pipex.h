@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/11 18:15:02 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/12 11:10:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
-# define STDOUT_FILENO 1
 # include "Libft/libft.h"
 
 typedef struct command
@@ -26,6 +25,7 @@ typedef struct command
 	char	*flag1;
 	char	*flag2;
 	char	*path;
+	int		exit_status;
 }	t_cmd;
 
 char	**find_paths(char **envp);

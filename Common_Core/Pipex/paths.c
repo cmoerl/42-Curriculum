@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/09 19:22:26 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/12 11:36:35 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	select_path1(char **paths, t_cmd *cmd1)
 		free(path_file);
 		i++;
 	}
+	perror("Command not found");
+	cmd1->exit_status = 127;
 }
 
 void	select_path2(char **paths, t_cmd *cmd2)
@@ -80,4 +82,6 @@ void	select_path2(char **paths, t_cmd *cmd2)
 		free(path_file);
 		i++;
 	}
+	perror("Command not found");
+	cmd2->exit_status = 127;
 }
