@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/12 11:10:49 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:51:17 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 typedef struct command
 {
 	char	*cmd;
-	char	*flag1;
-	char	*flag2;
+	char	*flag;
 	char	*path;
 	int		exit_status;
 }	t_cmd;

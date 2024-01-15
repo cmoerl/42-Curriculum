@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/12 11:53:49 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:58:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ void	child_process(t_cmd *cmd1, int *pipe, const char *infile)
 		exit(EXIT_FAILURE);
 	}
 	cmd_arr[0] = cmd1->cmd;
-	cmd_arr[1] = cmd1->flag1;
-	cmd_arr[2] = cmd1->flag2;
-	cmd_arr[3] = NULL;
+	cmd_arr[1] = cmd1->flag;
+	cmd_arr[2] = NULL;
 	execve(cmd1->path, cmd_arr, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
@@ -55,9 +54,8 @@ void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile)
 		exit(EXIT_FAILURE);
 	}
 	cmd_arr[0] = cmd2->cmd;
-	cmd_arr[1] = cmd2->flag1;
-	cmd_arr[2] = cmd2->flag2;
-	cmd_arr[3] = NULL;
+	cmd_arr[1] = cmd2->flag;
+	cmd_arr[2] = NULL;
 	execve(cmd2->path, cmd_arr, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
