@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/12 16:25:43 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/15 18:41:10 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,58 +27,64 @@ void	free_array(char **arr)
 
 void	parse_cmd2(char *cmd, t_cmd *cmd2)
 {
-	char	**arr;
-	int		i;
-	char	*tmp;
+	char	*pos;
+	char	*end;
 
-	arr = ft_split(cmd, ' ');
-	if (!arr)
-		return ;
-	cmd2->cmd = arr[0];
-	cmd2->flag = NULL;
-	i = 1;
-	while (arr[i] != NULL)
+	pos = cmd;
+	while (*pos && ft_iswhitespace(*pos))
+		pos++;
+	end = ft_strchr(pos, ' ');
+	if (end != NULL)
 	{
-		if (cmd2->flag == NULL)
-			cmd2->flag = ft_strdup(arr[i]);
-		else
-		{
-			tmp = ft_strjoin(cmd2->flag, " ");
-			free(cmd2->flag);
-			cmd2->flag = ft_strjoin(tmp, arr[i]);
-			free(tmp);
-		}
-		i++;
+		cmd2->cmd = malloc(end - pos + 1);
+		if (!cmd2->cmd)
+			return ;
+		ft_strncpy(cmd2->cmd, pos, end - pos + 1);
+		cmd2->cmd[end-pos] = '\0';
+		pos = end + 1;
 	}
-	free_array(arr);
+	else 
+	{
+		cmd2->cmd = ft_strdup(pos);
+		if (!cmd2->cmd)
+			return ;
+		pos = end;
+	}
+	cmd2->flag = ft_strdup(pos);
+	if (!cmd2->flag)
+		return ;
+	cmd2->flag = ft_strtrim(cmd2->flag, "'");
 }
 
 void	parse_cmd1(char *cmd, t_cmd *cmd1)
 {
-	char	**arr;
-	int		i;
-	char	*tmp;
+	char	*pos;
+	char	*end;
 
-	arr = ft_split(cmd, ' ');
-	if (!arr)
-		return ;
-	cmd1->cmd = arr[0];
-	cmd1->flag = NULL;
-	i = 1;
-	while (arr[i] != NULL)
+	pos = cmd;
+	while (*pos && ft_iswhitespace(*pos))
+		pos++;
+	end = ft_strchr(pos, ' ');
+	if (end != NULL)
 	{
-		if (cmd1->flag == NULL)
-			cmd1->flag = ft_strdup(arr[i]);
-		else
-		{
-			tmp = ft_strjoin(cmd1->flag, " ");
-			free(cmd1->flag);
-			cmd1->flag = ft_strjoin(tmp, arr[i]);
-			free(tmp);
-		}
-		i++;
+		cmd1->cmd = malloc(end - pos + 1);
+		if (!cmd1->cmd)
+			return ;
+		ft_strncpy(cmd1->cmd, pos, end - pos + 1);
+		cmd1->cmd[end-pos] = '\0';
+		pos = end + 1;
 	}
-	free_array(arr);
+	else 
+	{
+		cmd1->cmd = ft_strdup(pos);
+		if (!cmd1->cmd)
+			return ;
+		pos = end;
+	}
+	cmd1->flag = ft_strdup(pos);
+	if (!cmd1->flag)
+		return ;
+	cmd1->flag = ft_strtrim(cmd1->flag, "'");
 }
 
 void	fill_cmd_struct(char **argv, char **paths, t_cmd *cmd1, t_cmd *cmd2)

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 17:17:42 by csturm            #+#    #+#             */
-/*   Updated: 2023/12/14 18:19:41 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/15 18:13:16 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		ft_print_unsigned_int(unsigned int n);
 int		ft_print_ptr(void *p);
 int		ft_print_str(char *str);
 int		ft_printf(const char *format, ...);
+int		ft_iswhitespace(int c);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -56,6 +57,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_utoa(unsigned int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+char	*ft_strncpy(char *dst, const char *src, size_t size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
