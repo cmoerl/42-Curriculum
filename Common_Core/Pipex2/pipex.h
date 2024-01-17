@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/17 15:51:39 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/17 18:14:48 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include "Libft/libft.h"
 
-typedef struct command
-{
-	char	*cmd;
-	char	*flag;
-	char	*path;
-	int		exit_status;
-}	t_cmd;
-
 char	**find_paths(char **envp);
-void	parse_cmd1(char *cmd, t_cmd *cmd1);
-void	parse_cmd2(char *cmd, t_cmd *cmd2);
-void	select_path1(char **paths, t_cmd *cmd1);
-void	select_path2(char **paths, t_cmd *cmd2);
-void	child_process(t_cmd *cmd1, int *read_end, const char *infile);
-void	parent_process(t_cmd *cmd2, int *write_end, const char *outfile);
-void	pipex(const char *infile, const char *outfile,
-			t_cmd *cmd1, t_cmd *cmd2);
-void	make_pipe(int fd[2]);
+char	*find_cmd_path(char *cmd, char **envp);
+void	child_process(char *input, char **cmd, char **envp, int *pipe);
+void	parent_process(char *output, char **cmd, char **envp, int *pipe);
 void	free_array(char **arr);
-void	fill_cmd_struct(char **argv, char **paths, t_cmd *cmd1, t_cmd *cmd2);
-void	allocate_cmds(t_cmd **cmd1, t_cmd **cmd2);
-int 	parse1(char *cmd, t_cmd *cmd1);
-int 	parse_quotes_cmd1(char *cmd, t_cmd *cmd1);
-int 	parse2(char *cmd, t_cmd *cmd2);
-int 	parse_quotes_cmd2(char *cmd, t_cmd *cmd2);
+void	free_all(char **arr, char *str);
 
 #endif

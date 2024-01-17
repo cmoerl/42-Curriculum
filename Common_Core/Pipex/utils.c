@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/17 14:58:41 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:38:29 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,22 @@ void	parse_cmd1(char *cmd, t_cmd *cmd1)
 
 void	fill_cmd_struct(char **argv, char **paths, t_cmd *cmd1, t_cmd *cmd2)
 {
+	int	parse_quotes1;
+	int	parse_quotes2;
+	
 	cmd1->exit_status = 0;
 	cmd2->exit_status = 0;
-	parse_cmd1(argv[2], cmd1);
-	parse_cmd2(argv[3], cmd2);
+	parse_quotes1 = parse_quotes_cmd1(argv[2], cmd1);
+	if (parse_quotes1 == 0)
+		parse_cmd1(argv[2], cmd1);
+	else if (parse_quotes1 == -1)
+		exit (-1);
+	parse_quotes2 = parse_quotes_cmd2(argv[3], cmd2);
+	if (parse_quotes2 == 0)
+		parse_cmd2(argv[3], cmd2);
+	else if (parse_quotes2 == -1)
+		exit (-1);
+	ft_printf("cmd: %s, flag: %s\n", cmd2->cmd, cmd2->flag);
 	select_path1(paths, cmd1);
 	select_path2(paths, cmd2);
 }
