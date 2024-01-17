@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/15 18:41:10 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/17 14:58:41 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	parse_cmd2(char *cmd, t_cmd *cmd2)
 		cmd2->cmd = ft_strdup(pos);
 		if (!cmd2->cmd)
 			return ;
-		pos = end;
+		cmd2->flag = NULL;
+		return ;
 	}
 	cmd2->flag = ft_strdup(pos);
 	if (!cmd2->flag)
@@ -79,7 +80,8 @@ void	parse_cmd1(char *cmd, t_cmd *cmd1)
 		cmd1->cmd = ft_strdup(pos);
 		if (!cmd1->cmd)
 			return ;
-		pos = end;
+		cmd1->flag = NULL;
+		return ;
 	}
 	cmd1->flag = ft_strdup(pos);
 	if (!cmd1->flag)
@@ -92,11 +94,7 @@ void	fill_cmd_struct(char **argv, char **paths, t_cmd *cmd1, t_cmd *cmd2)
 	cmd1->exit_status = 0;
 	cmd2->exit_status = 0;
 	parse_cmd1(argv[2], cmd1);
-	if (cmd1->flag[0] == '\'' || cmd1->flag[0] == '\"')
-		cmd1->flag = ft_strtrim(cmd1->flag, "\'\"");
 	parse_cmd2(argv[3], cmd2);
-	if (cmd2->flag[0] == '\'' || cmd2->flag[0] == '\"')
-		cmd2->flag = ft_strtrim(cmd2->flag, "\'\"");
 	select_path1(paths, cmd1);
 	select_path2(paths, cmd2);
 }
