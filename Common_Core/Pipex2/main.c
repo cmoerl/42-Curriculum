@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/17 18:16:10 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/18 23:02:25 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	child_process(char *input, char **cmd, char **envp, int *pipe)
 	if (!cmd_path)
 	{
 		free_all(cmd, cmd_path);
-		error("Error", -1);
+		error("Command not found", 127);
 	}
 	if (execve(cmd_path, cmd, envp) == -1)
 		error("execve", -1);
@@ -75,7 +75,7 @@ void	parent_process(char *output, char **cmd, char **envp, int *pipe)
 	if (!cmd_path)
 	{
 		free_all(cmd, cmd_path);
-		error("Error", -1);
+		error("Command not found", 127);
 	}
 	if (execve(cmd_path, cmd, envp) == -1)
 		error("execve", -1);
@@ -88,9 +88,9 @@ int	main(int argc, char **argv, char **envp)
 	int		fd[2];
 
 	if (argc != 5)
-		exit(-1);
+		exit (EXIT_FAILURE);
 	if (!envp || envp[0][0] == '\0')
-		exit (-1);
+		exit (EXIT_FAILURE);
 	if (pipe(fd) == -1)
 		error("Could not create pipe", -1);
 	pid = fork ();

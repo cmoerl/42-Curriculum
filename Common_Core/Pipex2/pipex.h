@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/17 18:14:48 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/18 22:19:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	child_process(char *input, char **cmd, char **envp, int *pipe);
 void	parent_process(char *output, char **cmd, char **envp, int *pipe);
 void	free_array(char **arr);
 void	free_all(char **arr, char *str);
+void    error(char *str, int exit_code);
 
 #endif

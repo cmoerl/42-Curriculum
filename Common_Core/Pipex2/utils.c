@@ -6,11 +6,20 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/17 18:05:35 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/18 22:43:41 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	error(char *str, int exit_code)
+{
+	perror(str);
+	if (exit_code == -1)
+		exit (EXIT_FAILURE);
+	else
+	exit (exit_code);
+}
 
 void	free_array(char **arr)
 {
