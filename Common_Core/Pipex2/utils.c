@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/18 22:43:41 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/19 15:52:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	error(char *str, int exit_code)
 {
+	
 	perror(str);
 	if (exit_code == -1)
 		exit (EXIT_FAILURE);
@@ -21,17 +22,20 @@ void	error(char *str, int exit_code)
 	exit (exit_code);
 }
 
-void	free_array(char **arr)
+char	*free_array(char **arr)
 {
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return (NULL);
 	while (arr[i] != NULL)
 	{
 		free(arr[i]);
 		i++;
 	}
 	free(arr);
+	return (NULL);
 }
 
 void	free_all(char **arr, char *str)
@@ -43,6 +47,7 @@ void	free_all(char **arr, char *str)
 char	**find_paths(char **envp)
 {
 	char	**paths;
+	char	*new_path;
 	int		i;
 	int		j;
 
@@ -55,9 +60,17 @@ char	**find_paths(char **envp)
 	j = 0;
 	while (paths[j] != NULL)
 	{
-		paths[j] = ft_strjoin(paths[j], "/");
+		new_path = ft_strjoin(paths[j], "/");
+		if (!new_path)
+			return (NULL);
+		free(paths[j]);
+		paths[j] = new_path;
 		j++;
 	}
-	paths[0] = ft_strtrim(paths[0], "PATH=");
+	new_path = ft_strtrim(paths[0], "PATH=");
+	if (!new_path)
+		return (NULL);
+	free(paths[0]);
+	paths[0] = new_path;
 	return (paths);
 }
