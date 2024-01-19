@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csturm <csturm@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:52:24 by csturm            #+#    #+#             */
-/*   Updated: 2023/09/12 18:16:31 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:58:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	start = find_start(s1, set);
 	end = find_end(s1, set);
 	newstr = newstring(end, start, s1);
+	if (!newstr)
+		return (NULL);
 	return (newstr);
 }
 

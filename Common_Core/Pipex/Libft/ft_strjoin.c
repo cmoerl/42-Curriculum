@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:27:35 by csturm            #+#    #+#             */
-/*   Updated: 2023/10/03 14:24:04 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/19 19:20:50 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	newstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
-		return (0);
+		return (NULL);
 	ft_make_newstr(newstr, s1, s2);
 	return (newstr);
 }

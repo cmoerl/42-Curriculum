@@ -6,119 +6,139 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/17 14:39:40 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/19 19:39:44 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-void	make_pipe(int fd[2])
+char	*find_cmd_path(char *cmd, char **envp)
 {
-	if (pipe(fd) == -1)
+	char	*cmd_path;
+	char	**paths;
+	int		i;
+
+	paths = find_paths(envp);
+	if (!paths)
 	{
-		perror("Could not create pipe");
-		exit(EXIT_FAILURE);
+		free_array(paths);
+		return (NULL);
 	}
+	i = 0;
+	while (paths[i] != NULL)
+	{
+		cmd_path = ft_strjoin(paths[i], cmd);
+		if (!cmd_path)
+			return (free_array(paths));
+		if (access(cmd_path, F_OK) != -1)
+		{
+			if (access(cmd_path, X_OK) != -1)
+			{
+				free_array(paths);
+				return (cmd_path);
+			}
+		}
+		free(cmd_path);
+		i++;
+	}
+	return (free_array(paths));
 }
 
-void	child_process(t_cmd *cmd1, int *pipe, const char *infile)
+void	child_process(char *input, char **cmd, char **envp, int *pipe)
 {
-	char	*cmd_arr[4];
+	char	*cmd_path;
+	int		infile;
 
-	close(pipe[0]);
+	infile = open(input, O_RDONLY, 0777);
+	if (infile == -1)
+	{
+		free_array(cmd);
+		error("Could not access iput file", -1);
+	}
 	dup2(pipe[1], STDOUT_FILENO);
-	close(pipe[1]);
-	if (freopen(infile, "r", stdin) == NULL)
-	{
-		perror("Could not open infile");
-		exit(EXIT_FAILURE);
-	}
-	cmd_arr[0] = cmd1->cmd;
-	cmd_arr[1] = cmd1->flag;
-	cmd_arr[2] = NULL;
-	execve(cmd1->path, cmd_arr, NULL);
-	perror("execve");
-	exit(EXIT_FAILURE);
-}
-
-void	parent_process(t_cmd *cmd2, int *pipe, const char *outfile)
-{
-	char	*cmd_arr[4];
-
-	close(pipe[1]);
-	dup2(pipe[0], STDIN_FILENO);
+	dup2(infile, STDIN_FILENO);
 	close(pipe[0]);
-	if (freopen(outfile, "w", stdout) == NULL)
+	close(infile);
+	cmd_path = find_cmd_path(cmd[0], envp);
+	if (!cmd_path)
 	{
-		perror("Could not open outfile");
-		exit(EXIT_FAILURE);
+		free_all(cmd, cmd_path);
+		error("Command not found", 127);
 	}
-	cmd_arr[0] = cmd2->cmd;
-	cmd_arr[1] = cmd2->flag;
-	cmd_arr[2] = NULL;
-	execve(cmd2->path, cmd_arr, NULL);
-	perror("execve");
-	exit(EXIT_FAILURE);
+	execve(cmd_path, cmd, envp);
+	free_all(cmd, cmd_path);
+	error("execve", -1);
 }
 
-void	pipex(const char *infile, const char *outfile,
-			t_cmd *cmd1, t_cmd *cmd2)
+void	parent_process(char *output, char **cmd, char **envp, int *pipe)
 {
-	pid_t	pid;
-	int		pipe[2];
-	int		status;
+	char	*cmd_path;
+	int		outfile;
 
-	make_pipe(pipe);
-	pid = fork ();
-	if (pid == -1)
+	outfile = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (outfile == -1)
 	{
-		perror("Could not fork");
-		exit(EXIT_FAILURE);
+		free_array(cmd);
+		error("Could not access output file", -1);
 	}
-	if (pid == 0 && cmd1->exit_status == 0)
-		child_process(cmd1, pipe, infile);
-	else
+	dup2(pipe[0], STDIN_FILENO);
+	dup2(outfile, STDOUT_FILENO);
+	close(pipe[1]);
+	close(outfile);
+	cmd_path = find_cmd_path(cmd[0], envp);
+	if (!cmd_path)
 	{
-		if (cmd2->exit_status == 0)
-			parent_process(cmd2, pipe, outfile);
-		close(pipe[1]);
+		free_all(cmd, cmd_path);
+		error("Command not found", 127);
 	}
-	if (waitpid(pid, &status, 0) == -1)
-	{
-		perror("waitpid failed");
-		exit(EXIT_FAILURE);
-	}
+	execve(cmd_path, cmd, envp);
+	free_all(cmd, cmd_path);
+	error("execve", -1);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmd1;
-	t_cmd	*cmd2;
-	char	**paths;
+	pid_t	pid;
+	char	**cmd1;
+	// char	**cmd2;
+	int		fd[2];
 
 	if (argc != 5)
+		exit (EXIT_FAILURE);
+	if (!envp || envp[0][0] == '\0')
+		exit (EXIT_FAILURE);
+	if (pipe(fd) == -1)
+		error("Could not create pipe", -1);
+	pid = fork ();
+	if (pid == -1)
+		error("Could not fork", -1);
+
+	cmd1 = ft_split(argv[2], ' ');
+	if (!cmd1)
 	{
-		perror("Wrong number of arguments");
-		exit(EXIT_FAILURE);
+		free_array(cmd1);
+		error("Error", -1);
 	}
-	allocate_cmds(&cmd1, &cmd2);
-	paths = find_paths(envp);
-	if (!paths)
-	{
-		free(cmd1);
-		free(cmd2);
-		exit(-1);
-	}
-	fill_cmd_struct(argv, paths, cmd1, cmd2);
-	if (cmd1->exit_status != 0 && cmd2->exit_status != 0)
-		exit (cmd1->exit_status);
-	pipex(argv[1], argv[4], cmd1, cmd2);
-	free(cmd1);
-	free(cmd2);
-	free_array(paths);
-	if (cmd1->exit_status != 0)
-		exit (cmd1->exit_status);
-	else if (cmd2->exit_status != 0)
-		exit (cmd2->exit_status);
+	// int CHILD_STATUS = 0;
+	// if (pid == 0)
+	// 	child_process(argv[1], cmd1, envp, fd);
+	// else
+	// 	waitpid(pid, &CHILD_STATUS, 0);
+	
+	// if (!WIFEXITED(CHILD_STATUS))
+	// {
+	// 	printf("Child exited with code %d\n", WEXITSTATUS(CHILD_STATUS));
+	// 	error("ERRRRRR", 0);
+	// }
+	
+	// cmd2 = ft_split(argv[3], ' ');
+	// if (!cmd2)
+	// {
+	// 	free_array(cmd2);
+	// 	error("Error", -1);
+	// }
+	// parent_process(argv[4], cmd2, envp, fd);
 	return (0);
 }

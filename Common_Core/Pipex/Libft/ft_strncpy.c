@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:06:51 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/15 18:12:58 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/19 16:58:14 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ char	*ft_strncpy(char *dst, const char *src, size_t size)
 			dst[i] = src[i];
 			i++;
 		}
-        while (i < size)
+		while (i < size)
 		{
-            dst[i] = '\0';
-            i++;
-        }
+			dst[i] = '\0';
+			i++;
+		}
 	}
 	return (dst);
 }
