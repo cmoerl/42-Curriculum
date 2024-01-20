@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:18:07 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/19 19:58:18 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/20 14:23:12 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,11 @@ static int	ft_findlen(char const *s, char c, int start)
 	return (len);
 }
 
-static char	**free_all(char **array, int i)
+static void	free_all(char **array, int i)
 {
-	while (i)
-	{
-		printf("freeing array[%d]=%s\n", i, array[i]);	
+	while (i--)
 		free(array[i]);
-		i--;
-	}
 	free(array);
-	return (0);
 }
 
 char	**ft_split(char const *s, char c)
@@ -73,28 +68,23 @@ char	**ft_split(char const *s, char c)
 	int		len;
 	int		i;
 
-	i = 0;
 	if (!s)
 		return (NULL);
-	start = 0;
 	array = malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
 	if (array == NULL)
 		return (NULL);
-	free_all(array, ft_wordcount(s, c));
+	i = 0;
+	start = 0;
 	while (i < ft_wordcount(s, c))
 	{
 		start = ft_findstart(s, c, start);
-		printf("start=%lu\n", start);
-		// len = 0;
 		len = ft_findlen(s, c, start);
-		// printf("len=%d\n", len);
-	// 	array[i] = ft_substr(s, start, len);
-	// 	if (!array[i])
-	// 		return (free_all(array, i));
+		array[i] = ft_substr(s, start, len);
+		if (!array[i])
+			return (free_all(array, i), NULL);
 		start = start + len;
 		i++;
 	}
-	return (NULL);
-	// array[i] = NULL;
-	// return (array);
+	array[i] = NULL;
+	return (array);
 }

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/19 18:34:33 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/20 13:44:08 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ void	error(char *str, int exit_code)
 		exit (exit_code);
 }
 
-char	*free_array(char **arr)
+void	free_array(char **arr)
 {
 	int	i;
 
 	i = 0;
 	if (!arr)
-		return (NULL);
+		return ;
 	while (arr[i] != NULL)
 	{
 		free(arr[i]);
 		i++;
 	}
 	free(arr);
-	return (NULL);
+	return ;
 }
 
 void	free_all(char **arr, char *str)
