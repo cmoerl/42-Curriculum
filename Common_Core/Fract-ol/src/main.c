@@ -6,29 +6,28 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:39 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/21 18:38:47 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/22 17:07:43 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fract-ol.h"
+#include <stdlib.h>
 
 int main(int argc, char **argv)
 {
     t_fractol *fractol;
-
-    if (argc != 2)
+    
+    if (argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
+        fractol = init_mandelbrot();
+    else if (argc == 4 && !ft_strncmp(argv[1], "julia", 5))
+        fractol = init_julia(argv[2], argv[3]);
+    else
     {
-        ft_putstr("Usage: ./fractol [fractal]\n");
-        ft_putstr("Available fractals: mandelbrot, julia, burningship\n");
-        return (0);
+        ft_printf("Usage: ./fractol [fractal]\n");
+        ft_printf("Available fractals: mandelbrot, julia, burningship\n");
+        exit(EXIT_FAILURE);
     }
-    fractol = init_fractol(argv[1]);
-    if (!fractol)
-    {
-        ft_putstr("Usage: ./fractol [fractal]\n");
-        ft_putstr("Available fractals: mandelbrot, julia, burningship\n");
-        return (0);
-    }
+    render(fractol);
     mlx_hook(fractol->win, 2, 0, key_press, fractol);
     mlx_hook(fractol->win, 4, 0, mouse_press, fractol);
     mlx_hook(fractol->win, 6, 0, mouse_move, fractol);

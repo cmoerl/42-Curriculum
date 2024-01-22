@@ -6,103 +6,63 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/21 18:41:24 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/22 18:35:07 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACT_OL_H
 # define FRACT_OL_H
 
-typedef struct s_fract-ol
+# include "../Libft/libft.h"
+# include "../minilibx-linux/mlx.h"
+# include <math.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+# define WIDTH 800
+# define HEIGHT 800
+
+typedef struct	s_complex
 {
-    int     x;
-    int     y;
-    int     max_iter;
-    int     color;
-    int     zoom;
-    int     move_x;
-    int     move_y;
-    int     julia_mouse;
-    double  c_re;
-    double  c_im;
-    double  new_re;
-    double  new_im;
-    double  old_re;
-    double  old_im;
-    double  zoom_x;
-    double  zoom_y;
-    double  pr;
-    double  pi;
-    double  new_re;
-    double  new_im;
-    double  old_re;
-    double  old_im;
-    double  zoom;
-    double  move_x;
-    double  move_y;
-    double  max_iter;
-    double  color;
-    double  c_re;
-    double  c_im;
-    double  z_re;
-    double  z_im;
-    double  tmp;
-    double  x;
-    double  y;
-    double  x1;
-    double  x2;
-    double  y1;
-    double  y2;
-    double  zoom;
-    double  image_x;
-    double  image_y;
-    double  c_re;
-    double  c_im;
-    double  z_re;
-    double  z_im;
-    double  tmp;
-    double  x;
-    double  y;
-    double  x1;
-    double  x2;
-    double  y1;
-    double  y2;
-    double  zoom;
-    double  image_x;
-    double  image_y;
-    double  c_re;
-    double  c_im;
-    double  z_re;
-    double  z_im;
-    double  tmp;
-    double  x;
-    double  y;
-    double  x1;
-    double  x2;
-    double  y1;
-    double  y2;
-    double  zoom;
-    double  image_x;
-    double  image_y;
-    double  c_re;
-    double  c_im;
-    double  z_re;
-    double  z_im;
-    double  tmp;
-    double  x;
-    double  y;
-    double  x1;
-    double  x2;
-    double  y1;
-    double  y2;
-    double  zoom;
-    double  image_x;
-    double  image_y;
-    double  c_re;
-    double  c_im;
-    double  z_re;
-    double  z_im;
-}   t_fract-ol;
+    double		real;
+    double		imgn;
+}				t_complex;
+
+typedef struct    s_img
+{
+    void		*img_ptr;
+    char        *pxl;
+    int			bpp;
+    int			size_l;
+    int			endian;
+}				t_img;
+
+typedef struct  s_hooks
+{
+    double      esc;
+    int         it_def;
+    double      shift_x;
+    double      shift_y;
+    double      zoom;
+    double      julia_x;
+    double      julia_y;
+}               t_hooks;
+
+typedef struct  s_fractol
+{
+    char        *name;
+    void        *mlx_ptr;
+    void        *win_ptr;
+    t_img       *img;
+    t_hooks     *hooks;
+}            t_fractol;
+
+
+t_fractol       *init_mandelbrot(void);
+t_fractol       *init_julia(char *real, char *imgn);
+t_img           *init_img(t_fractol *fractol);
+t_hooks         *init_hooks(char *real, char *imgn);
+void            malloc_exit_fractol(t_fractol *fractol);
 
 
 #endif
