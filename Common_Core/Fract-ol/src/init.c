@@ -1,11 +1,20 @@
 #include "../incl/fract-ol.h"
 #include <stdlib.h>
 
-t_img *init_img(t_fractol *fractol)
+t_img *init_img(void *mlx_ptr, int width, int height)
 {
-    // Add your implementation here
-    // This function is responsible for initializing the image
-    return NULL; // Replace with the actual implementation
+    t_img *img;
+
+    img = malloc(sizeof(t_img));
+    if (!img)
+        return (NULL);
+    img->img_ptr = mlx_new_image(mlx_ptr, width, height);
+    if (!img->img_ptr)
+        return (NULL);
+    img->pxl = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->size_l, &img->endian);
+    if (!img->pxl)
+        return (NULL);
+    return (img);
 }
 
 t_hooks *init_hooks(char *real, char *imaginary)
@@ -28,12 +37,19 @@ t_fractol *init_mandelbrot(void)
     fractol->mlx_ptr = mlx_init();
     if (!fractol->mlx_ptr)
         malloc_exit_fractol(fractol);
-    fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, "Fract-ol");
+    fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, fractol->name);
     if (!fractol->win_ptr)
+    {
+        mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
-    fractol->img = init_img(fractol);
+    }
+    fractol->img = init_img(fractol->mlx_ptr, WIDTH, HEIGHT);
     if (!fractol->img)
+    {
+        mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
+        mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
+    }
     fractol->hooks = init_hooks(NULL, NULL);
     if (!fractol->hooks)
         malloc_exit_fractol(fractol);
@@ -53,12 +69,19 @@ t_fractol *init_julia(char *real, char *imaginary)
     fractol->mlx_ptr = mlx_init();
     if (!fractol->mlx_ptr)
         malloc_exit_fractol(fractol);
-    fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, "Fract-ol");
+    fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, fractol->name);
     if (!fractol->win_ptr)
+    {
+        mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
-    fractol->img = init_img(fractol);
+    }
+    fractol->img = init_img(fractol->mlx_ptr, WIDTH, HEIGHT);
     if (!fractol->img)
+    {
+        mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
+        mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
+    }
     fractol->hooks = init_hooks(real, imaginary);
     if (!fractol->hooks)
         malloc_exit_fractol(fractol);

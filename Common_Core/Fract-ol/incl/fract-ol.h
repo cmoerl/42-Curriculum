@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/22 18:35:07 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/23 16:31:10 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1000
+# define HEIGHT 1000
 
 typedef struct	s_complex
 {
@@ -60,7 +60,7 @@ typedef struct  s_fractol
 
 t_fractol       *init_mandelbrot(void);
 t_fractol       *init_julia(char *real, char *imgn);
-t_img           *init_img(t_fractol *fractol);
+t_img           *init_img(void *mlx_ptr, int width, int height);
 t_hooks         *init_hooks(char *real, char *imgn);
 void            malloc_exit_fractol(t_fractol *fractol);
 
