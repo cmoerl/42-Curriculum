@@ -6,12 +6,12 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 17:33:15 by csturm            #+#    #+#              #
-#    Updated: 2024/01/19 19:44:18 by csturm           ###   ########.fr        #
+#    Updated: 2024/01/24 14:22:00 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC:= cc
-CFLAGS:=
+CFLAGS:= -Wall -Wextra -Werror
 
 SRC:= main.c utils.c
 LIBFT:= ${wildcard ./Libft/*.c}

@@ -6,12 +6,11 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:18:07 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/20 14:23:12 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/24 15:22:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static int	ft_wordcount(char const *s, char c)
 {
@@ -88,3 +87,21 @@ char	**ft_split(char const *s, char c)
 	array[i] = NULL;
 	return (array);
 }
+
+/* int	main(void)
+{
+	char const	*s;
+	char		**array;
+	int			i;
+
+	s = "This is a string.";
+	array = ft_split(s, ' ');
+	i = 0;
+	while (array[i] != NULL)
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
+	free_all(array, i);
+	return (0);
+} */

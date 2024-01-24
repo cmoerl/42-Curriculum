@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/20 16:09:18 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/24 16:57:33 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*find_cmd_path(char *cmd, char **envp)
 	char	**paths;
 	int		i;
 
+	if (!check_cmd_path(cmd))
+		return (cmd);
 	paths = find_paths(envp);
 	if (!paths)
 	{
@@ -78,9 +80,11 @@ void	child_process(char *input, char **cmd, char **envp, int *pipe)
 		free_all(cmd, cmd_path);
 		error("Command not found", 127);
 	}
-	execve(cmd_path, cmd, envp);
-	free_all(cmd, cmd_path);
-	error("execve", -1);
+	if (execve(cmd_path, cmd, envp) == -1)
+	{
+		free_all(cmd, cmd_path);
+		error("execve", -1);
+	}
 }
 
 void	parent_process(char *output, char **cmd, char **envp, int *pipe)
@@ -89,7 +93,7 @@ void	parent_process(char *output, char **cmd, char **envp, int *pipe)
 	int		outfile;
 	int		fd_close;
 
-	outfile = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	outfile = open(output, O_WRONLY | O_TRUNC, 0777);
 	if (outfile == -1)
 	{
 		free_array(cmd);
@@ -115,9 +119,11 @@ void	parent_process(char *output, char **cmd, char **envp, int *pipe)
 		free_all(cmd, cmd_path);
 		error("Command not found", 127);
 	}
-	execve(cmd_path, cmd, envp);
-	free_all(cmd, cmd_path);
-	error("execve", -1);
+	if (execve(cmd_path, cmd, envp) == -1)
+	{
+		free_all(cmd, cmd_path);
+		error("execve", -1);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -147,13 +153,16 @@ int	main(int argc, char **argv, char **envp)
 		waitpid(pid, &CHILD_STATUS, 0);
 	if (!WIFEXITED(CHILD_STATUS))
 		error("Child Process Error", CHILD_STATUS);
+	if (cmd1 != NULL)
+		free(cmd1);	
 	cmd2 = ft_split(argv[3], ' ');
 	if (!cmd2)
 	{
 		free_array(cmd2);
 		error("Error", -1);
 	}
-	free(cmd1);
 	parent_process(argv[4], cmd2, envp, fd);
+	if (cmd2 != NULL)
+		free(cmd2);
 	return (0);
 }

@@ -6,11 +6,21 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/20 13:44:08 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/24 16:28:23 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	check_cmd_path(char *cmd)
+{
+	if (access(cmd, F_OK) != -1)
+	{
+		if (access(cmd, X_OK) != -1)
+			return (0);
+	}
+	return (1);
+}
 
 void	error(char *str, int exit_code)
 {
