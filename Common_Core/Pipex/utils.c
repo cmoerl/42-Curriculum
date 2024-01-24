@@ -6,13 +6,13 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/24 16:28:23 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/24 18:24:48 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	check_cmd_path(char *cmd)
+int	check_cmd(char *cmd)
 {
 	if (access(cmd, F_OK) != -1)
 	{
@@ -22,35 +22,15 @@ int	check_cmd_path(char *cmd)
 	return (1);
 }
 
-void	error(char *str, int exit_code)
+char	*append_slash(char *path)
 {
-	perror(str);
-	if (exit_code == -1)
-		exit (EXIT_FAILURE);
-	else
-		exit (exit_code);
-}
+	char	*new_path;
 
-void	free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i] != NULL)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return ;
-}
-
-void	free_all(char **arr, char *str)
-{
-	free_array(arr);
-	free(str);
+	new_path = ft_strjoin(path, "/");
+	if (!new_path)
+		return (NULL);
+	free(path);
+	return (new_path);
 }
 
 char	**find_paths(char **envp)
@@ -69,11 +49,9 @@ char	**find_paths(char **envp)
 	j = 0;
 	while (paths[j] != NULL)
 	{
-		new_path = ft_strjoin(paths[j], "/");
-		if (!new_path)
+		paths[j] = append_slash(paths[j]);
+		if (!paths[j])
 			return (NULL);
-		free(paths[j]);
-		paths[j] = new_path;
 		j++;
 	}
 	new_path = ft_strtrim(paths[0], "PATH=");
