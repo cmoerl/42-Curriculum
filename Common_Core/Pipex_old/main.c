@@ -6,11 +6,30 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/19 20:11:29 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/25 17:02:46 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	*check_cmd_path(char **paths, char *cmd, int i)
+{
+	char	*cmd_path;
+
+	cmd_path = ft_strjoin(paths[i], cmd);
+	if (!cmd_path)
+		return (NULL);
+	if (access(cmd_path, F_OK) != -1)
+	{
+		if (access(cmd_path, X_OK) != -1)
+		{
+			free_array(paths);
+			return (cmd_path);
+		}
+	}
+	free(cmd_path);
+	return (NULL);
+}
 
 char	*find_cmd_path(char *cmd, char **envp)
 {
@@ -18,6 +37,8 @@ char	*find_cmd_path(char *cmd, char **envp)
 	char	**paths;
 	int		i;
 
+	if (!check_cmd(cmd))
+		return (cmd);
 	paths = find_paths(envp);
 	if (!paths)
 	{
@@ -27,107 +48,68 @@ char	*find_cmd_path(char *cmd, char **envp)
 	i = 0;
 	while (paths[i] != NULL)
 	{
-		cmd_path = ft_strjoin(paths[i], cmd);
-		if (!cmd_path)
-			return (free_array(paths));
-		if (access(cmd_path, F_OK) != -1)
-		{
-			if (access(cmd_path, X_OK) != -1)
-			{
-				free_array(paths);
-				return (cmd_path);
-			}
-		}
-		free(cmd_path);
+		cmd_path = check_cmd_path(paths, cmd, i);
+		if (cmd_path)
+			return (cmd_path);
 		i++;
 	}
-	return (free_array(paths));
+	free_array(paths);
+	return (NULL);
 }
 
-void	child_process(char *input, char **cmd, char **envp, int *pipe)
+void	handle_child(char *infile, char *cmd, char **envp, int *fd)
 {
-	char	*cmd_path;
-	int		infile;
+	pid_t	pid;
+	int		child_status;
+	char	**cmd_arr;
 
-	infile = open(input, O_RDONLY, 0777);
-	if (infile == -1)
+	child_status = 0;
+	pid = fork();
+	if (pid == -1)
+		error("Could not fork", -1);
+	cmd_arr = ft_split(cmd, ' ');
+	if (!cmd_arr)
 	{
-		free_array(cmd);
-		error("Could not access iput file", -1);
+		free_array(cmd_arr);
+		error("Error", -1);
 	}
-	dup2(pipe[1], STDOUT_FILENO);
-	dup2(infile, STDIN_FILENO);
-	close(pipe[0]);
-	close(infile);
-	cmd_path = find_cmd_path(cmd[0], envp);
-	if (!cmd_path)
+	if (pid == 0)
+		child_process(infile, cmd_arr, envp, fd);
+	else
+		waitpid(pid, &child_status, 0);
+	if (!WIFEXITED(child_status))
 	{
-		free_all(cmd, cmd_path);
-		error("Command not found", 127);
+		free_array(cmd_arr);
+		error("Child Process Error", child_status);
 	}
-	execve(cmd_path, cmd, envp);
-	free_all(cmd, cmd_path);
-	error("execve", -1);
+	if (cmd_arr != NULL)
+		free_array(cmd_arr);
 }
 
-void	parent_process(char *output, char **cmd, char **envp, int *pipe)
+void	handle_parent(char *outfile, char *cmd, char **envp, int *fd)
 {
-	char	*cmd_path;
-	int		outfile;
+	char	**cmd_arr;
 
-	outfile = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (outfile == -1)
+	cmd_arr = ft_split(cmd, ' ');
+	if (!cmd_arr)
 	{
-		free_array(cmd);
-		error("Could not access output file", -1);
+		free_array(cmd_arr);
+		error("Error", -1);
 	}
-	dup2(pipe[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
-	close(pipe[1]);
-	close(outfile);
-	cmd_path = find_cmd_path(cmd[0], envp);
-	if (!cmd_path)
-	{
-		free_all(cmd, cmd_path);
-		error("Command not found", 127);
-	}
-	if (execve(cmd_path, cmd, envp) == -1)
-		error("execve", -1);
-	free_all(cmd, cmd_path);
+	parent_process(outfile, cmd_arr, envp, fd);
+	if (cmd_arr != NULL)
+		free_array(cmd_arr);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	pid_t	pid;
-	char	**cmd1;
-	char	**cmd2;
 	int		fd[2];
 
-	if (argc != 5)
-		exit (EXIT_FAILURE);
-	if (!envp || envp[0][0] == '\0')
+	if (argc != 5 || !envp || envp[0][0] == '\0')
 		exit (EXIT_FAILURE);
 	if (pipe(fd) == -1)
 		error("Could not create pipe", -1);
-	pid = fork ();
-	if (pid == -1)
-		error("Could not fork", -1);
-	cmd1 = ft_split(argv[2], ' ');
-	if (!cmd1)
-	{
-		free_array(cmd1);
-		error("Error", -1);
-	}
-	if (pid == 0)
-		child_process(argv[1], cmd1, envp, fd);	
-	else
-	 	waitpid(pid, NULL, 0);
-	cmd2 = ft_split(argv[3], ' ');
-	if (!cmd2)
-	{
-		free_array(cmd2);
-		error("Error", -1);
-	}
-	parent_process(argv[4], cmd2, envp, fd);
+	handle_child(argv[1], argv[2], envp, fd);
+	handle_parent(argv[4], argv[3], envp, fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:31:17 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/24 18:33:11 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/25 18:02:20 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,22 @@ int	handle_file_pipe_child(char *input, char **cmd, int *pipe)
 	infile = open(input, O_RDONLY, 0777);
 	if (infile == -1)
 	{
+		close(pipe[0]);
+		close(pipe[1]);
 		free_array(cmd);
-		error("Could not access iput file", -1);
+		error("Could not access input file", -1);
 	}
 	dup2(pipe[1], STDOUT_FILENO);
-	dup2(infile, STDIN_FILENO);
-	if (close(pipe[0]) == -1)
+	if (close(pipe[1]) == -1 || close(pipe[0]) == -1)
 	{
 		free_array(cmd);
 		error("Could not close pipe", -1);
+	}
+	dup2(infile, STDIN_FILENO);
+	if (close(infile) == -1)
+	{
+		free_array(cmd);
+		error("Could not close input file", -1);
 	}
 	return (infile);
 }
