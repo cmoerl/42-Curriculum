@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:33:14 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/25 15:25:53 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/26 10:54:15 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ int	handle_file_pipe_parent(char *output, char **cmd, int *pipe)
 		close(pipe[0]);
 		close(pipe[1]);
 		free_array(cmd);
-		error("Could not access output file", -1);
+		error("Could not access output file\n", -1);
 	}
 	dup2(pipe[0], STDIN_FILENO);
 	if (close(pipe[0]) == -1 || close(pipe[1]) == -1)
 	{
 		free_array(cmd);
-		error("Could not close pipe", -1);
+		error("Could not close pipe\n", -1);
 	}
 	dup2(outfile, STDOUT_FILENO);
 	if (close(outfile) == -1)
 	{
 		free_array(cmd);
-		error("Could not close output file", -1);
+		error("Could not close output file\n", -1);
 	}
 	return (outfile);
 }
@@ -45,15 +45,16 @@ void	parent_process(char *output, char **cmd, char **envp, int *pipe)
 	int		outfile;
 
 	outfile = handle_file_pipe_parent(output, cmd, pipe);
+	close(outfile);
 	cmd_path = find_cmd_path(cmd[0], envp);
 	if (!cmd_path)
 	{
 		free_all(cmd, cmd_path);
-		error("Command not found", 127);
+		error("Command not found\n", 127);
 	}
 	if (execve(cmd_path, cmd, envp) == -1)
 	{
 		free_all(cmd, cmd_path);
-		error("execve", -1);
+		error("execve\n", -1);
 	}
 }

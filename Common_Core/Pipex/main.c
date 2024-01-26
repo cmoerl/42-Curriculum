@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/25 17:22:21 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/26 11:06:43 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*check_cmd_path(char **paths, char *cmd, int i)
 			return (cmd_path);
 		}
 	}
-	free(cmd_path);
+	free_all(paths, cmd_path);
 	return (NULL);
 }
 
@@ -66,7 +66,7 @@ void	handle_child(char *infile, char *cmd, char **envp, int *fd)
 	if (!cmd_arr)
 	{
 		free_array(cmd_arr);
-		error("Error", -1);
+		error("Error\n", -1);
 	}
 	child_process(infile, cmd_arr, envp, fd);
 	exit(EXIT_SUCCESS);
@@ -80,7 +80,7 @@ void	handle_parent(char *outfile, char *cmd, char **envp, int *fd)
 	if (!cmd_arr)
 	{
 		free_array(cmd_arr);
-		error("Error", -1);
+		error("Error\n", -1);
 	}
 	parent_process(outfile, cmd_arr, envp, fd);
 	exit(EXIT_SUCCESS);
@@ -93,30 +93,32 @@ int	main(int argc, char **argv, char **envp)
 	int		status1, status2;
 
 	if (argc != 5 || !envp || envp[0][0] == '\0')
-		exit (EXIT_FAILURE);
+		error("Invalid number of arguments\n", -1);
 	if (pipe(fd) == -1)
-		error("Could not create pipe", -1);
-	pid2 = fork();
-	if (pid2 == -1)
-		error("Could not fork", -1);
-	if (pid2 == 0)
-	{
-		handle_parent(argv[4], argv[3], envp, fd);
-		exit (EXIT_SUCCESS);
-	}
+		error("Could not create pipe\n", -1);
 	pid1 = fork();
 	if (pid1 == -1)
-		error("Could not fork", -1);
+		error("Could not fork\n", -1);
 	if (pid1 == 0)
 	{
 		handle_child(argv[1], argv[2], envp, fd);
 		exit (EXIT_SUCCESS);
 	}
+	pid2 = fork();
+	if (pid2 == -1)
+		error("Could not fork\n", -1);
+	if (pid2 == 0)
+	{
+		handle_parent(argv[4], argv[3], envp, fd);
+		exit (EXIT_SUCCESS);
+	}
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, &status1, 0);
+	if (!WIFEXITED(status1))
+		error("", status1);
 	waitpid(pid2, &status2, 0);
-	if (!WIFEXITED(status1) || !WIFEXITED(status2))
-		error("Child Process Error", -1);
+	if (!WIFEXITED(status2))
+		error("", status2);
 	return (0);
 }

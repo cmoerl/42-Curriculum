@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:17:09 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/24 17:21:35 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/26 10:52:36 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error(char *str, int exit_code)
 {
-	perror(str);
+	ft_putstr_fd(str, 2);
 	if (exit_code == -1)
 		exit (EXIT_FAILURE);
 	else
