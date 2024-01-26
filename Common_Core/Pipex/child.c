@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:31:17 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/26 11:17:18 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/26 15:50:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	child_process(char *input, char **cmd, char **envp, int *pipe)
 	cmd_path = find_cmd_path(cmd[0], envp);
 	if (!cmd_path)
 	{
-		ft_putstr_fd("pipex: no cmd_path", 2);
 		free_all(cmd, cmd_path);
 		error("Command not found\n", 127);
 	}

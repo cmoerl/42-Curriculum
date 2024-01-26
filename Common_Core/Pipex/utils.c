@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/24 18:24:48 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/26 15:48:21 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**find_paths(char **envp)
 	int		j;
 
 	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5))
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	paths = ft_split(envp[i], ':');
 	if (!paths)

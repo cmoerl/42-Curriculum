@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 17:33:15 by csturm            #+#    #+#              #
-#    Updated: 2024/01/24 17:47:38 by csturm           ###   ########.fr        #
+#    Updated: 2024/01/26 16:59:58 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC:= cc
 CFLAGS:= -Wall -Wextra -Werror
 
-SRC:= main.c utils.c error_free.c parent.c child.c
+SRC:= main.c utils.c error_free_paths.c parent.c child.c
 LIBFT:= ${wildcard ./Libft/*.c}
 
 OBJ:= $(SRC:.c=.o)

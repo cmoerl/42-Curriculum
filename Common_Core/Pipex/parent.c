@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:33:14 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/26 10:54:15 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/26 16:46:10 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	handle_file_pipe_parent(char *output, char **cmd, int *pipe)
 {
 	int	outfile;
 
-	outfile = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	outfile = open(output, O_WRONLY | O_TRUNC, 0777);
 	if (outfile == -1)
 	{
 		close(pipe[0]);
