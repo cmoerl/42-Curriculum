@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:31:17 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/26 15:50:49 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/27 18:00:57 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	child_process(char *input, char **cmd, char **envp, int *pipe)
 	int		infile;
 
 	infile = handle_file_pipe_child(input, cmd, pipe);
-	close(infile);
 	cmd_path = find_cmd_path(cmd[0], envp);
 	if (!cmd_path)
 	{

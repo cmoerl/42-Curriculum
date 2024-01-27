@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:37:11 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/26 17:01:24 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/27 17:11:07 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,36 @@ void	handle_parent(char *outfile, char *cmd, char **envp, int *fd)
 	exit(EXIT_SUCCESS);
 }
 
+pid_t	create_parent(char *file, char *cmd, char **envp, int *fd)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		error("Could not fork\n", -1);
+	if (pid == 0)
+	{
+		handle_parent(file, cmd, envp, fd);
+		exit(EXIT_SUCCESS);
+	}
+	return (pid);
+}
+
+pid_t	create_child(char *file, char *cmd, char **envp, int *fd)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		error("Could not fork\n", -1);
+	if (pid == 0)
+	{
+		handle_child(file, cmd, envp, fd);
+		exit(EXIT_SUCCESS);
+	}
+	return (pid);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
@@ -53,22 +83,8 @@ int	main(int argc, char **argv, char **envp)
 		error("Invalid number of arguments\n", -1);
 	if (pipe(fd) == -1)
 		error("Could not create pipe\n", -1);
-	pid1 = fork();
-	if (pid1 == -1)
-		error("Could not fork\n", -1);
-	if (pid1 == 0)
-	{
-		handle_child(argv[1], argv[2], envp, fd);
-		exit (EXIT_SUCCESS);
-	}
-	pid2 = fork();
-	if (pid2 == -1)
-		error("Could not fork\n", -1);
-	if (pid2 == 0)
-	{
-		handle_parent(argv[4], argv[3], envp, fd);
-		exit (EXIT_SUCCESS);
-	}
+	pid1 = create_child(argv[1], argv[2], envp, fd);
+	pid2 = create_parent(argv[4], argv[3], envp, fd);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, &status1, 0);
