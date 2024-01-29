@@ -6,33 +6,47 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 17:33:15 by csturm            #+#    #+#              #
-#    Updated: 2024/01/22 15:21:27 by csturm           ###   ########.fr        #
+#    Updated: 2024/01/29 16:04:19 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC:= cc
 CFLAGS:= -Wall -Wextra -Werror
 
-SRC:= 
-LIBFT:= ${wildcard ./Libft/*.c}
+FILES:= main init malloc_exit render
 
-OBJ:= $(SRC:.c=.o)
-LIBFT_OBJ:= $(LIBFT:.c=.o)
+SRC_DIR= ./src
+SRC:= $(FILES:%=$(SRC_DIR)/%.c)
+
+LIBFT_DIR:= ./Libft
+LIBFT:= $(LIBFT_DIR)/libft.a
+
+OBJ_DIR:= ./obj
+OBJ:= $(FILES:%=$(OBJ_DIR)/%.o)
 
 NAME = fractol
 
 all: $(NAME)
 	cc -I./minilibx-linux -L./minilibx-linux -lmlx -lXext -lX11 -lm -o fractol fractol.c
-$(NAME): $(OBJ) $(LIBFT_OBJ)
-	$(MAKE) -C ./Libft --no-print-directory
-	$(CC) $(CFLAGS) $(OBJ) ./Libft/libft.a -o $(NAME)
+
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
 clean:
-	$(MAKE) -C ./Libft clean --no-print-directory
-	rm -f $(OBJ)	
+	$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
+	rm -rf $(OBJ_DIR)	
 
 fclean: clean
-	$(MAKE) -C ./Libft fclean --no-print-directory
+	$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	rm -f $(NAME)
 
 re: fclean all

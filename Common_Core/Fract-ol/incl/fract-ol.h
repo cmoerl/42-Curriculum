@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/23 16:31:10 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/29 16:43:59 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ typedef struct  s_fractol
 }            t_fractol;
 
 
-t_fractol       *init_mandelbrot(void);
-t_fractol       *init_julia(char *real, char *imgn);
+t_fractol       *init_fract(char *real, char *imaginary);
 t_img           *init_img(void *mlx_ptr, int width, int height);
 t_hooks         *init_hooks(char *real, char *imgn);
 void            malloc_exit_fractol(t_fractol *fractol);

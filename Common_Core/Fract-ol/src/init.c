@@ -24,66 +24,29 @@ t_hooks *init_hooks(char *real, char *imaginary)
     return NULL; // Replace with the actual implementation
 }
 
-t_fractol *init_mandelbrot(void)
+t_fractol *init_fract(char *real, char *imaginary)
 {
     t_fractol *fractol;
 
     fractol = malloc(sizeof(t_fractol));
     if (!fractol)
         exit(EXIT_FAILURE);
-    fractol->name = ft_strdup("mandelbrot");
-    if (!fractol->name)
+    if (!(fractol->name = ft_strdup("julia")))
         malloc_exit_fractol(fractol);
-    fractol->mlx_ptr = mlx_init();
-    if (!fractol->mlx_ptr)
+    if (!(fractol->mlx_ptr = mlx_init()))
         malloc_exit_fractol(fractol);
-    fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, fractol->name);
-    if (!fractol->win_ptr)
+    if (!(fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, fractol->name)))
     {
         mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
     }
-    fractol->img = init_img(fractol->mlx_ptr, WIDTH, HEIGHT);
-    if (!fractol->img)
+    if (!(fractol->img = init_img(fractol->mlx_ptr, WIDTH, HEIGHT)))
     {
         mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
         mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
     }
-    fractol->hooks = init_hooks(NULL, NULL);
-    if (!fractol->hooks)
-        malloc_exit_fractol(fractol);
-    return fractol;
-}
-
-t_fractol *init_julia(char *real, char *imaginary)
-{
-    t_fractol *fractol;
-
-    fractol = malloc(sizeof(t_fractol));
-    if (!fractol)
-        exit(EXIT_FAILURE);
-    fractol->name = ft_strdup("julia");
-    if (!fractol->name)
-        malloc_exit_fractol(fractol);
-    fractol->mlx_ptr = mlx_init();
-    if (!fractol->mlx_ptr)
-        malloc_exit_fractol(fractol);
-    fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, fractol->name);
-    if (!fractol->win_ptr)
-    {
-        mlx_destroy_display(fractol->mlx_ptr);
-        malloc_exit_fractol(fractol);
-    }
-    fractol->img = init_img(fractol->mlx_ptr, WIDTH, HEIGHT);
-    if (!fractol->img)
-    {
-        mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
-        mlx_destroy_display(fractol->mlx_ptr);
-        malloc_exit_fractol(fractol);
-    }
-    fractol->hooks = init_hooks(real, imaginary);
-    if (!fractol->hooks)
+    if (!(fractol->hooks = init_hooks(real, imaginary)))
         malloc_exit_fractol(fractol);
     return fractol;
 }
