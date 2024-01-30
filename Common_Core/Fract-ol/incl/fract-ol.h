@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/29 16:43:59 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:36:42 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 
 # define WIDTH 1000
 # define HEIGHT 1000
+# define ITERATIONS 42
+# define BLACK 0x000000
+# define WHITE 0xFFFFFF
+# define PURPLE 0xB18AD8
 
 typedef struct	s_complex
 {
@@ -58,10 +62,12 @@ typedef struct  s_fractol
 }            t_fractol;
 
 
-t_fractol       *init_fract(char *real, char *imaginary);
+t_fractol       *init_fract(/* char *real, char *imaginary, */ char *name);
 t_img           *init_img(void *mlx_ptr, int width, int height);
 t_hooks         *init_hooks(char *real, char *imgn);
 void            malloc_exit_fractol(t_fractol *fractol);
-
+void            put_esc_pxl(t_img *img, int x, int y, int i);
+void            put_pxl(t_img *img, int x, int y);
+void            render(t_fractol *fractol);
 
 #endif

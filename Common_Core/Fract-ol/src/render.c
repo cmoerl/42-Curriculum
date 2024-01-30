@@ -6,13 +6,30 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:37:03 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/29 16:04:41 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:28:43 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fract-ol.h"
 
-void    render_mandelbrot(double x_scaled, double y_scaled, t_fractol *fractol)
+t_complex   mandelbrot_formula(t_complex z, t_complex c)
+{
+    t_complex   result;
+
+    result.real = z.real * z.real - z.imgn * z.imgn + c.real;
+    result.imgn = 2 * z.real * z.imgn + c.imgn;
+    return (result);
+}
+
+double  scale(double value, int real)
+{
+    if (real)
+        return ((2 - (-2)) * (value - 0) / (WIDTH  - 0) + (-2));
+    else
+        return ((-2 - 2) * (value - 0) / (HEIGHT - 0) + 2);
+}
+
+void    render_mandelbrot(double x, double y, t_fractol *fractol)
 {
     t_complex   z;
     t_complex   c;
@@ -21,26 +38,25 @@ void    render_mandelbrot(double x_scaled, double y_scaled, t_fractol *fractol)
 
     z.real = 0.0;
     z.imgn = 0.0;
-    c.real = 4 * (double)x / WIDTH - 2;
-    c.imgn = 2 - (double)y / HEIGHT * 4;
+    c.real = scale(x, 1);
+    c.imgn = scale(y, 0);
     i = 0;
-    while (i < 42)
+    while (i < ITERATIONS)
     {
-        sum += z.real * z.real - z.imgn * z.imgn + c.real;
+        z = mandelbrot_formula(z, c);
+        sum = z.real * z.real + z.imgn * z.imgn;
         if (sum > 4)
             break ;
         i++;
     }
-    if (i != 42)
-        put_esc_pxl(fractol->img, z, c, i);
+    if (i == ITERATIONS)
+        put_pxl(fractol->img, (int)x, (int)y);
     else
-        put_pxl(fractol->img, z, c, i);
+        put_esc_pxl(fractol->img, (int)x, (int)y, i);
 }
 
-void    iterate_map(t_fractol *fractol)
+void    render(t_fractol *fractol)
 {
-    double  x_scaled;
-    double  y_scaled;
     int     x;
     int     y;
 
@@ -50,19 +66,13 @@ void    iterate_map(t_fractol *fractol)
         x = 0;
         while (x < WIDTH)
         {
-            if (ft_strncmp(fractol->name,  "mandelbrot", 10) == 0)
-                render_mandelbrot(fractol);
-            else if (ft_strncmp(fractol->name, "julia", 5) == 0)
-                render_julia(fractol);
+            // if (ft_strncmp(fractol->name,  "mandelbrot", 10) == 0)
+                render_mandelbrot(x, y, fractol);
+            // else if (ft_strncmp(fractol->name, "julia", 5) == 0)
+            //     render_julia(x, y, fractol);
             x++;
         }
         y++;
     }
-
-}
-
-void render(t_fractol *fractol)
-{
-    iterate_map(fractol);
     mlx_put_image_to_window(fractol->mlx_ptr, fractol->win_ptr, fractol->img->img_ptr, 0, 0);
 }

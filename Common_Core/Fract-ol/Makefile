@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 17:33:15 by csturm            #+#    #+#              #
-#    Updated: 2024/01/29 16:04:19 by csturm           ###   ########.fr        #
+#    Updated: 2024/01/30 16:34:59 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC:= cc
 CFLAGS:= -Wall -Wextra -Werror
 
-FILES:= main init malloc_exit render
+FILES:= main init malloc_exit render image
 
 SRC_DIR= ./src
 SRC:= $(FILES:%=$(SRC_DIR)/%.c)
@@ -27,10 +27,9 @@ OBJ:= $(FILES:%=$(OBJ_DIR)/%.o)
 NAME = fractol
 
 all: $(NAME)
-	cc -I./minilibx-linux -L./minilibx-linux -lmlx -lXext -lX11 -lm -o fractol fractol.c
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) -I./minilibx-linux -L./minilibx-linux -lmlx -lXext -lX11 -lm $(OBJ) $(LIBFT) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

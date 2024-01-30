@@ -17,22 +17,30 @@ t_img *init_img(void *mlx_ptr, int width, int height)
     return (img);
 }
 
-t_hooks *init_hooks(char *real, char *imaginary)
+/* t_hooks *init_hooks(char *real, char *imaginary)
 {
-    // Add your implementation here
-    // This function is responsible for initializing the hooks
-    return NULL; // Replace with the actual implementation
-}
+    t_hooks *hooks;
 
-t_fractol *init_fract(char *real, char *imaginary)
+    hooks = malloc(sizeof(t_hooks));
+    if (!hooks)
+        return (NULL);
+    hooks->it_def =
+    hooks->shift_x =
+    hooks->shift_y =
+    hooks->zoom =
+    hooks->julia_x =
+    hooks->julia_y =
+    return (hooks);
+} */
+
+t_fractol *init_fract(/* char *real, char *imaginary, */ char *name)
 {
     t_fractol *fractol;
 
     fractol = malloc(sizeof(t_fractol));
     if (!fractol)
         exit(EXIT_FAILURE);
-    if (!(fractol->name = ft_strdup("julia")))
-        malloc_exit_fractol(fractol);
+    fractol->name = name;
     if (!(fractol->mlx_ptr = mlx_init()))
         malloc_exit_fractol(fractol);
     if (!(fractol->win_ptr = mlx_new_window(fractol->mlx_ptr, WIDTH, HEIGHT, fractol->name)))
@@ -46,7 +54,7 @@ t_fractol *init_fract(char *real, char *imaginary)
         mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
     }
-    if (!(fractol->hooks = init_hooks(real, imaginary)))
-        malloc_exit_fractol(fractol);
+    // if (!(fractol->hooks = init_hooks(real, imaginary)))
+    //     malloc_exit_fractol(fractol);
     return fractol;
 }
