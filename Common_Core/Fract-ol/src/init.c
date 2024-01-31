@@ -17,23 +17,26 @@ t_img *init_img(void *mlx_ptr, int width, int height)
     return (img);
 }
 
-/* t_hooks *init_hooks(char *real, char *imaginary)
+t_hooks *init_hooks(char *real, char *imaginary)
 {
     t_hooks *hooks;
+    double  real_num;
+    double  imaginary_num;
 
+    real_num = ft_strtod(real);
+    imaginary_num = ft_strtod(imaginary);
     hooks = malloc(sizeof(t_hooks));
     if (!hooks)
         return (NULL);
-    hooks->it_def =
-    hooks->shift_x =
-    hooks->shift_y =
-    hooks->zoom =
-    hooks->julia_x =
-    hooks->julia_y =
+    hooks->shift_x = 0.0;
+    hooks->shift_y = 0.0;
+    hooks->zoom = 1.0;
+    hooks->julia_x = real_num;
+    hooks->julia_y = imaginary_num;
     return (hooks);
-} */
+}
 
-t_fractol *init_fract(/* char *real, char *imaginary, */ char *name)
+t_fractol *init_fract(char *real, char *imaginary, char *name)
 {
     t_fractol *fractol;
 
@@ -54,7 +57,11 @@ t_fractol *init_fract(/* char *real, char *imaginary, */ char *name)
         mlx_destroy_display(fractol->mlx_ptr);
         malloc_exit_fractol(fractol);
     }
-    // if (!(fractol->hooks = init_hooks(real, imaginary)))
-    //     malloc_exit_fractol(fractol);
+    if (!(fractol->hooks = init_hooks(real, imaginary)))
+    {
+        mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
+        mlx_destroy_display(fractol->mlx_ptr);
+        malloc_exit_fractol(fractol);
+    }
     return fractol;
 }

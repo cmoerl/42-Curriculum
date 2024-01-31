@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 17:17:42 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/15 18:13:16 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:25:11 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 long	ft_atoi_long(const char *nptr);
+double  ft_strtod(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 15:00:59 by csturm            #+#    #+#              #
-#    Updated: 2024/01/15 18:13:35 by csturm           ###   ########.fr        #
+#    Updated: 2024/01/31 16:25:26 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC:= ft_atoi.c ft_isalpha.c ft_memchr.c ft_memset.c ft_strjoin.c ft_strncmp.c f
 		ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 		ft_substr.c ft_utoa.c ft_print_char.c ft_print_hex.c ft_print_int.c ft_print_ptr.c \
 		ft_print_str.c ft_print_unsigned_int.c ft_printf.c ft_atoi_long.c ft_iswhitespace.c \
-		ft_strncpy.c
+		ft_strncpy.c ft_strtod.c
 
 OBJ:= $(SRC:.c=.o)
 

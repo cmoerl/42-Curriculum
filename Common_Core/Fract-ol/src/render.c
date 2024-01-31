@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:37:03 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/30 16:28:43 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/31 16:05:04 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void    render_mandelbrot(double x, double y, t_fractol *fractol)
 
     z.real = 0.0;
     z.imgn = 0.0;
-    c.real = scale(x, 1);
-    c.imgn = scale(y, 0);
+    c.real = (scale(x, 1) * fractol->hooks->zoom) + fractol->hooks->shift_x;
+    c.imgn = (scale(y, 0) * fractol->hooks->zoom) + fractol->hooks->shift_y;
     i = 0;
     while (i < ITERATIONS)
     {
@@ -66,7 +66,7 @@ void    render(t_fractol *fractol)
         x = 0;
         while (x < WIDTH)
         {
-            // if (ft_strncmp(fractol->name,  "mandelbrot", 10) == 0)
+            if (ft_strncmp(fractol->name,  "mandelbrot", 10) == 0)
                 render_mandelbrot(x, y, fractol);
             // else if (ft_strncmp(fractol->name, "julia", 5) == 0)
             //     render_julia(x, y, fractol);

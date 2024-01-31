@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/30 16:52:34 by csturm           ###   ########.fr       */
+/*   Updated: 2024/01/31 17:51:18 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 # define WIDTH 1000
 # define HEIGHT 1000
@@ -25,6 +27,9 @@
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 # define PURPLE 0xB18AD8
+# define RED 0xFF0000
+# define YELLOW 0xFFFF00
+# define BLUE 0x0000FF
 
 typedef struct	s_complex
 {
@@ -62,12 +67,15 @@ typedef struct  s_fractol
 }            t_fractol;
 
 
-t_fractol       *init_fract(/* char *real, char *imaginary, */ char *name);
+t_fractol       *init_fract(char *real, char *imaginary, char *name);
 t_img           *init_img(void *mlx_ptr, int width, int height);
 t_hooks         *init_hooks(char *real, char *imgn);
 void            malloc_exit_fractol(t_fractol *fractol);
 void            put_esc_pxl(t_img *img, int x, int y, int i);
 void            put_pxl(t_img *img, int x, int y);
 void            render(t_fractol *fractol);
+int             close_handler(t_fractol *fractol);
+int             key_handler(int keycode, t_fractol *fractol);
+int             mouse_handler(int button, int x, int y, t_fractol *fractol);
 
 #endif

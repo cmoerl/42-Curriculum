@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 17:33:15 by csturm            #+#    #+#              #
-#    Updated: 2024/01/30 16:34:59 by csturm           ###   ########.fr        #
+#    Updated: 2024/01/31 17:33:35 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC:= cc
 CFLAGS:= -Wall -Wextra -Werror
 
-FILES:= main init malloc_exit render image
+FILES:= main init malloc_exit render image events
 
 SRC_DIR= ./src
 SRC:= $(FILES:%=$(SRC_DIR)/%.c)
