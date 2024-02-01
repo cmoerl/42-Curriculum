@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/31 17:51:18 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/01 13:17:16 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 # define FRACT_OL_H
 
 # include "../Libft/libft.h"
-# include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include "../minilibx-linux/mlx.h"
 
 # define WIDTH 1000
 # define HEIGHT 1000
-# define ITERATIONS 42
+# define ITERATIONS 100
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 # define PURPLE 0xB18AD8

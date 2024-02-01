@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:37:03 by csturm            #+#    #+#             */
-/*   Updated: 2024/01/31 16:05:04 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/01 13:15:07 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,32 @@ void    render_mandelbrot(double x, double y, t_fractol *fractol)
         put_esc_pxl(fractol->img, (int)x, (int)y, i);
 }
 
+void    render_julia(double x, double y, t_fractol *fractol)
+{
+    t_complex   z;
+    t_complex   c;
+    double      sum;
+    int         i;
+
+    z.real = (scale(x, 1) * fractol->hooks->zoom) + fractol->hooks->shift_x;
+    z.imgn = (scale(y, 0) * fractol->hooks->zoom) + fractol->hooks->shift_y;
+    c.real = fractol->hooks->julia_x;
+    c.imgn = fractol->hooks->julia_y;
+    i = 0;
+    while (i < ITERATIONS)
+    {
+        z = mandelbrot_formula(z, c);
+        sum = z.real * z.real + z.imgn * z.imgn;
+        if (sum > 4)
+            break ;
+        i++;
+    }
+    if (i == ITERATIONS)
+        put_pxl(fractol->img, (int)x, (int)y);
+    else
+        put_esc_pxl(fractol->img, (int)x, (int)y, i);
+}
+
 void    render(t_fractol *fractol)
 {
     int     x;
@@ -68,8 +94,8 @@ void    render(t_fractol *fractol)
         {
             if (ft_strncmp(fractol->name,  "mandelbrot", 10) == 0)
                 render_mandelbrot(x, y, fractol);
-            // else if (ft_strncmp(fractol->name, "julia", 5) == 0)
-            //     render_julia(x, y, fractol);
+            else if (ft_strncmp(fractol->name, "julia", 5) == 0)
+                render_julia(x, y, fractol);
             x++;
         }
         y++;
