@@ -6,11 +6,32 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/02 13:41:41 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/02 15:49:42 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fractol.h"
+
+int	check_args(char *real, char *imaginary)
+{
+	int	i;
+
+	i = 0;
+	while (real[i])
+	{
+		if (!ft_isdigit(real[i]) && real[i] != '.' && real[i] != '-' && real[i] != '+')
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (imaginary[i])
+	{
+		if (!ft_isdigit(imaginary[i]) && imaginary[i] != '.' && imaginary[i] != '-')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 t_img	*init_img(void *mlx_ptr, int width, int height)
 {
@@ -37,6 +58,8 @@ t_hooks	*init_hooks(char *real, char *imaginary)
 
 	if (real != NULL && imaginary != NULL)
 	{
+		if(!check_args(real, imaginary))
+			return (NULL);
 		real_num = ft_strtod(real);
 		imaginary_num = ft_strtod(imaginary);
 	}

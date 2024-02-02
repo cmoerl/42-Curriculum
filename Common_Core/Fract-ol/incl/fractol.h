@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/02 13:55:06 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/02 14:23:24 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 # define WIDTH 1000
 # define HEIGHT 1000
-# define ITERATIONS 100
+# define ITERATIONS 200
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 # define PURPLE 0xB18AD8
