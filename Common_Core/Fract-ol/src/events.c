@@ -6,11 +6,11 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:21:30 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/01 13:44:10 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/02 13:41:33 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fract-ol.h"
+#include "../incl/fractol.h"
 
 void	malloc_exit_fractol(t_fractol *fractol)
 {
