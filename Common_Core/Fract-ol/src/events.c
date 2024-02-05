@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:21:30 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/02 13:41:33 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/05 14:56:56 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ int	key_handler(int keycode, t_fractol *fractol)
 		fractol->hooks->shift_y += (0.2 * fractol->hooks->zoom);
 	else if (keycode == XK_Down)
 		fractol->hooks->shift_y -= (0.2 * fractol->hooks->zoom);
+	else if (keycode == XK_x)
+		fractol->hooks->julia_x -= 0.01;
+	else if (keycode == XK_d)
+		fractol->hooks->julia_x += 0.01;
+	else if (keycode == XK_y)
+		fractol->hooks->julia_y -= 0.01;
+	else if (keycode == XK_s)
+		fractol->hooks->julia_y += 0.01;
 	render(fractol);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:06 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/02 14:23:24 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/05 14:41:24 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void		render(t_fractol *fractol);
 int			close_handler(t_fractol *fractol);
 int			key_handler(int keycode, t_fractol *fractol);
 int			mouse_handler(int button, int x, int y, t_fractol *fractol);
+int			check_args(char *real, char *imaginary);
 
 #endif

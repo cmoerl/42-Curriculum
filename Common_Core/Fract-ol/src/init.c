@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/02 15:49:42 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/05 14:59:12 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ int	check_args(char *real, char *imaginary)
 	i = 0;
 	while (real[i])
 	{
-		if (!ft_isdigit(real[i]) && real[i] != '.' && real[i] != '-' && real[i] != '+')
+		if (!ft_isdigit(real[i]) && real[i] != '.'
+			&& real[i] != '-' && real[i] != '+')
 			return (0);
 		i++;
 	}
 	i = 0;
 	while (imaginary[i])
 	{
-		if (!ft_isdigit(imaginary[i]) && imaginary[i] != '.' && imaginary[i] != '-')
+		if (!ft_isdigit(imaginary[i]) && imaginary[i] != '.'
+			&& imaginary[i] != '-')
 			return (0);
 		i++;
 	}
@@ -58,8 +60,6 @@ t_hooks	*init_hooks(char *real, char *imaginary)
 
 	if (real != NULL && imaginary != NULL)
 	{
-		if(!check_args(real, imaginary))
-			return (NULL);
 		real_num = ft_strtod(real);
 		imaginary_num = ft_strtod(imaginary);
 	}
@@ -83,11 +83,16 @@ void	protect_ptr(void *ptr, t_fractol *fractol)
 {
 	if (!ptr)
 	{
-		if (fractol->win_ptr)
-			mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
-		if (fractol->mlx_ptr)
-			mlx_destroy_display(fractol->mlx_ptr);
-		malloc_exit_fractol(fractol);
+		if (fractol)
+		{
+			if (fractol->win_ptr)
+				mlx_destroy_window(fractol->mlx_ptr, fractol->win_ptr);
+			if (fractol->mlx_ptr)
+				mlx_destroy_display(fractol->mlx_ptr);
+			malloc_exit_fractol(fractol);
+		}
+		else
+			exit (EXIT_FAILURE);
 	}
 }
 
