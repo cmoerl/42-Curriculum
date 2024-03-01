@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 17:26:39 by csturm            #+#    #+#             */
-/*   Updated: 2024/02/05 15:03:09 by csturm           ###   ########.fr       */
+/*   Updated: 2024/02/08 16:28:17 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	main(int argc, char **argv)
 {
 	t_fractol	*fractol;
 
-	if (argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
+	if (argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 11))
 		fractol = init_fract(NULL, NULL, argv[1]);
-	else if (argc == 4 && !ft_strncmp(argv[1], "julia", 5))
+	else if (argc == 4 && !ft_strncmp(argv[1], "julia", 6))
 	{
 		if (!check_args(argv[2], argv[3]))
 		{
