@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_time.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 16:28:58 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 21:50:36 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/06 20:08:16 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/06 20:10:45 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../../inc/philo.h"
 
-int main(int argc, char **argv)
+long long get_time(void)
 {
-    t_data data;
+    struct timeval time;
 
-    if (argc != 5 && argc != 6)
-        error(ERR_NUM_ARGS);
-    init_data(&data, argc, argv);
-    init_forks(&data);
-    init_philos(&data);
-    philo_routine(&data);
-    monitor_routine(&data);
-    free_data(&data);
-    return (0);
+    gettimeofday(&time, NULL);
+    return ((long long)time.tv_sec * 1000 + time.tv_usec / 1000);
 }

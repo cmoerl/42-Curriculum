@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_forks.c                                       :+:      :+:    :+:   */
+/*   create_threads.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 20:32:07 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 20:40:28 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/06 21:42:54 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/06 21:44:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    init_forks(t_data *data)
+void    create_threads(t_data *data)
 {
     int i;
 
     i = 0;
     while (i < data->philo_count)
     {
-        if (pthread_mutex_init(&data->forks[i].mutex, NULL) != 0)
+        if (pthread_create(&data->philos[i].thread_no, NULL, data->philos, &data->philos[i]) != 0)
         {
             free_data(data);
-            error(ERR_MUTEX);
+            error(ERR_THREAD);
         }
-        data->forks[i].fork_no = i + 1;
+        i++;
+    }
+    i = 0;
+    while (i < data->philo_count)
+    {
+        if (pthread_join(data->philos[i].thread_no, NULL) != 0)
+        {
+            free_data(data);
+            error(ERR_THREAD);
+        }
         i++;
     }
 }

@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_forks.c                                       :+:      :+:    :+:   */
+/*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 20:32:07 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 20:40:28 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/06 20:35:40 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/06 20:48:37 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    init_forks(t_data *data)
+void    free_data(t_data *data)
 {
     int i;
 
-    i = 0;
-    while (i < data->philo_count)
+    if (data->philos)
     {
-        if (pthread_mutex_init(&data->forks[i].mutex, NULL) != 0)
+        i = 0;
+        while (i < data->philo_count)
         {
-            free_data(data);
-            error(ERR_MUTEX);
+            pthread_mutex_destroy(&data->philos[i].mutex);
+            i++;
         }
-        data->forks[i].fork_no = i + 1;
-        i++;
+        free(data->philos);
+    }
+    if (data->forks)
+    {
+        i = 0;
+        while (i < data->philo_count)
+        {
+            pthread_mutex_destroy(&data->forks[i].mutex);
+            i++;
+        }
+        free(data->forks);
     }
 }

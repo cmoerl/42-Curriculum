@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 17:22:27 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/06 21:53:59 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 #define ERR_DIG "Invalid argument, must be a positive number"
 #define ERR_NUM_OF "Invalid number, must be between 0 and 9223372036854775807"
 #define ERR_MALLOC "Malloc failed"
+#define ERR_TIME "Failed to get time"
+#define ERR_MUTEX "Failed to init mutex"
+#define ERR_THREAD "Failed to create thread"
 
 typedef struct s_data t_data;
 
@@ -34,13 +37,15 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-    int         philo_no;
-    t_fork      left_fork;
-    t_fork      right_fork;
-    int         meals;
-    int         prev_meal;
-    pthread_t   thread_no;
-    t_data      *data;
+    int             philo_no;
+    t_fork          left_fork;
+    t_fork          right_fork;
+    int             meals;
+    long long       prev_meal;
+    int             full;
+    pthread_t       thread_no;
+    pthread_mutex_t mutex;
+    t_data          *data;
 } t_philo;
 
 typedef struct s_data
@@ -53,21 +58,30 @@ typedef struct s_data
     t_philo     *philos;
     t_fork      *forks;
     int         start_time;
+    int         end;
 } t_data;
 
 /* error management */
 
-void    error(char *msg);
+void        error(char *msg);
 
 /* initialisation */
 
-void    init_data(t_data *data, int argc, char **argv);
+void        init_data(t_data *data, int argc, char **argv);
+
+/* threads */
+
+void        create_threads(t_data *data);
+
+/* time */
+
+long long   get_time(void);
 
 /* mini library */
 
-long	ft_atoi_long(const char *nptr);
-int     ft_isdigit(int c);
-size_t	ft_strlen(const char *s);
-int	    ft_strncmp(const char *s1, const char *s2, size_t n);
+long	    ft_atoi_long(const char *nptr);
+int         ft_isdigit(int c);
+size_t	    ft_strlen(const char *s);
+int	        ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
