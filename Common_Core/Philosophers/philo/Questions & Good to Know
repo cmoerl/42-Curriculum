@@ -1,0 +1,4 @@
+- How large may the arguments be? Larger than INT_MAX?
+- Check for different kinds of inputs like "          +77$%"
+- Is there a minimum time? (Like 60 ms?)
+- odd philos take left fork first, even philos take right fork first

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 21:53:59 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:12:13 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ typedef struct s_data
 /* error management */
 
 void        error(char *msg);
+void        free_data(t_data *data);
 
 /* initialisation */
 
 void        init_data(t_data *data, int argc, char **argv);
+void        init_forks(t_data *data);
+void        init_philos(t_data *data);
 
 /* threads */
 
@@ -83,5 +86,16 @@ long	    ft_atoi_long(const char *nptr);
 int         ft_isdigit(int c);
 size_t	    ft_strlen(const char *s);
 int	        ft_strncmp(const char *s1, const char *s2, size_t n);
+
+/* monitor */
+
+void        monitor_routine(t_data *data);
+
+/* dinner routine */
+
+void        dinner(t_data *data);
+void        philo_sleep(t_data *data);
+void        philo_eat(t_data *data);
+void        philo_think(t_data *data);
 
 #endif

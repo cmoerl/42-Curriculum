@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:42:54 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 21:44:31 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:24:20 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    create_threads(t_data *data)
     i = 0;
     while (i < data->philo_count)
     {
-        if (pthread_create(&data->philos[i].thread_no, NULL, data->philos, &data->philos[i]) != 0)
+        if (pthread_create(&data->philos[i].thread_no, NULL, /* insert function */, &data->philos[i]) != 0)
         {
             free_data(data);
             error(ERR_THREAD);

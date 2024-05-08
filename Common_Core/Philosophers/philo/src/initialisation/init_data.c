@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:42:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 21:47:54 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/08 15:51:11 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static int check_overflow(const char *str)
     return (0);
 }
 
-static void check_args(int argc, char **argv)
+static void check_args(char **argv)
 {
+    argv++;
     while (*argv)
     {
         if (!ft_isdigit(**argv))
@@ -35,11 +36,11 @@ static void check_args(int argc, char **argv)
 
 void    init_data(t_data *data, int argc, char **argv)
 {
-    check_args(argc, argv);
+    check_args(argv);
     data->philo_count = ft_atoi_long(argv[1]);
-    data->time_to_die = ft_atoi_long(argv[2]);
-    data->time_to_eat = ft_atoi_long(argv[3]);
-    data->time_to_sleep = ft_atoi_long(argv[4]);
+    data->time_to_die = ft_atoi_long(argv[2]) * 1000;
+    data->time_to_eat = ft_atoi_long(argv[3]) * 1000;
+    data->time_to_sleep = ft_atoi_long(argv[4]) * 1000;
     if (argc == 6)
         data->max_meals = ft_atoi_long(argv[5]);
     else

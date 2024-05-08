@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:24:13 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/06 21:54:18 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/08 16:26:37 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void    init_philos(t_data *data)
             error(ERR_MUTEX);
         }
         data->forks[i].fork_no = i + 1;
-        if (i == 0)
-            data->philos[i].left_fork = data->forks[data->philo_count - 1];
-        else
-            data->philos[i].left_fork = data->forks[i - 1];
+        data->philos[i].left_fork = data->forks[(i + 1) % data->philo_count];
         data->philos[i].right_fork = data->forks[i];
         data->philos[i].full = 0;
         i++;
