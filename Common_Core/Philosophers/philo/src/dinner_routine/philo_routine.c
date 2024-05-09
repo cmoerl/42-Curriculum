@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dinner.c                                           :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 21:38:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/09 17:47:43 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/09 17:24:49 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/09 17:51:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    dinner(t_data *data)
+void	*philo_routine(void *philo)
 {
-    if (data->philo_count == 1)
-        one_philo(data);
-    if (data->max_meals == 0)
-        return ;
-    create_monitor(data);
-    create_threads(data);
-    join_threads(data);
+    t_philo	*p;
+
+    p = (t_philo *)philo;
+    wait_for_threads(p->data); /* necessary? */
+    while (!p->data->end)
+    {
+        philo_sleep(p->data);
+        philo_eat(p->data);
+        philo_think(p->data);
+    }
+    return (NULL);
 }

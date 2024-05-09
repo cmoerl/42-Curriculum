@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/08 17:12:13 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/09 17:46:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define ERR_NUM_ARGS "Invalid number of arguments"
 #define ERR_DIG "Invalid argument, must be a positive number"
-#define ERR_NUM_OF "Invalid number, must be between 0 and 9223372036854775807"
+#define ERR_NUM_OF "Invalid number, must be between 0 and 2147483647"
 #define ERR_MALLOC "Malloc failed"
 #define ERR_TIME "Failed to get time"
 #define ERR_MUTEX "Failed to init mutex"
@@ -29,12 +29,14 @@
 
 typedef struct s_data t_data;
 
+/* add flag to show if mutex has been initialised --> for free_data */
 typedef struct s_fork
 {
     pthread_mutex_t mutex;
     int             fork_no;
 } t_fork;
 
+/* add flag to show if mutex has been initialised --> for free_data */
 typedef struct s_philo
 {
     int             philo_no;
@@ -63,7 +65,7 @@ typedef struct s_data
 
 /* error management */
 
-void        error(char *msg);
+void        error(char *msg, t_data *data);
 void        free_data(t_data *data);
 
 /* initialisation */
@@ -75,6 +77,7 @@ void        init_philos(t_data *data);
 /* threads */
 
 void        create_threads(t_data *data);
+void        join_threads(t_data *data);
 
 /* time */
 
@@ -86,6 +89,8 @@ long	    ft_atoi_long(const char *nptr);
 int         ft_isdigit(int c);
 size_t	    ft_strlen(const char *s);
 int	        ft_strncmp(const char *s1, const char *s2, size_t n);
+int	        ft_iswhitespace(int c);
+void	    *ft_memcpy(void *dest, const void *src, size_t n);
 
 /* monitor */
 
@@ -94,6 +99,7 @@ void        monitor_routine(t_data *data);
 /* dinner routine */
 
 void        dinner(t_data *data);
+void	    *philo_routine(void *philo);
 void        philo_sleep(t_data *data);
 void        philo_eat(t_data *data);
 void        philo_think(t_data *data);
