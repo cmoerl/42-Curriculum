@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/09 17:46:53 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:52:45 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct s_fork
 typedef struct s_philo
 {
     int             philo_no;
-    t_fork          left_fork;
-    t_fork          right_fork;
+    t_fork          *left_fork;
+    t_fork          *right_fork;
     int             meals;
     long long       prev_meal;
     int             full;
@@ -52,15 +52,16 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-    long         philo_count;
-    long         time_to_die;
-    long         time_to_eat;
-    long         time_to_sleep;
-    long         max_meals;
-    t_philo     *philos;
-    t_fork      *forks;
-    int         start_time;
-    int         end;
+    long                philo_count;
+    long                time_to_die;
+    long                time_to_eat;
+    long                time_to_sleep;
+    long                max_meals;
+    t_philo             *philos;
+    t_fork              *forks;
+    int                 start_time;
+    pthread_mutex_t     print;
+    int                 end;
 } t_data;
 
 /* error management */
@@ -94,14 +95,18 @@ void	    *ft_memcpy(void *dest, const void *src, size_t n);
 
 /* monitor */
 
-void        monitor_routine(t_data *data);
+/* void        monitor_routine(t_data *data); */
+
+/* status */
+
+void        print_status(t_philo *philo, char *status);
 
 /* dinner routine */
 
 void        dinner(t_data *data);
 void	    *philo_routine(void *philo);
-void        philo_sleep(t_data *data);
-void        philo_eat(t_data *data);
-void        philo_think(t_data *data);
+void        philo_sleep(t_philo *philo);
+void        philo_eat(t_philo *philo);
+void        philo_think(t_philo *philo);
 
 #endif

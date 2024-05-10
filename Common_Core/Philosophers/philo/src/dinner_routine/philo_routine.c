@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:24:49 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/09 17:51:31 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:33:59 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void	*philo_routine(void *philo)
 {
     t_philo	*p;
 
+    printf("philo %d entered philo_routine\n", ((t_philo *)philo)->philo_no);
     p = (t_philo *)philo;
-    wait_for_threads(p->data); /* necessary? */
+    // wait_for_threads(p->data); /* necessary? */
     while (!p->data->end)
     {
-        philo_sleep(p->data);
-        philo_eat(p->data);
-        philo_think(p->data);
+        philo_eat(p);
+        philo_sleep(p);
+        philo_think(p);
     }
     return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:42:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/09 16:49:53 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/10 14:16:28 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ static char *extract_number(char **argv, t_data *data)
 static void check_args(char **argv, t_data *data)
 {
     char    *num;
-    
+    char    *tmp;
+
+    argv++;
     while (*argv)
     {
-        num = extract_number(argv, data);
+        tmp = *argv;
+        num = extract_number(&tmp, data);
         if (!*num)
             error(ERR_DIG, data);
         if (check_overflow(num))

@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_think.c                                      :+:      :+:    :+:   */
+/*   print_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 21:52:31 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/10 14:37:51 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/10 13:24:43 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/10 14:03:06 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    philo_think(t_philo *philo)
+void    print_status(t_philo *philo, char *status)
 {
-    printf("entered philo_think\n");
-    print_status(philo, "is thinking");
+    pthread_mutex_lock(&philo->data->print);
+    if (philo->data->end)
+    {
+        pthread_mutex_unlock(&philo->data->print);
+        return ;
+    }
+    printf("%lld %d %s\n", get_time(), philo->philo_no, status);
+    pthread_mutex_unlock(&philo->data->print);
 }
