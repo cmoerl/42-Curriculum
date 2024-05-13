@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 15:57:48 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:47:55 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
     long                max_meals;
     t_philo             *philos;
     t_fork              *forks;
+    pthread_t           monitor;
     long long           start_time;
     pthread_mutex_t     print;
     int                 end;
@@ -96,7 +97,8 @@ void	    *ft_memcpy(void *dest, const void *src, size_t n);
 
 /* monitor */
 
-/* void        monitor_routine(t_data *data); */
+void        create_monitor(t_data *data);
+void        monitor_routine(t_data *data);
 
 /* status */
 

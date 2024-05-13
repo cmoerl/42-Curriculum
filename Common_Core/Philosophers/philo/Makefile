@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 19:46:54 by csturm            #+#    #+#              #
-#    Updated: 2024/05/13 15:58:19 by csturm           ###   ########.fr        #
+#    Updated: 2024/05/13 16:57:43 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SOURCE_FILES := main.c \
 				dinner_routine/philo_think.c dinner_routine/philo_routine.c \
 				threads/create_threads.c threads/join_threads.c \
 				status/print_status.c \
-				# monitor/monitor_routine.c \
+				monitor/monitor_routine.c monitor/create_monitor.c \
 
 OBJECTS := $(SOURCE_FILES:%.c=$(OBJECTS_PATH)%.o)
 

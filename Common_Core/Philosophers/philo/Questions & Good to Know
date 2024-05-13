@@ -7,3 +7,4 @@
 - have mutex_lock within print_status so that there is not word scramble
 - also print when somebody takes a fork
 - use Marians script to count meals
+- EXIT IS FORBIDDEN!!

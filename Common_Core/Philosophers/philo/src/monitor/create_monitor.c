@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   create_monitor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 17:24:49 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 16:53:45 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/13 16:23:55 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/13 16:26:02 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void	*philo_routine(void *philo)
+void    create_monitor(t_data *data)
 {
-    t_philo	*p;
-
-    p = (t_philo *)philo;
-    // wait_for_threads(p->data); /* necessary? */
-    while (!p->data->end)
-    {
-        if (p->full)
-            continue ;
-        philo_eat(p);
-        philo_sleep(p);
-        philo_think(p);
-    }
-    return (NULL);
+    if (pthread_create(&data->monitor, NULL, (void *)monitor_routine, data) != 0)
+        error(ERR_THREAD, data);
 }
