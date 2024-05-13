@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 19:46:54 by csturm            #+#    #+#              #
-#    Updated: 2024/05/10 13:49:49 by csturm           ###   ########.fr        #
+#    Updated: 2024/05/13 15:58:19 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SOURCE_FILES := main.c \
 				initialisation/init_data.c initialisation/init_forks.c initialisation/init_philos.c \
 				minilib/ft_atoi_long.c minilib/ft_isdigit.c minilib/ft_strlen.c minilib/ft_strncmp.c \
 				minilib/ft_iswhitespace.c minilib/ft_memcpy.c \
-				time/get_time.c \
+				time/get_time.c time/get_start_time.c \
 				dinner_routine/dinner.c dinner_routine/philo_eat.c dinner_routine/philo_sleep.c \
 				dinner_routine/philo_think.c dinner_routine/philo_routine.c \
 				threads/create_threads.c threads/join_threads.c \

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   get_start_time.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 17:24:49 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 15:43:37 by csturm           ###   ########.fr       */
+/*   Created: 2024/05/13 15:54:15 by csturm            #+#    #+#             */
+/*   Updated: 2024/05/13 15:54:21 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void	*philo_routine(void *philo)
+long long get_start_time(void)
 {
-    t_philo	*p;
+    struct timeval start_time;
+    long long       milliseconds;
 
-    p = (t_philo *)philo;
-    // wait_for_threads(p->data); /* necessary? */
-    while (!p->data->end)
-    {
-        philo_eat(p);
-        philo_sleep(p);
-        philo_think(p);
-    }
-    return (NULL);
+    gettimeofday(&start_time, NULL);
+    milliseconds = ((long long)start_time.tv_sec * 1000) + ((long long)start_time.tv_usec / 1000);
+    return (milliseconds);
 }

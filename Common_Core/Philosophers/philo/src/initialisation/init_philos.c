@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:24:13 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/10 16:05:05 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:56:56 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void    init_philos(t_data *data)
     while (i < data->philo_count)
     {
         data->philos[i].philo_no = i + 1;
-        printf("philo_no: %d\n", data->philos[i].philo_no);
-        data->philos[i].prev_meal = get_time();
+        data->philos[i].prev_meal = get_time(data->start_time);
         if (data->philos[i].prev_meal == -1)
             error(ERR_TIME, data);
         data->philos[i].meals = 0;

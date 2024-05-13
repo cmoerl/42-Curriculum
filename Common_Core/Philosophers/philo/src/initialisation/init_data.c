@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:42:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 15:39:51 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:54:01 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void    init_data(t_data *data, int argc, char **argv)
         free(data->philos);
         error(ERR_MALLOC, data);
     }
-    data->start_time = get_time();
+    data->start_time = get_start_time();
     if (data->start_time == -1)
     {
         free(data->philos);

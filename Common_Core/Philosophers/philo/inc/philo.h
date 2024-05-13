@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/10 14:52:45 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:57:48 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_data
     long                max_meals;
     t_philo             *philos;
     t_fork              *forks;
-    int                 start_time;
+    long long           start_time;
     pthread_mutex_t     print;
     int                 end;
 } t_data;
@@ -82,7 +82,8 @@ void        join_threads(t_data *data);
 
 /* time */
 
-long long   get_time(void);
+long long   get_time(long long start_time);
+long long   get_start_time(void);
 
 /* mini library */
 
