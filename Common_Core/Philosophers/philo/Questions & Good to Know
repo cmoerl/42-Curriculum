@@ -1,10 +1,13 @@
-- How large may the arguments be? Larger than INT_MAX? --> no larger than INT_MAX
-- Check for different kinds of inputs like "          +77$%"
-- Is there a minimum time? (Like 60 ms?) YES, but no checker necessary
-- odd philos take left fork first, even philos take right fork first
-- have routine functions in create_threads
+x - How large may the arguments be? Larger than INT_MAX? --> no larger than INT_MAX
+? - Check for different kinds of inputs like "          +77$%"
+x - Is there a minimum time? (Like 60 ms?) YES, but no checker necessary
+x - odd philos take left fork first, even philos take right fork first
+x - have routine functions in create_threads
 - join all threads at end of program
-- have mutex_lock within print_status so that there is not word scramble
-- also print when somebody takes a fork
+x - have mutex_lock within print_status so that there is not word scramble
+x - also print when somebody takes a fork
 - use Marians script to count meals
 - EXIT IS FORBIDDEN!!
+- There should be a mutex to prevent a philo from starting to eat and dying at the same time
+- the program should stop when there is only one philo and he dies
+- one philo should die for "./philo 2 400 200 200"

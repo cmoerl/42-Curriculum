@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:40:41 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 16:34:43 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:03:02 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void    check_if_dead(t_data *data)
         error(ERR_TIME, data);
     while (i < data->philo_count)
     {
-        if (time - data->philos[i].prev_meal > data->time_to_die)
+        if (time - data->philos[i].prev_meal > data->time_to_die && !data->philos[i].full)
         {
             print_status(&data->philos[i], "died");
             data->end = 1;
