@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:52:45 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 16:52:09 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:31:46 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void    philo_eat(t_philo *philo)
 {
     take_forks(philo);
     print_status(philo, "is eating");
-    usleep(philo->data->time_to_eat);
+    philo->prev_meal = get_time(philo->data->start_time) + philo->data->time_to_eat;
+    usleep(philo->data->time_to_eat * 1000);
     philo->meals++;
     if (philo->meals == philo->data->max_meals)
         philo->full = 1;

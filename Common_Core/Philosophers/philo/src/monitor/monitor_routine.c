@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:40:41 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 16:57:55 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:34:43 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void    check_if_full(t_data *data)
 static void    check_if_dead(t_data *data)
 {
     int i;
-    int time;
+    long time;
 
     i = 0;
     time = get_time(data->start_time);
@@ -45,10 +45,8 @@ static void    check_if_dead(t_data *data)
     {
         if (time - data->philos[i].prev_meal > data->time_to_die)
         {
-            pthread_mutex_lock(&data->philos[i].mutex);
             print_status(&data->philos[i], "died");
             data->end = 1;
-            pthread_mutex_unlock(&data->philos[i].mutex);
             break ;
         }
         i++;

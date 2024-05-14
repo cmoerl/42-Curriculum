@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 16:47:55 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:08:58 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_philo
     t_fork          *left_fork;
     t_fork          *right_fork;
     int             meals;
-    long long       prev_meal;
+    long            prev_meal;
     int             full;
     pthread_t       thread_no;
     pthread_mutex_t mutex;

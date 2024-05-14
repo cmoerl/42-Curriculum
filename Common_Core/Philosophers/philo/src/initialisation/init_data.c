@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:42:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 15:54:01 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:15:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void    init_data(t_data *data, int argc, char **argv)
 {
     check_args(argv, data);
     data->philo_count = ft_atoi_long(argv[1]);
-    data->time_to_die = ft_atoi_long(argv[2]) * 1000;
-    data->time_to_eat = ft_atoi_long(argv[3]) * 1000;
-    data->time_to_sleep = ft_atoi_long(argv[4]) * 1000;
+    data->time_to_die = ft_atoi_long(argv[2]);
+    data->time_to_eat = ft_atoi_long(argv[3]);
+    data->time_to_sleep = ft_atoi_long(argv[4]);
     if (!data->philo_count || !data->time_to_die || !data->time_to_eat || !data->time_to_sleep)
         error(ERR_DIG, data);
     if (argc == 6)
