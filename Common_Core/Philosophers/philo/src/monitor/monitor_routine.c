@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:40:41 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 17:03:02 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:56:42 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void    check_if_full(t_data *data)
     }
 }
 
-static void    check_if_dead(t_data *data)
+static int    check_if_dead(t_data *data)
 {
     int i;
     long time;
@@ -40,7 +40,7 @@ static void    check_if_dead(t_data *data)
     i = 0;
     time = get_time(data->start_time);
     if (time == -1)
-        error(ERR_TIME, data);
+        return (error(ERR_TIME), 1);
     while (i < data->philo_count)
     {
         if (time - data->philos[i].prev_meal > data->time_to_die && !data->philos[i].full)
@@ -51,6 +51,7 @@ static void    check_if_dead(t_data *data)
         }
         i++;
     }
+    return (0);
 }
 
 void    monitor_routine(t_data *data)
@@ -64,7 +65,8 @@ void    monitor_routine(t_data *data)
             if (data->end)
                 break ;
         }
-        check_if_dead(data);
+        if (check_if_dead(data))
+            break ;
         if (data->end)
             break ;
         usleep(1000);

@@ -6,16 +6,13 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:31:57 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/09 16:42:25 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:00:36 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    error(char *msg, t_data *data)
+void    error(char *msg)
 {
     printf("Error: %s\n", msg);
-    if (data)
-        free_data(data);
-    exit(1);
 }

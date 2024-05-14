@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:46:23 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 17:09:24 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:04:45 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 void    join_threads(t_data *data)
 {
     int i;
+    int err;
 
     i = 0;
+    err = 0;
     while (i < data->philo_count)
     {
         if (pthread_join(data->philos[i].thread_no, NULL) != 0)
-            error(ERR_THREAD, data);
+            err = 1;
         i++;
     }
     if (pthread_join(data->monitor, NULL) != 0)
-        error(ERR_THREAD, data);
+        err = 1;
+    if (err)
+        error(ERR_THREAD);
 }

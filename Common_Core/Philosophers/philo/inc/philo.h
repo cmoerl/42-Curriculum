@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 16:08:58 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:17:34 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,18 @@ typedef struct s_data
 
 /* error management */
 
-void        error(char *msg, t_data *data);
+void        error(char *msg);
 void        free_data(t_data *data);
 
 /* initialisation */
 
-void        init_data(t_data *data, int argc, char **argv);
-void        init_forks(t_data *data);
-void        init_philos(t_data *data);
+int         init_data(t_data *data, int argc, char **argv);
+int         init_forks(t_data *data);
+int         init_philos(t_data *data);
 
 /* threads */
 
-void        create_threads(t_data *data);
+int         create_threads(t_data *data);
 void        join_threads(t_data *data);
 
 /* time */
@@ -97,7 +97,7 @@ void	    *ft_memcpy(void *dest, const void *src, size_t n);
 
 /* monitor */
 
-void        create_monitor(t_data *data);
+int         create_monitor(t_data *data);
 void        monitor_routine(t_data *data);
 
 /* status */

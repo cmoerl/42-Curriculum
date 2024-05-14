@@ -6,13 +6,13 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:42:54 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 15:44:43 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:17:21 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    create_threads(t_data *data)
+int    create_threads(t_data *data)
 {
     int i;
 
@@ -20,7 +20,8 @@ void    create_threads(t_data *data)
     while (i < data->philo_count)
     {
         if (pthread_create(&data->philos[i].thread_no, NULL, philo_routine, &data->philos[i]) != 0)
-            error(ERR_THREAD, data);
+            return (error(ERR_THREAD), 1);
         i++;
     }
+    return (0);
 }

@@ -11,3 +11,4 @@ x - also print when somebody takes a fork
 - There should be a mutex to prevent a philo from starting to eat and dying at the same time
 - the program should stop when there is only one philo and he dies
 - one philo should die for "./philo 2 400 200 200"
+- mutex lock for error messages needed
