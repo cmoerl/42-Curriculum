@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:28:58 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 17:50:55 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:21:14 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 {
     t_data data;
 
+    data = (t_data){0};
     if (argc != 5 && argc != 6)
         return (error(ERR_NUM_ARGS), 1);
     if (init_data(&data, argc, argv))

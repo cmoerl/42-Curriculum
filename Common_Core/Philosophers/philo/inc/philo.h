@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 18:17:34 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:21:53 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_data t_data;
 typedef struct s_fork
 {
     pthread_mutex_t mutex;
+    int             mutex_init;
     int             fork_no;
 } t_fork;
 
@@ -47,6 +48,7 @@ typedef struct s_philo
     int             full;
     pthread_t       thread_no;
     pthread_mutex_t mutex;
+    int             mutex_init;
     t_data          *data;
 } t_philo;
 
@@ -62,6 +64,7 @@ typedef struct s_data
     pthread_t           monitor;
     long long           start_time;
     pthread_mutex_t     print;
+    int                 print_init;
     int                 end;
 } t_data;
 

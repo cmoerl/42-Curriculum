@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:42:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 18:19:13 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/15 18:02:31 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ static int check_args(char **argv)
     {
         tmp = *argv;
         num = extract_number(&tmp);
-        if (!*num || !num)
+        if (!num)
+            return (1);
+        if (!*num)
             return (error(ERR_DIG), 1);
         if (check_overflow(num))
             return (error(ERR_NUM_OF), 1);
@@ -82,8 +84,10 @@ int    init_data(t_data *data, int argc, char **argv)
         data->max_meals = ft_atoi_long(argv[5]);
     else
         data->max_meals = -1;
+    data->print_init = 0;
     if (pthread_mutex_init(&data->print, NULL) != 0)
-        return (error(ERR_MUTEX), 1);    
+        return (error(ERR_MUTEX), 1);
+    data->print_init = 1;  
     data->philos = NULL;
     data->forks = NULL;
     data->philos = malloc(sizeof(t_philo) * data->philo_count);

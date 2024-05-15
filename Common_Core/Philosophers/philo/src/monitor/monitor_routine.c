@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:40:41 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 17:56:42 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:56:50 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static void    check_if_full(t_data *data)
     i = 0;
     while (i < data->philo_count)
     {
+        pthread_mutex_lock(&data->philos[i].mutex);
         if (data->philos[i].meals >= data->max_meals)
             full_philos++;
+        pthread_mutex_unlock(&data->philos[i].mutex);
         i++;
     }
     if (full_philos == data->philo_count)
@@ -43,12 +45,15 @@ static int    check_if_dead(t_data *data)
         return (error(ERR_TIME), 1);
     while (i < data->philo_count)
     {
+        pthread_mutex_lock(&data->philos[i].mutex);
         if (time - data->philos[i].prev_meal > data->time_to_die && !data->philos[i].full)
         {
             print_status(&data->philos[i], "died");
             data->end = 1;
+            pthread_mutex_unlock(&data->philos[i].mutex);
             break ;
         }
+        pthread_mutex_unlock(&data->philos[i].mutex);
         i++;
     }
     return (0);
@@ -56,7 +61,6 @@ static int    check_if_dead(t_data *data)
 
 void    monitor_routine(t_data *data)
 {
-    /* wait until all threads are running? */
     while (!data->end)
     {
         if (data->max_meals != -1)
