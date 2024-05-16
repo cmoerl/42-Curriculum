@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/16 15:21:02 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:24:59 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void	    *philo_routine(void *philo);
 void        philo_sleep(t_philo *philo);
 void        philo_eat(t_philo *philo);
 void        philo_think(t_philo *philo);
+void        one_philo(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 19:46:54 by csturm            #+#    #+#              #
-#    Updated: 2024/05/13 16:57:43 by csturm           ###   ########.fr        #
+#    Updated: 2024/05/16 16:25:19 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SOURCE_FILES := main.c \
 				minilib/ft_iswhitespace.c minilib/ft_memcpy.c \
 				time/get_time.c time/get_start_time.c \
 				dinner_routine/dinner.c dinner_routine/philo_eat.c dinner_routine/philo_sleep.c \
-				dinner_routine/philo_think.c dinner_routine/philo_routine.c \
+				dinner_routine/philo_think.c dinner_routine/philo_routine.c dinner_routine/one_philo.c \
 				threads/create_threads.c threads/join_threads.c \
 				status/print_status.c \
 				monitor/monitor_routine.c monitor/create_monitor.c \
