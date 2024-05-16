@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:38:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/16 16:24:18 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:43:51 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void    dinner(t_data *data)
 {
-    if (data->philo_count == 1)
-    {
-        one_philo(data);
-        return ;
-    }
     if (data->max_meals == 0)
         return ;
     if (create_threads(data))
