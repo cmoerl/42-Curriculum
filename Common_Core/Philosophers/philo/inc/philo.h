@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/15 17:21:53 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:21:02 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define ERR_NUM_ARGS "Invalid number of arguments"
 #define ERR_DIG "Invalid argument, must be a positive number"
-#define ERR_NUM_OF "Invalid number, must be between 0 and 2147483647"
+#define ERR_NUM_OF "Invalid number, must be between 1 and 2147483647"
 #define ERR_MALLOC "Malloc failed"
 #define ERR_TIME "Failed to get time"
 #define ERR_MUTEX "Failed to init mutex"

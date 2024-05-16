@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:42:36 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/15 18:02:31 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:35:22 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,47 +24,28 @@ static int check_overflow(const char *str)
     return (0);
 }
 
-static char *extract_number(char **argv)
-{
-    char    *start;
-    char    *end;
-    char    *num;
-    size_t  len;
-
-    while (**argv && ft_iswhitespace(**argv))
-        (*argv)++;
-    if (**argv == '+')
-        (*argv)++;
-    start = *argv;
-    while (**argv && ft_isdigit(**argv))
-        (*argv)++;
-    end = *argv;
-    len = end - start;
-    num = malloc(len + 1);
-    if (!num)
-        return (error(ERR_MALLOC), NULL);
-    ft_memcpy(num, start, len);
-    num[len] = '\0';
-    return (num);
-}
-
 static int check_args(char **argv)
 {
-    char    *num;
     char    *tmp;
+    char    *num;
 
     argv++;
     while (*argv)
     {
         tmp = *argv;
-        num = extract_number(&tmp);
-        if (!num)
-            return (1);
-        if (!*num)
-            return (error(ERR_DIG), 1);
+        while (ft_iswhitespace(*tmp))
+            tmp++;
+        if (*tmp == '+')
+            tmp++;
+        num = tmp;
+        while (*tmp)
+        {
+            if (!ft_isdigit((unsigned char)*tmp))
+                return (error(ERR_DIG), 1);
+            tmp++;
+        }
         if (check_overflow(num))
             return (error(ERR_NUM_OF), 1);
-        free(num);
         argv++;
     }
     return (0);

@@ -1,5 +1,5 @@
-x - How large may the arguments be? Larger than INT_MAX? --> no larger than INT_MAX
-? - Check for different kinds of inputs like "          +77$%"
+x - How large may the arguments be? Larger than INT_MAX? --> no larger than INT_MAX --> change minimum to 1
+- Check for different kinds of inputs like "          +77$%" --> NO
 x - Is there a minimum time? (Like 60 ms?) YES, but no checker necessary
 x - odd philos take left fork first, even philos take right fork first
 x - have routine functions in create_threads
@@ -12,3 +12,4 @@ x - EXIT IS FORBIDDEN!!
 - the program should stop when there is only one philo and he dies
 - one philo should die for "./philo 2 400 200 200"
 - mutex lock for error messages needed
+- take care of letters at end of numbers
