@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 19:46:54 by csturm            #+#    #+#              #
-#    Updated: 2024/05/17 17:21:05 by csturm           ###   ########.fr        #
+#    Updated: 2024/05/17 17:32:29 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,23 +42,28 @@ all: $(NAME)
 # Linking the Program
 $(NAME): $(OBJECTS)
 	@$(COMPILER) $(FLAGS) $(OBJECTS) -o $(NAME)
+	@echo "linking successfull - executable $(NAME) created"
 
 # Compiling Source Files
 $(OBJECTS_PATH)%.o: $(SOURCES_PATH)%.c
 	@mkdir -p $(@D)
 	@$(COMPILER) $(FLAGS) -c $< -o $@
+	@echo "$< compiled successfully"
 
 # Cleaning Up Object Files
 clean:
 	@$(CLEANUP) $(OBJECTS)
 	@$(CLEANUP) $(OBJECTS_PATH)
+	@echo "object cleanup completed"
 
 # Full Clean-Up
 fclean: clean
 	@$(CLEANUP) $(NAME)
+	@echo "$(NAME) cleanup completed"
 
 # Recompile the Projects
 re: fclean all
+	@echo "recompilation completed"
 
 # Phony Targets
 .PHONY: all clean fclean re
