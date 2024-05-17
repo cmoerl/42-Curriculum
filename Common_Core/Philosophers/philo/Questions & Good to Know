@@ -11,6 +11,6 @@ x - EXIT IS FORBIDDEN!!
 - There should be a mutex to prevent a philo from starting to eat and dying at the same time
 x - the program should stop when there is only one philo and he dies
 x - one philo should die for "./philo 2 400 200 200"
-- mutex lock for error messages needed
+x - mutex lock for error messages needed
 x - take care of letters at end of numbers
 - put compiler messages Makefile

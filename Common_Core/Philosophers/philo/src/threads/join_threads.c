@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:46:23 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/14 18:04:45 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:19:06 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void    join_threads(t_data *data)
     if (pthread_join(data->monitor, NULL) != 0)
         err = 1;
     if (err)
-        error(ERR_THREAD);
+        error(ERR_THREAD, data);
 }

@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:40:41 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/15 17:56:50 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:18:37 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int    check_if_dead(t_data *data)
     i = 0;
     time = get_time(data->start_time);
     if (time == -1)
-        return (error(ERR_TIME), 1);
+        return (error(ERR_TIME, data), 1);
     while (i < data->philo_count)
     {
         pthread_mutex_lock(&data->philos[i].mutex);

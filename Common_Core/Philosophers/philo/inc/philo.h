@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/16 16:24:59 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/17 17:20:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_data
 
 /* error management */
 
-void        error(char *msg);
+void        error(char *msg, t_data *data);
 void        free_data(t_data *data);
 
 /* initialisation */
@@ -114,6 +114,5 @@ void	    *philo_routine(void *philo);
 void        philo_sleep(t_philo *philo);
 void        philo_eat(t_philo *philo);
 void        philo_think(t_philo *philo);
-void        one_philo(t_data *data);
 
 #endif
