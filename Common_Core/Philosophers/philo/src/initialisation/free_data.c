@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:35:40 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/18 13:55:39 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/18 14:19:28 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	destroy_and_free(t_data *data, int philo)
 {
 	int	i;
 
+	i = 0;
 	while (i < data->philo_count)
 	{
 		if (philo && data->philos[i].mutex_init)

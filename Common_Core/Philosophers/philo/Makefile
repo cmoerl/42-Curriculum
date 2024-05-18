@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 19:46:54 by csturm            #+#    #+#              #
-#    Updated: 2024/05/17 17:32:29 by csturm           ###   ########.fr        #
+#    Updated: 2024/05/18 14:37:08 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,16 +23,15 @@ SOURCES_PATH := src/
 # Source and Object Files
 
 SOURCE_FILES := main.c \
-				error_management/error.c error_management/free_data.c \
 				initialisation/init_data.c initialisation/init_forks.c initialisation/init_philos.c \
+				initialisation/free_data.c \
 				minilib/ft_atoi_long.c minilib/ft_isdigit.c minilib/ft_strlen.c minilib/ft_strncmp.c \
 				minilib/ft_iswhitespace.c minilib/ft_memcpy.c \
-				time/get_time.c time/get_start_time.c \
-				dinner_routine/dinner.c dinner_routine/philo_eat.c dinner_routine/philo_sleep.c \
-				dinner_routine/philo_think.c dinner_routine/philo_routine.c \
-				threads/create_threads.c threads/join_threads.c \
-				status/print_status.c \
 				monitor/monitor_routine.c monitor/create_monitor.c \
+				philos/philo_eat.c philos/philo_routine.c philos/philo_sleep.c philos/philo_think.c \
+				printing/error.c printing/print_status.c \
+				threads/create_threads.c threads/join_threads.c \
+				time/get_time.c time/get_start_time.c \
 
 OBJECTS := $(SOURCE_FILES:%.c=$(OBJECTS_PATH)%.o)
 

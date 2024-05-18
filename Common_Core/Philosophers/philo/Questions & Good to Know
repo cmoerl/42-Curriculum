@@ -14,3 +14,4 @@ x - one philo should die for "./philo 2 400 200 200"
 x - mutex lock for error messages needed
 x - take care of letters at end of numbers
 x - put compiler messages Makefile
+- why does my program, when successful not work with valgrind?
