@@ -8,7 +8,7 @@ x - have mutex_lock within print_status so that there is not word scramble
 x - also print when somebody takes a fork
 - use Marians script to count meals
 x - EXIT IS FORBIDDEN!!
-- There should be a mutex to prevent a philo from starting to eat and dying at the same time
+x - There should be a mutex to prevent a philo from starting to eat and dying at the same time
 x - the program should stop when there is only one philo and he dies
 x - one philo should die for "./philo 2 400 200 200"
 x - mutex lock for error messages needed
