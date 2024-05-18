@@ -6,7 +6,7 @@ x - have routine functions in create_threads
 x - join all threads at end of program
 x - have mutex_lock within print_status so that there is not word scramble
 x - also print when somebody takes a fork
-- use Marians script to count meals
+x - use Marians script to count meals
 x - EXIT IS FORBIDDEN!!
 x - There should be a mutex to prevent a philo from starting to eat and dying at the same time
 x - the program should stop when there is only one philo and he dies
