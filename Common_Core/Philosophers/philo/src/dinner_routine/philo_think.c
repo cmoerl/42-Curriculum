@@ -6,13 +6,13 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:52:31 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/13 15:43:56 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/18 13:22:12 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-void    philo_think(t_philo *philo)
+void	philo_think(t_philo *philo)
 {
-    print_status(philo, "is thinking");
+	print_status(philo, "is thinking");
 }
