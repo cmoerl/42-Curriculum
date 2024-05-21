@@ -15,7 +15,8 @@ x - mutex lock for error messages needed
 x - take care of letters at end of numbers
 x - put compiler messages Makefile
 - why does my program, when successful not work with valgrind?
-- dies but shouldn't: ./philo 18 180 85 85 10
+x - dies but shouldn't: ./philo 18 180 85 85 10
+- dies but shouldn't: ./philo 5 800 200 200 2 (sometimes)
 
 Test results:
 
