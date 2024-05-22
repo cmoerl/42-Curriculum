@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:24:49 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/21 16:36:21 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:13:38 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ void	*philo_routine(void *philo)
 		usleep(100);
 	while (!p->data->end)
 	{
+		pthread_mutex_lock(&p->mutex);
 		if (p->full)
+		{
+			pthread_mutex_unlock(&p->mutex);
+			usleep (1000);
 			continue ;
+		}
+		pthread_mutex_unlock(&p->mutex);
 		philo_eat(p);
 		if (p->data->philo_count == 1)
 			return (NULL);

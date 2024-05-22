@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:40:41 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/18 18:27:37 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:56:16 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void	monitor_routine(t_data *data)
 			break ;
 		if (data->end)
 			break ;
+		usleep(1000);
 	}
 }
