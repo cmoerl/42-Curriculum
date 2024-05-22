@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:52:45 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/21 17:23:49 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:33:21 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void	take_forks(t_philo *philo)
 {
 	while (1)
 	{
-		printf("philo %d: %lld\n", philo->philo_no, get_time(philo->data->start_time) - philo->prev_meal);
-		if (get_time(philo->data->start_time) - philo->prev_meal > philo->data->time_to_die / 10 || hungriest_philo(philo) == 1)
+		if (hungriest_philo(philo) == 1)
 		{
 			if (philo->philo_no % 2 == 0)
 			{
@@ -73,7 +72,7 @@ static void	take_forks(t_philo *philo)
 void	philo_eat(t_philo *philo)
 {
 	take_forks(philo);
-	if (philo->data->philo_count == 1)
+	if (philo->data->philo_count == 1 || philo->data->end)
 		return ;
 	print_status(philo, "is eating");
 	pthread_mutex_lock(&philo->mutex);
