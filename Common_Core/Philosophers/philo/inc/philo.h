@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:11:15 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/18 13:45:33 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:06:19 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int			ft_isdigit(int c);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_iswhitespace(int c);
-void		*ft_memcpy(void *dest, const void *src, size_t n);
 
 /* monitor */
 
