@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 21:52:45 by csturm            #+#    #+#             */
-/*   Updated: 2024/05/22 15:33:21 by csturm           ###   ########.fr       */
+/*   Updated: 2024/05/23 14:37:47 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	handle_single_philo(t_philo *philo)
 
 static void	take_forks(t_philo *philo)
 {
-	while (1)
+	while (!philo->data->end)
 	{
 		if (hungriest_philo(philo) == 1)
 		{
@@ -61,11 +61,7 @@ static void	take_forks(t_philo *philo)
 			break ;
 		}
 		else
-		{
 			usleep(100);
-		}
-		if (philo->data->end)
-			return ;
 	}
 }
 
