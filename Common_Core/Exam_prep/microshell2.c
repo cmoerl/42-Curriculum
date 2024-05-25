@@ -3,7 +3,7 @@
 int	error(char *msg)
 {
 	while (*msg)
-		write (2, msg++, 1);
+		write(2, msg++, 1);
 	return (1);
 }
 
@@ -12,7 +12,7 @@ int	cd(char **argv, int i)
 	if (i != 2)
 		return (error("error: cd: bad arguments\n"));
 	if (chdir(argv[1]) == -1)
-		return (error("error: cd: cannot change directory to "), error (argv[1]), error("\n"));
+		return (error("error: cd: cannot change directory to "), error(argv[1]), error("\n"));
 	return (0);
 }
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 			while (argv[i] && strcmp(argv[i], "|") && strcmp(argv[i], ";"))
 				i++;
 			if (!strcmp(*argv, "cd"))
-				status = cd (argv, i);
+				status = cd(argv, i);
 			else if (i)
 				status = exec(argv, envp, i);
 		}
