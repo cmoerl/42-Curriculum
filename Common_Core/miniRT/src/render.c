@@ -6,31 +6,38 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:03:05 by csturm            #+#    #+#             */
-/*   Updated: 2024/06/19 17:03:29 by csturm           ###   ########.fr       */
+/*   Updated: 2024/06/21 13:16:51 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-void	render(t_scene *scene)
-{
-    t_ray	ray;
-    t_color	color;
-    int		x;
-    int		y;
+/*
+- take a t_scene struct
+- iterate over the screen pixels
+- get the ray for each pixel
+- trace the ray and get the color
+- put the color on the screen
+- repeat until all pixels are colored
+- show the image 
+*/
 
+void    render_scene(t_scene scene)
+{
+    int x;
+    int y;
+
+    x = 0;
     y = 0;
-    while (y < scene->res.y)
+    while (y < scene.height)
     {
-        x = 0;
-        while (x < scene->res.x)
+        while (x < scene.width)
         {
-            ray = get_ray(scene, x, y);
-            color = trace_ray(scene, ray, 0);
-            my_mlx_pixel_put(scene, x, y, color);
+            // get ray
+            // trace ray
+            // put color on screen
             x++;
         }
         y++;
     }
-    mlx_put_image_to_window(scene->mlx, scene->win, scene->img, 0, 0);
 }

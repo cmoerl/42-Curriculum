@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 16:56:02 by csturm            #+#    #+#             */
-/*   Updated: 2024/06/21 13:00:11 by csturm           ###   ########.fr       */
+/*   Created: 2024/06/21 12:31:27 by csturm            #+#    #+#             */
+/*   Updated: 2024/06/21 12:55:54 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-int main(int argc, char **argv)
-{
-    t_scene scene;
+/* 
+- print an error message
+- exit the program (cleanly)
+*/
 
-    if (argc != 2)
-    {
-        printf(stderr, "Error: Wrong number of arguments\n");
-        return (1);
-    }
-    scene = parse_scene(argv[1], scene);
-    render_scene(scene);
-    return (0);
+void    clean_exit(t_scene *scene)
+{
+    free(scene->spheres);
+    free(scene->planes);
+    free(scene->cylinders);
+}
+
+void    error(char *message, t_scene *scene)
+{
+    printf(stderr, "Error: %s\n", message);
+    clean_exit(scene);
+    exit(1);
 }

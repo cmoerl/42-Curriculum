@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:42:57 by csturm            #+#    #+#             */
-/*   Updated: 2024/06/19 16:59:28 by csturm           ###   ########.fr       */
+/*   Updated: 2024/06/21 13:16:13 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #define MINIRT_H
 
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <mlx.h>
+#include "mlx.h"
 
 typedef struct s_color
 {
@@ -67,9 +74,7 @@ typedef struct s_light
 typedef struct s_camera
 {
     t_vector center;
-    float normal_x;
-    float normal_y;
-    float normal_z;
+    t_vector normal;
     float fov;
 } t_camera;
 
@@ -78,9 +83,15 @@ typedef struct s_scene
     t_sphere *spheres;
     t_plane *planes;
     t_cylinder *cylinders;
-    t_amblight *amblight;
-    t_light *lights;
-    t_camera *cameras;
+    t_amblight amblight;
+    t_light light;
+    t_camera camera;
+    int width;
+    int height;
 } t_scene;
+
+t_scene parse_scene(char *filename, t_scene scene);
+void render_scene(t_scene scene);
+void    error(char *message, t_scene *scene);
 
 #endif
