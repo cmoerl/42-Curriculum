@@ -1,31 +1,29 @@
-﻿42 Common Core Projects
+# ﻿42 Common Core Projects
 
 Welcome to my 42 Common Core projects repository! This repository contains a collection of projects that I have completed as part of the 42 School curriculum. Each project demonstrates various skills and concepts that I have learned, including algorithmic thinking, low-level programming, and more.
 
 
-Table of Contents
+## Table of Contents
 
     Introduction
     Projects
         Libft
         ft_printf
         get_next_line
-        Born2beroot
         push_swap
         pipex
         fract-ol
         philosophers
-        NetPractice
 
 
-Introduction
+## Introduction
 
 This repository showcases the various projects I have completed as part of the 42 Common Core curriculum. Each project focuses on different aspects of programming and computer science, allowing me to develop a broad range of skills. These projects are designed to be challenging and require a deep understanding of the underlying concepts.
 
 
-Projects
+## Projects
 
-Libft
+### Libft
 
 Description: The Libft project involves recreating several standard C library functions from scratch.
 
@@ -39,7 +37,7 @@ Skills Learned:
 Repository: Common_Core/Libft
 
 
-ft_printf
+### ft_printf
 
 Description: The ft_printf project involves creating a custom implementation of the printf function.
 
@@ -52,7 +50,7 @@ Skills Learned:
 Repository: Common_Core/ft_printf
 
 
-get_next_line
+### get_next_line
 
 Description: The get_next_line project focuses on reading a line from a file descriptor.
 
@@ -65,7 +63,7 @@ Skills Learned:
 Repository: Common_Core/get_next_line
 
 
-push_swap
+### push_swap
 
 Description: The push_swap project involves creating a sorting algorithm using a limited set of operations on a stack data structure.
 
@@ -78,7 +76,7 @@ Skills Learned:
 Repository: Common_Core/push_swap
 
 
-pipex
+### pipex
 
 Description: The pipex project involves creating a simplified version of the Unix pipeline.
 
@@ -91,7 +89,7 @@ Skills Learned:
 Repository: Common_Core/pipex
 
 
-fract-ol
+### fract-ol
 
 Description: The fract-ol project involves creating fractal images.
 
@@ -104,7 +102,7 @@ Skills Learned:
 Repository: Common_Core/fract-ol
 
 
-philosophers
+### philosophers
 
 Description: The philosophers project involves solving the classic dining philosophers problem.
 
