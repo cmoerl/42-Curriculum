@@ -1,6 +1,8 @@
-**42 Common Core Projects**
+﻿42 Common Core Projects
 
-Welcome to my 42 Common Core projects repository! This repository contains a collection of projects that I have completed as part of the 42 School curriculum. Each project demonstrates various skills and concepts that I have learned, including algorithmic thinking, low-level programming, system administration, and more.
+Welcome to my 42 Common Core projects repository! This repository contains a collection of projects that I have completed as part of the 42 School curriculum. Each project demonstrates various skills and concepts that I have learned, including algorithmic thinking, low-level programming, and more.
+
+
 Table of Contents
 
     Introduction
@@ -14,18 +16,18 @@ Table of Contents
         fract-ol
         philosophers
         NetPractice
-    Acknowledgments
-    Contact
 
-**Introduction**
+
+Introduction
 
 This repository showcases the various projects I have completed as part of the 42 Common Core curriculum. Each project focuses on different aspects of programming and computer science, allowing me to develop a broad range of skills. These projects are designed to be challenging and require a deep understanding of the underlying concepts.
 
-**Projects**
+
+Projects
 
 Libft
 
-Description: The Libft project involves recreating several standard C library functions from scratch. This project helped me understand the inner workings of commonly used functions and improved my understanding of memory management, string manipulation, and data structures.
+Description: The Libft project involves recreating several standard C library functions from scratch.
 
 Skills Learned:
 
@@ -34,11 +36,12 @@ Skills Learned:
     String and data manipulation
     Data structures (linked lists, etc.)
 
-Repository: Libft
+Repository: Common_Core/Libft
+
 
 ft_printf
 
-Description: The ft_printf project involves creating a custom implementation of the printf function. This project taught me about variadic functions, formatted output, and handling different data types.
+Description: The ft_printf project involves creating a custom implementation of the printf function.
 
 Skills Learned:
 
@@ -46,11 +49,12 @@ Skills Learned:
     Formatted output
     Handling various data types
 
-Repository: ft_printf
+Repository: Common_Core/ft_printf
+
 
 get_next_line
 
-Description: The get_next_line project focuses on reading a line from a file descriptor. This project improved my understanding of file I/O, buffer management, and efficient data handling.
+Description: The get_next_line project focuses on reading a line from a file descriptor.
 
 Skills Learned:
 
@@ -58,23 +62,12 @@ Skills Learned:
     Buffer management
     Efficient data handling
 
-Repository: get_next_line
+Repository: Common_Core/get_next_line
 
-Born2beroot
-
-Description: The Born2beroot project involves setting up a virtual machine and configuring it to be secure and efficient. This project introduced me to system administration, operating systems, and network security.
-
-Skills Learned:
-
-    System administration
-    Operating systems
-    Network security
-
-Repository: Born2beroot
 
 push_swap
 
-Description: The push_swap project involves creating a sorting algorithm using a limited set of operations on a stack data structure. This project enhanced my algorithmic thinking and problem-solving skills.
+Description: The push_swap project involves creating a sorting algorithm using a limited set of operations on a stack data structure.
 
 Skills Learned:
 
@@ -82,11 +75,12 @@ Skills Learned:
     Problem-solving
     Stack data structure
 
-Repository: push_swap
+Repository: Common_Core/push_swap
+
 
 pipex
 
-Description: The pipex project involves creating a simplified version of the Unix pipeline. This project helped me understand process creation, inter-process communication, and handling pipes.
+Description: The pipex project involves creating a simplified version of the Unix pipeline.
 
 Skills Learned:
 
@@ -94,11 +88,12 @@ Skills Learned:
     Inter-process communication
     Handling pipes
 
-Repository: pipex
+Repository: Common_Core/pipex
+
 
 fract-ol
 
-Description: The fract-ol project involves creating fractal images. This project introduced me to graphics programming, mathematical concepts, and optimization techniques.
+Description: The fract-ol project involves creating fractal images.
 
 Skills Learned:
 
@@ -106,11 +101,12 @@ Skills Learned:
     Mathematical concepts
     Optimization techniques
 
-Repository: fract-ol
+Repository: Common_Core/fract-ol
+
 
 philosophers
 
-Description: The philosophers project involves solving the classic dining philosophers problem. This project helped me understand concurrency, threading, and synchronization.
+Description: The philosophers project involves solving the classic dining philosophers problem.
 
 Skills Learned:
 
@@ -118,16 +114,4 @@ Skills Learned:
     Threading
     Synchronization
 
-Repository: philosophers
-
-NetPractice
-
-Description: The NetPractice project involves configuring and troubleshooting a small network. This project enhanced my knowledge of networking principles, IP addressing, and routing.
-
-Skills Learned:
-
-    Networking principles
-    IP addressing
-    Routing
-
-Repository: NetPractice
+Repository: Common_Core/philosophers
