@@ -34,7 +34,7 @@ Skills Learned:
     String and data manipulation
     Data structures (linked lists, etc.)
 
-Repository: Common_Core/Libft
+Repository: [Libft](Common_Core/Libft)
 
 
 ### ft_printf
@@ -47,7 +47,7 @@ Skills Learned:
     Formatted output
     Handling various data types
 
-Repository: Common_Core/ft_printf
+Repository: [ft_printf](Common_Core/ft_printf)
 
 
 ### get_next_line
@@ -60,7 +60,7 @@ Skills Learned:
     Buffer management
     Efficient data handling
 
-Repository: Common_Core/get_next_line
+Repository: [get_next_line](Common_Core/get_next_line)
 
 
 ### push_swap
@@ -73,7 +73,7 @@ Skills Learned:
     Problem-solving
     Stack data structure
 
-Repository: Common_Core/push_swap
+Repository: [push_swap](Common_Core/push_swap)
 
 
 ### pipex
@@ -86,7 +86,7 @@ Skills Learned:
     Inter-process communication
     Handling pipes
 
-Repository: Common_Core/pipex
+Repository: [pipex](Common_Core/pipex)
 
 
 ### fract-ol
@@ -99,7 +99,7 @@ Skills Learned:
     Mathematical concepts
     Optimization techniques
 
-Repository: Common_Core/fract-ol
+Repository: [fract-ol](Common_Core/fract-ol)
 
 
 ### philosophers
@@ -112,4 +112,4 @@ Skills Learned:
     Threading
     Synchronization
 
-Repository: Common_Core/philosophers
+Repository: [philosophers](Common_Core/philosophers)
