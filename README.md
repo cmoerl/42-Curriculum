@@ -74,6 +74,7 @@ Skills Learned:
     Stack data structure
 
 Repository: [push_swap](Common_Core/push_swap)
+<!-- add explanation of usage and result -->
 
 
 ### pipex
@@ -87,6 +88,7 @@ Skills Learned:
     Handling pipes
 
 Repository: [pipex](Common_Core/pipex)
+<!-- add syntax: ./pipex infile "cmd" "cmd" outfile -->
 
 
 ### fract-ol
@@ -100,7 +102,8 @@ Skills Learned:
     Optimization techniques
 
 Repository: [fract-ol](Common_Core/fract-ol)
-
+<!-- add how to use (keys and mouse) -->
+<!-- add how get and use minilibx -->
 
 ### philosophers
 
@@ -113,3 +116,4 @@ Skills Learned:
     Synchronization
 
 Repository: [philosophers](Common_Core/philosophers)
+<!-- add instructions on how to use mealcount -->
