@@ -34,7 +34,7 @@ ft_printf is a custom implementation of the standard C library function printf. 
 
 To compile the ft_printf library, clone the repository and run make:
 
-    git clone https://github.com/yourusername/ft_printf.git
+    git clone https://github.com/cmoerl/ft_printf.git
     cd ft_printf
     make
 

@@ -32,7 +32,7 @@ char *get_next_line(int fd);
 
 To compile the get_next_line library, clone the repository and run make:
 
-    git clone https://github.com/yourusername/get_next_line.git
+    git clone https://github.com/cmoerl/get_next_line.git
     cd get_next_line
     make
 

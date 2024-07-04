@@ -21,7 +21,7 @@ Libft is a custom implementation of many functions from the standard C library, 
 
 To compile the libft library, clone the repository and run make:
 
-    git clone https://github.com/yourusername/libft.git
+    git clone https://github.com/cmoerl/libft.git
     cd libft
     make
 
