@@ -18,7 +18,8 @@ Fract-ol is a graphical program that explores the beauty of fractals. By utilizi
 
     GCC or another C compiler
     Make
-    MiniLibX library <!-- needs to be linked -->
+    MiniLibX library 
+    <!-- needs to be linked -->
 
 ### Compilation
 
