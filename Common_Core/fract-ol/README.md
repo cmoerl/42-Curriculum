@@ -19,7 +19,10 @@ Fract-ol is a graphical program that explores the beauty of fractals. By utilizi
     GCC or another C compiler
     Make
     MiniLibX library 
-<!-- needs to be linked -->
+
+#### MiniLibX Library
+
+Fract-ol utilizes the MiniLibX library, a simple and easy-to-use library that provides basic graphics functionality. You can obtain the library from [this repository](https://github.com/42Paris/minilibx-linux). After downloading, place the library files in the fract-ol directory.
 
 ### Compilation
 
