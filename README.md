@@ -14,6 +14,9 @@ Welcome to my 42 Common Core projects repository! This repository contains a col
         pipex
         fract-ol
         philosophers
+        non-coding projects
+            Born2beroot
+            NetPractice
 
 
 ## Introduction
@@ -74,7 +77,6 @@ Skills Learned:
     Stack data structure
 
 Repository: [push_swap](Common_Core/push_swap)
-<!-- add explanation of usage and result -->
 
 
 ### pipex
@@ -88,7 +90,6 @@ Skills Learned:
     Handling pipes
 
 Repository: [pipex](Common_Core/pipex)
-<!-- add syntax: ./pipex infile "cmd" "cmd" outfile -->
 
 
 ### fract-ol
@@ -102,8 +103,7 @@ Skills Learned:
     Optimization techniques
 
 Repository: [fract-ol](Common_Core/fract-ol)
-<!-- add how to use (keys and mouse) -->
-<!-- add how get and use minilibx -->
+
 
 ### philosophers
 
@@ -116,4 +116,29 @@ Skills Learned:
     Synchronization
 
 Repository: [philosophers](Common_Core/philosophers)
-<!-- add instructions on how to use mealcount -->
+
+
+### non-coding projects
+
+Repository: [non-coding_projects](Common_Core/non-coding_projects)
+
+#### Born2beroot
+
+Description: The Born2beroot project is an intensive system administration exercise. It involves setting up a virtual machine using VirtualBox and configuring a server with strict guidelines. This project focuses on learning the essentials of virtualization, system security, and server management.
+
+Skills Learned:
+
+    Virtualization with VirtualBox
+    Operating system configuration
+    Security practices (SSH, firewalls, password policies)
+    System monitoring and maintenance
+
+#### NetPractice
+
+Description: The NetPractice project is designed to provide a practical understanding of networking fundamentals. Participants configure small-scale networks to solve specific problems, focusing on TCP/IP addressing and network configuration through a web-based training interface.
+
+Skills Learned:
+
+    TCP/IP addressing and subnetting
+    Network configuration and troubleshooting
+    Practical problem-solving in networking
