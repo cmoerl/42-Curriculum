@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:55:17 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/17 12:23:47 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:58:26 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ void    PhoneBook::printContactShort(int index) const
 
 void    PhoneBook::printContactLong(int index) const
 {
-    std::cout << "First name: " << _contacts[index].getFirstName() << std::endl;
-    std::cout << "Last name: " << _contacts[index].getLastName() << std::endl;
-    std::cout << "Nickname: " << _contacts[index].getNickname() << std::endl;
-    std::cout << "Phone number: " << _contacts[index].getPhoneNumber() << std::endl;
-    std::cout << "Darkest secret: " << _contacts[index].getDarkestSecret() << std::endl;
+    std::cout << "First name: " << _contacts[index].getFirstName() << "\n";
+    std::cout << "Last name: " << _contacts[index].getLastName() << "\n";
+    std::cout << "Nickname: " << _contacts[index].getNickname() << "\n";
+    std::cout << "Phone number: " << _contacts[index].getPhoneNumber() << "\n";
+    std::cout << "Darkest secret: " << _contacts[index].getDarkestSecret() << "\n";
 }

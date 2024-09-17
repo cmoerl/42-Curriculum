@@ -1,0 +1,60 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/09/17 14:42:42 by csturm            #+#    #+#              #
+#    Updated: 2024/09/17 14:55:23 by csturm           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# Project Name and Compiler Settings
+NAME := zombie
+COMPILER := c++
+FLAGS := -Wall -Wextra -Werror -g -std=c++98
+CLEANUP := rm -rf
+
+# Directory Paths
+OBJECTS_PATH := obj/
+
+# Source and Object Files
+SOURCE_FILES := main.cpp \
+				Zombie.cpp \
+				newZombie.cpp \
+				randomChump.cpp
+
+OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
+
+# Build the Project
+all: $(NAME)
+
+# Linking the Program
+$(NAME): $(OBJECTS)
+	@$(COMPILER) $(FLAGS) $(OBJECTS) -o $(NAME)
+	@echo "linking successful - executable $(NAME) created"
+
+# Compiling Source Files
+$(OBJECTS_PATH)%.o: %.cpp
+	@mkdir -p $(@D)
+	@$(COMPILER) $(FLAGS) -c $< -o $@
+	@echo "$< compiled successfully"
+
+# Cleaning Up Object Files
+clean:
+	@$(CLEANUP) $(OBJECTS)
+	@$(CLEANUP) $(OBJECTS_PATH)
+	@echo "object cleanup completed"
+
+# Full Clean-Up
+fclean: clean
+	@$(CLEANUP) $(NAME)
+	@echo "cleanup completed"
+
+# Recompile the Projects
+re: fclean all
+	@echo "recompilation completed"
+
+# Phony Targets
+.PHONY: all clean fclean re
