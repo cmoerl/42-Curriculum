@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:55:17 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/16 15:55:29 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/17 12:23:47 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ void    PhoneBook::searchContact() const
     }
     
     std::string input;
-    std::cout << "Enter index: ";
+    std::cout << "Enter index of contact to display: ";
     std::getline(std::cin, input);
     std::stringstream ss(input);
     int index;
     ss >> index;
     if (ss.fail() || !ss.eof())
     {
-        std::cerr << "Invalid index\n";
+        std::cerr << "Invalid index\nReturning to menu\n";
         return;
     }
     if (index >= 0 && index < _index)
@@ -100,18 +100,18 @@ void    PhoneBook::searchContact() const
 
 void    PhoneBook::printContactShort(int index) const
 {
-    std::string first_name = _contacts[index].getFirstName();
-    if (first_name.length() > 10)
-        first_name = first_name.substr(0, 9) + ".";
-    std::string last_name = _contacts[index].getLastName();
-    if (last_name.length() > 10)
-        last_name = last_name.substr(0, 9) + ".";
+    std::string firstName = _contacts[index].getFirstName();
+    if (firstName.length() > 10)
+        firstName = firstName.substr(0, 9) + ".";
+    std::string lastName = _contacts[index].getLastName();
+    if (lastName.length() > 10)
+        lastName = lastName.substr(0, 9) + ".";
     std::string nickname = _contacts[index].getNickname();
     if (nickname.length() > 10)
         nickname = nickname.substr(0, 9) + ".";
     std::cout << "|" << std::setw(10) << index << "|";
-    std::cout << std::setw(10) << first_name << "|";
-    std::cout << std::setw(10) << last_name << "|";
+    std::cout << std::setw(10) << firstName << "|";
+    std::cout << std::setw(10) << lastName << "|";
     std::cout << std::setw(10) << nickname << "|\n";
 }
 
