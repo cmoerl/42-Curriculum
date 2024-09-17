@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:48:01 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/17 14:55:07 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:11:51 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,5 @@ void Zombie::announce()
 {
     std::cout << _name << ": BraiiiiiiinnnzzzZ...\n";
 }
+
+
