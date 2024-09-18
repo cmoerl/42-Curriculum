@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 11:25:55 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/17 10:32:25 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/18 10:56:24 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int main(int argc, char **argv)
         std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n";
         return (0);
     }
-    for (int i = 1; argv[i] != NULL; i++)
+    for (int i = 1; i < argc; i++)
     {
         for (int j = 0; argv[i][j] != '\0'; j++)
             std::cout << static_cast<char>(toupper(argv[i][j]));
-        if (argv[i + 1] != NULL)
+        if (i + 1 < argc)
             std::cout << " ";
     }
     std::cout << "\n";
