@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 12:56:49 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/18 15:26:15 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:28:03 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int main()
 {
-    Zombie* zombie = Zombie::newZombie("Braineater");
+    Zombie* zombie = newZombie("Braineater");
     zombie->announce();
-    zombie->randomChump("Moaner");
+    randomChump("Moaner");
     delete zombie;
     return (0);
 }

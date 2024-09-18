@@ -1,13 +1,19 @@
+#ifndef ZOMBIE_HPP
+#define ZOMBIE_HPP
+
 #include <string>
 
 class Zombie
 {
     public:
         void    announce();
-        static Zombie* newZombie(std::string name);
-        static void    randomChump(std::string name);
+        Zombie(std::string name);
         ~Zombie();
     private:
-        Zombie(std::string name);
         std::string _name;
 };
+
+Zombie* newZombie(std::string name);
+void    randomChump(std::string name);
+
+#endif
