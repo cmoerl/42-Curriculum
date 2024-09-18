@@ -6,16 +6,15 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:55:17 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/17 13:58:26 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/18 13:05:05 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-#include <iostream>
-#include <iomanip>
-#include <sstream>
 
 PhoneBook::PhoneBook() : _index(0){}
+
+PhoneBook::~PhoneBook() {}
 
 void    PhoneBook::addContact()
 {

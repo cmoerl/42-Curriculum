@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/16 13:45:34 by csturm            #+#    #+#              #
-#    Updated: 2024/09/16 15:59:07 by csturm           ###   ########.fr        #
+#    Updated: 2024/09/18 13:04:16 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name and Compiler Settings
 NAME := phonebook
 COMPILER := c++
-FLAGS := -Wall -Wextra -Werror -g -std=c++98
+FLAGS := -Wall -Wextra -Werror -g -std=c++98 -pedantic
 CLEANUP := rm -rf
 
 # Directory Paths

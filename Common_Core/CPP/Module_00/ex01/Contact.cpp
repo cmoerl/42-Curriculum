@@ -6,12 +6,11 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:24:42 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/16 15:55:43 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/18 13:05:14 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-#include <iostream>
 
 Contact::Contact() {}
 
