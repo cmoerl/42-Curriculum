@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/16 11:20:03 by csturm            #+#    #+#              #
-#    Updated: 2024/09/16 11:25:26 by csturm           ###   ########.fr        #
+#    Updated: 2024/09/18 13:35:44 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name and Compiler Settings
 NAME := megaphone
 COMPILER := c++
-FLAGS := -Wall -Wextra -Werror -g -std=c++98
+FLAGS := -Wall -Wextra -Werror -g -std=c++98 -pedantic
 CLEANUP := rm -rf
 
 # Source and Object Files
