@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 11:41:17 by csturm            #+#    #+#              #
-#    Updated: 2024/09/17 11:44:27 by csturm           ###   ########.fr        #
+#    Updated: 2024/09/18 13:39:12 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name and Compiler Settings
 NAME := test
 COMPILER := c++
-FLAGS := -Wall -Wextra -Werror -g -std=c++98
+FLAGS := -Wall -Wextra -Werror -g -std=c++98 -pedantic
 CLEANUP := rm -rf
 
 # Source and Object Files

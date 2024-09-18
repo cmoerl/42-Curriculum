@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:19:34 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/17 13:57:04 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/18 13:40:33 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ Account::Account() : _amount(0), _nbDeposits(0), _nbWithdrawals(0)
 {
 }
 
+// class methods
+
 void Account::makeDeposit(int deposit)
 {
     _displayTimestamp();
@@ -50,8 +52,6 @@ void Account::makeDeposit(int deposit)
     _nbDeposits++;
     std::cout << ";amount:" << _amount << ";nb_deposits:" << _nbDeposits << "\n";
 }
-
-// class methods
 
 bool Account::makeWithdrawal(int withdrawal)
 {
