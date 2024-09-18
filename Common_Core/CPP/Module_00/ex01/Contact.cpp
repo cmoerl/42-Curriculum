@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 14:24:42 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/18 13:05:14 by csturm           ###   ########.fr       */
+/*   Updated: 2024/09/18 13:29:43 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool    Contact::setPhoneNumber(const std::string& phoneNumber)
         i++;
     for (; phoneNumber[i] != '\0'; i++)
     {
-        if (!std::isdigit(phoneNumber[i]))
+        if (!std::isdigit(phoneNumber[i]) && phoneNumber[i] != ' ')
         {
             std::cerr << "Invalid phone number\n";
             return (false);
