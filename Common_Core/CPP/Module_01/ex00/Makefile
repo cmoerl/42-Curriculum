@@ -6,14 +6,14 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 14:42:42 by csturm            #+#    #+#              #
-#    Updated: 2024/09/17 14:55:23 by csturm           ###   ########.fr        #
+#    Updated: 2024/09/18 15:20:36 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project Name and Compiler Settings
 NAME := zombie
 COMPILER := c++
-FLAGS := -Wall -Wextra -Werror -g -std=c++98
+FLAGS := -Wall -Wextra -Werror -g -std=c++98 -pedantic
 CLEANUP := rm -rf
 
 # Directory Paths
