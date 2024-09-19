@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/17 14:42:42 by csturm            #+#    #+#              #
-#    Updated: 2024/09/18 15:20:36 by csturm           ###   ########.fr        #
+#    Updated: 2024/09/19 12:37:27 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ OBJECTS_PATH := obj/
 # Source and Object Files
 SOURCE_FILES := main.cpp \
 				Zombie.cpp \
-				newZombie.cpp \
-				randomChump.cpp
+				zombieHorde.cpp
 
 OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
 
