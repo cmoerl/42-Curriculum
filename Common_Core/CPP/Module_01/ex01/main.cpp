@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:43:12 by csturm            #+#    #+#             */
-/*   Updated: 2024/09/19 12:26:56 by csturm           ###   ########.fr       */
+/*   Updated: 2024/10/07 11:31:50 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ int main()
     for (int i = 0; i < zombies; i++)
         horde[i].announce();
     deleteZombies(horde, zombies);
+    return (0);
 }
