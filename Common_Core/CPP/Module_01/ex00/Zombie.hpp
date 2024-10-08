@@ -6,9 +6,9 @@
 class Zombie
 {
     public:
-        void    announce();
         Zombie(std::string name);
         ~Zombie();
+        void    announce();
     private:
         std::string _name;
 };
