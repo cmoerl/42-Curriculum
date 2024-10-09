@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:06:40 by csturm            #+#    #+#             */
-/*   Updated: 2024/10/08 11:26:36 by csturm           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:58:49 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int main(int argc, char **argv)
     if (argc != 4)
     {
         std::cout << "This program takes three parameters: a file name and two strings\n";
+        return (1);
+    }
+    if (std::string(argv[2]).empty())
+    {
+        std::cout << "Error: cannot replace empty string\n";
         return (1);
     }
     std::ifstream file(argv[1]);
