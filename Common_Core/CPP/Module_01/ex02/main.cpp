@@ -6,7 +6,7 @@
 /*   By: csturm <csturm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 11:36:35 by csturm            #+#    #+#             */
-/*   Updated: 2024/10/09 10:26:08 by csturm           ###   ########.fr       */
+/*   Updated: 2024/10/09 11:32:30 by csturm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,3 @@ int main()
     
     Cannot reference another reference (pointer to a pointer). 
     */
-    
