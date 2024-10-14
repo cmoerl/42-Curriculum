@@ -2,6 +2,7 @@
 #define POINT_HPP
 
 #include "Fixed.hpp"
+#include <string>
 
 class Point
 {
@@ -12,9 +13,14 @@ class Point
         Point(const float x, const float y);
         ~Point();
 
+        void    setX(Fixed const x);
+        void    setY(Fixed const y);
+        Fixed   getX() const;
+        Fixed   getY() const;
+
     private:
-        const Fixed _x;
-        const Fixed _y;
+        Fixed _x;
+        Fixed _y;
 };
 
 #endif
