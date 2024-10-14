@@ -17,5 +17,5 @@ bool bsp( Point const a, Point const b, Point const c, Point const point)
     Fixed   areaPBC = area(point, b, c);
     Fixed   areaPCA = area(point, c, a);
     // check if sum of sub-triangles equals area of the triangle
-    return (areaABC == (areaPAB + areaPBC + areaPCA));
+    return (areaABC == (areaPAB + areaPBC + areaPCA) && areaPAB != 0 && areaPBC != 0 && areaPCA != 0);
 }
