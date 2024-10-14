@@ -37,8 +37,10 @@ class Fixed
         Fixed   operator*(const Fixed &fp)const;
         Fixed   operator/(const Fixed &fp)const;
 
+        // post de- and increment
         Fixed   operator++(int);
         Fixed   operator--(int);
+        // pre de- and increment
         Fixed   &operator++();
         Fixed   &operator--();
 

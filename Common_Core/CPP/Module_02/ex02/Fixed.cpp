@@ -145,6 +145,7 @@ Fixed   Fixed::operator/(const Fixed &fp)const
     return (result);
 }
 
+// post de- and increment
 Fixed   Fixed::operator--(int)
 {
     Fixed   tmp = *this;
@@ -161,6 +162,7 @@ Fixed   Fixed::operator++(int)
     return (tmp);
 }
 
+// pre de- and increment
 Fixed   &Fixed::operator++()
 {
     this->_value++;
