@@ -1,0 +1,7 @@
+- each header should be able to be used independently from others
+--> include all dependencies needed
+--> avoid double inclusions by using include guards (?)
+
+ex00:
+- all functions should print, even constructor and destructor
+- go hard on the tests
