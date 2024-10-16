@@ -28,10 +28,10 @@ class ClapTrap
         bool    checkAbility() const;
 
     protected:
-        std::string          _name;
-        unsigned int         _hitPoints;
-        unsigned int         _energyPoints;
-        const unsigned int   _attackDamage;
+        std::string     _name;
+        unsigned int    _hitPoints;
+        unsigned int    _energyPoints;
+        unsigned int    _attackDamage;
 };
 
 #endif

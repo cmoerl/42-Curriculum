@@ -116,7 +116,7 @@ void    ClapTrap::beRepaired(unsigned int amount)
 {
     if (!ClapTrap::checkAbility())
         return ;
-    if (this->getHitPoints() + amount < 10)
+    if (this->getHitPoints() + amount < 100)
     {
         std::cout << "ClapTrap " << this->getName() << " repairs itself, gaining " 
         << amount << " hit points!" << std::endl;
@@ -126,7 +126,7 @@ void    ClapTrap::beRepaired(unsigned int amount)
     {
         std::cout << "ClapTrap " << this->getName() 
         << " repairs itself, gaining maximum health!" << std::endl;
-        setHitPoints(10);
+        setHitPoints(100);
     }
     this->setEnergyPoints(this->getEnergyPoints() - 1);
 }

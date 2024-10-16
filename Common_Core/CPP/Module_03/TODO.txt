@@ -5,3 +5,8 @@
 ex00:
 - all functions should print, even constructor and destructor
 - go hard on the tests
+
+ex01:
+- ScavTrap will inherit the constructors and deconstructor
+- they and attack() should print different messages
+- construction/destruction chaining must be shown
