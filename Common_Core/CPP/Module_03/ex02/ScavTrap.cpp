@@ -46,12 +46,14 @@ ScavTrap::~ScavTrap() {
 }
 
 void    ScavTrap::guardGate() {
+    if (!this->checkAbility())
+        return ;
     std::cout << "ScavTrap " << this->getName() 
     << " is now in Gate keeper mode!" << std::endl;
 }
 
 void    ScavTrap::attack(const std::string &target) {
-    if (!ScavTrap::checkAbility())
+    if (!this->checkAbility())
         return ;
     std::cout << "ScavTrap " << this->getName() << " attacks " 
     << target << ", causing " << this->getAttackDamage() 
