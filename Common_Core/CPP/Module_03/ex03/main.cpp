@@ -1,57 +1,67 @@
 #include "DiamondTrap.hpp"
 
-void    printFragTrap(FragTrap &robot)
+void    printDiamondTrap(DiamondTrap &robot, std::string name)
 {  
-    std::cout << robot.getName() << ": hit points (" << robot.getHitPoints() 
+    std::cout << name << ": hit points (" << robot.getHitPoints() 
     << "), energy points (" << robot.getEnergyPoints() << ")" << std::endl;
 }
 
 int main(void)
 {
-    DiamondTrap    frag("frag");
-    DiamondTrap    trap("trap");
+    DiamondTrap    diana("Diana");
+    DiamondTrap    mono("Mono");
 
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    frag.attack("enemy");
-    frag.takeDamage(5);
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    diana.attack("enemy");
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    frag.beRepaired(2);
-    trap.beRepaired(10);
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    diana.takeDamage(5);
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    trap.attack("enemy");
-    trap.takeDamage(10);
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    diana.beRepaired(2);
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    trap.attack("enemy");
-    trap.takeDamage(1);
-    trap.beRepaired(5);
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    mono.beRepaired(10);
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    for (int i = 0; i < 9; i++)
-        frag.attack("enemy");
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    mono.attack("enemy");
+    mono.takeDamage(110);
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    frag.highFivesGuys();
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    mono.attack("enemy");
+    mono.takeDamage(1);
+    mono.beRepaired(5);
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
 
-    frag.whoAmI();
+    for (int i = 0; i < 99; i++)
+        diana.attack("enemy");
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
+
+    diana.highFivesGuys();
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
+    std::cout << std::endl;
+
+    diana.whoAmI();
+    std::cout << std::endl;
 
     return (0);
 }

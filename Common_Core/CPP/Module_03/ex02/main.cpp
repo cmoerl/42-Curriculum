@@ -11,45 +11,45 @@ int main(void)
     FragTrap    frag("frag");
     FragTrap    trap("trap");
 
+    std::cout << std::endl;
     printFragTrap(frag);
     printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
+
+    frag.highFivesGuys();
+    trap.highFivesGuys();
+    printFragTrap(frag);
+    printFragTrap(trap);
+    std::cout << std::endl;
 
     frag.attack("enemy");
-    frag.takeDamage(5);
     printFragTrap(frag);
     printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
 
-    frag.beRepaired(2);
-    trap.beRepaired(10);
+    trap.takeDamage(100);
     printFragTrap(frag);
     printFragTrap(trap);
-    std::cout << "\n";
-
-    trap.attack("enemy");
-    trap.takeDamage(10);
-    printFragTrap(frag);
-    printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     trap.attack("enemy");
     trap.takeDamage(1);
     trap.beRepaired(5);
     printFragTrap(frag);
     printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < 100; i++)
         frag.attack("enemy");
     printFragTrap(frag);
     printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     frag.highFivesGuys();
+    trap.highFivesGuys();
     printFragTrap(frag);
     printFragTrap(trap);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     return (0);
 }
