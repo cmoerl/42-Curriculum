@@ -51,10 +51,6 @@ DiamondTrap::~DiamondTrap() {
         std::cout << "DiamondTrap named " << DiamondTrap::_name << " has been destroyed" << std::endl;
 }
 
-// std::string DiamondTrap::getName() const {
-//     return this->_name;
-// }
-
 void    DiamondTrap::whoAmI() {
     if (!this->checkAbility())
         return ;
