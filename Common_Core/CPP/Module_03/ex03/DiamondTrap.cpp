@@ -1,7 +1,7 @@
 #include "DiamondTrap.hpp"
 #include <string>
 
-DiamondTrap::DiamondTrap(): ClapTrap("_clap_name"), ScavTrap(), FragTrap() {
+DiamondTrap::DiamondTrap(): ClapTrap(), ScavTrap(), FragTrap() {
     this->_name = "";
     this->_hitPoints = FragTrap::_hitPoints;
     this->_energyPoints = ScavTrap::_energyPoints;
@@ -25,6 +25,7 @@ DiamondTrap &DiamondTrap::operator = (const DiamondTrap &copy) {
         ClapTrap::operator = (copy);
         ScavTrap::operator = (copy);
         FragTrap::operator = (copy);
+        this->_name = copy._name;
     }
     if (DiamondTrap::_name.empty())
         std::cout << "Copy of DiamondTrap has been assigned" << std::endl;
