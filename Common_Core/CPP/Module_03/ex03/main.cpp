@@ -14,6 +14,14 @@ int main(void)
     std::cout << std::endl;
     printDiamondTrap(diana, "Diana");
     printDiamondTrap(mono, "Mono");
+    diana.whoAmI();
+    mono.whoAmI();
+    std::cout << std::endl;
+
+    diana.highFivesGuys();
+    mono.guardGate();
+    printDiamondTrap(diana, "Diana");
+    printDiamondTrap(mono, "Mono");
     std::cout << std::endl;
 
     diana.attack("enemy");
@@ -55,12 +63,8 @@ int main(void)
     printDiamondTrap(mono, "Mono");
     std::cout << std::endl;
 
-    diana.highFivesGuys();
-    printDiamondTrap(diana, "Diana");
-    printDiamondTrap(mono, "Mono");
-    std::cout << std::endl;
-
     diana.whoAmI();
+    mono.whoAmI();
     std::cout << std::endl;
 
     return (0);
