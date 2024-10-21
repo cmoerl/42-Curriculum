@@ -1,7 +1,7 @@
 #include "Cat.hpp"
 
 Cat::Cat(): Animal() {
-    type = "cat";
+    type = "Cat";
     std::cout << "Cat default constructor" << std::endl;
 }
 

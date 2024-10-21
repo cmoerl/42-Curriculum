@@ -13,6 +13,7 @@ int main()
     std::cout << std::endl;
     const WrongAnimal*  wrongmeta = new WrongAnimal();
     const WrongAnimal*  k = new WrongCat();
+    const WrongCat*     l = new WrongCat();
     std::cout << std::endl;
 
     std::cout << j->getType() << " " << std::endl;
@@ -23,7 +24,9 @@ int main()
 
     std::cout << std::endl;
     std::cout << k->getType() << " " << std::endl;
+    std::cout << l->getType() << " " << std::endl;
     k->makeSound();
+    l->makeSound();
     wrongmeta->makeSound();
     std::cout << std::endl;
 
