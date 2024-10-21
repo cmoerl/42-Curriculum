@@ -12,6 +12,7 @@ Brain::Brain(const Brain &copy) {
         _ideas[i] = copy._ideas[i];
 }
 
+// remember to delete old brain if existing
 Brain &Brain::operator = (const Brain &copy) {
     std::cout << "Brain copy assignment operator" << std::endl;
     if (this != &copy) {
