@@ -10,10 +10,10 @@ OBJECTS_PATH := obj/
 # Source and Object Files
 SOURCE_FILES := main.cpp \
 				AMateria.cpp \
-				ICharacter.cpp \
-				ICure.cpp \
-				IIce.cpp \
-				IMateriaSource.cpp
+				Character.cpp \
+				Cure.cpp \
+				Ice.cpp \
+				MateriaSource.cpp
 
 OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
 
