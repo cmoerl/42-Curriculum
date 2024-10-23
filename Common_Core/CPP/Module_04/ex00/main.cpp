@@ -35,6 +35,7 @@ int main()
     delete j;
     delete wrongmeta;
     delete k;
+    delete l;
 
     return (0);
 }
