@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
 
 #include "ICharacter.hpp"
 
@@ -7,6 +8,8 @@ class   Character: public ICharacter
     private:
         AMateria    *_slots[4];
         std::string _name;
+        AMateria    *_unequipped[10];
+        int         _unequippedCount;
 
     protected:
 
@@ -23,3 +26,5 @@ class   Character: public ICharacter
         void        use(int idx, ICharacter &target);
 
 };
+
+#endif

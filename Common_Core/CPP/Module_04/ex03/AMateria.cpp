@@ -15,7 +15,7 @@ AMateria::AMateria(const AMateria &copy): type(copy.type) {
 AMateria &AMateria::operator = (const AMateria &copy) {
     std::cout << "AMateria copy assigment operator" << std::endl;
     if (this != &copy) {
-    //     type = copy.type;
+    //     do not copy type
     }
     return (*this);
 }

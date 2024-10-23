@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATERIASOURCE_HPP
+#define MATERIASOURCE_HPP
 
 #include "ICharacter.hpp"
 #include "IMateriaSource.hpp"
@@ -8,11 +9,7 @@ class   MateriaSource: public IMateriaSource
     private:
         AMateria    *_materias[4];
 
-    protected:
-
     public:
-        AMateria    *leftover[100];
-
         MateriaSource();
         MateriaSource(const MateriaSource &copy);
         MateriaSource &operator = (const MateriaSource &copy);
@@ -21,3 +18,5 @@ class   MateriaSource: public IMateriaSource
         void        learnMateria(AMateria*);
         AMateria    *createMateria(std::string const &type);
 };
+
+#endif
