@@ -1,23 +1,23 @@
 #include "Character.hpp"
 #include "AMateria.hpp"
 
-Character::Character(): _name(""), _unequippedCount(0) {
+Character::Character(): _name(""), _trashCount(0) {
     std::cout << "Character default constructor" << std::endl;
     for (int i = 0; i < 4; i++)
         _slots[i] = NULL;
-    for (int i = 0; i < 10; i++)
-        _unequipped[i] = NULL;
+    for (int i = 0; i < 100; i++)
+        _trash[i] = NULL;
 }
 
-Character::Character(std::string name): _name(name), _unequippedCount(0) {
+Character::Character(std::string name): _name(name), _trashCount(0) {
     std::cout << "Character parameterised constructor" << std::endl;
     for (int i = 0; i < 4; i++)
         _slots[i] = NULL;
-    for (int i = 0; i < 10; i++)
-        _unequipped[i] = NULL;
+    for (int i = 0; i < 100; i++)
+        _trash[i] = NULL;
 }
 
-Character::Character(const Character &copy): _name(copy._name), _unequippedCount(0) {
+Character::Character(const Character &copy): _name(copy._name), _trashCount(0) {
     std::cout << "Character copy constructor" << std::endl;
     for (int i = 0; i < 4; i++) {
         if (copy._slots[i])
@@ -25,16 +25,15 @@ Character::Character(const Character &copy): _name(copy._name), _unequippedCount
         else
             _slots[i] = NULL;
     }
-    for (int i = 0; i < 10; i++) {
-        _unequipped[i] = NULL;
-    }
+    for (int i = 0; i < 100; i++)
+        _trash[i] = NULL;
 }
 
 Character &Character::operator = (const Character &copy) {
     std::cout << "Character copy assignment constructor" << std::endl;
     if (this != &copy) {
         _name = copy._name;
-        _unequippedCount = 0;
+        _trashCount = 0;
         for (int i = 0; i < 4; i++) {
             if (_slots[i])
                 delete _slots[i];
@@ -43,9 +42,8 @@ Character &Character::operator = (const Character &copy) {
             else
                 _slots[i] = NULL;
         }
-        for (int i = 0; i < 10; i++) {
-            _unequipped[i] = NULL;
-        }
+        for (int i = 0; i < 100; i++)
+            _trash[i] = NULL;
     }
     return (*this);
 }
@@ -56,9 +54,9 @@ Character::~Character() {
         if (_slots[i])
             delete _slots[i];
     }
-    for (int i = 0; i < _unequippedCount; i++) {
-        if (_unequipped[i])
-            delete _unequipped[i];
+    for (int i = 0; i < _trashCount; i++) {
+        if (_trash[i])
+            delete _trash[i];
     }
 }
 
@@ -74,12 +72,28 @@ void        Character::equip(AMateria *m) {
     for (int i = 0; i < 4; i++) {
         if (!_slots[i]) {
             _slots[i] = m->clone();
-            delete m;
+            for (int j = 0; j < 100; j++) {
+                if (_trash[j] == m)
+                    break ;
+                else if (!_trash[j]) {
+                    _trash[j] = m;
+                    _trashCount++;
+                    break ;
+                }
+            }
             return ;
         }
     }
     std::cerr << "Error: Slots are full" << std::endl;
-    delete m;
+    for (int i = 0; i < 100; i++) {
+        if (_trash[i] == m)
+            break ;
+        else if (!_trash[i]) {
+            _trash[i] = m;
+            _trashCount++;
+            break ;
+        }
+    }
 }
 
 void        Character::unequip(int idx) { 
@@ -87,12 +101,14 @@ void        Character::unequip(int idx) {
         std::cerr << "Error: Could not unequip" << std::endl;
         return ;
     }
-    for (int i = 0; i < 10; i++) {
-        if (!_unequipped[i]) {
-            _unequipped[i] = _slots[idx];
-            _unequippedCount++;
-            break ;
-        }
+    for (int i = 0; i < 100; i++) {
+            if (_trash[i] == _slots[idx])
+                break ;
+            else if (!_trash[i]) {
+                _trash[i] = _slots[idx];
+                _trashCount++;
+                break ;
+            }
     }
     _slots[idx] = NULL;
 }

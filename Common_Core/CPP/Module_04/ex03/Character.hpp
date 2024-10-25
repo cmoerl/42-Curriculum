@@ -8,8 +8,8 @@ class   Character: public ICharacter
     private:
         AMateria    *_slots[4];
         std::string _name;
-        AMateria    *_unequipped[10];
-        int         _unequippedCount;
+        AMateria    *_trash[100];
+        int         _trashCount;
 
     protected:
 
@@ -18,7 +18,7 @@ class   Character: public ICharacter
         Character(std::string name);
         Character(const Character &copy);
         Character &operator = (const Character &copy);
-        ~Character();
+        virtual ~Character();
 
         std::string const &getName() const;
         void        equip(AMateria *m);
