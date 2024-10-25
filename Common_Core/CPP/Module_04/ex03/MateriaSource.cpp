@@ -41,7 +41,6 @@ MateriaSource::~MateriaSource() {
     }
 }
 
-// store the address?
 void        MateriaSource::learnMateria(AMateria* materia) {
     if (!materia) {
         std::cerr << "Error: No Materia to be learned" << std::endl;
@@ -50,10 +49,12 @@ void        MateriaSource::learnMateria(AMateria* materia) {
     for (int i = 0; i < 4; i++) {
         if (!_materias[i]) {
             _materias[i] = materia->clone();
+            delete materia;
             return ;
         }
     }
     std::cerr << "Error: No empty slot to learn Materia" << std::endl;
+    delete materia;
 }
 
 AMateria    *MateriaSource::createMateria(std::string const &type) {

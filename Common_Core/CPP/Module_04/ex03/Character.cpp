@@ -74,13 +74,14 @@ void        Character::equip(AMateria *m) {
     for (int i = 0; i < 4; i++) {
         if (!_slots[i]) {
             _slots[i] = m->clone();
+            delete m;
             return ;
         }
     }
     std::cerr << "Error: Slots are full" << std::endl;
+    delete m;
 }
 
-// store the address?
 void        Character::unequip(int idx) { 
     if (idx > 3 || idx < 0 || !_slots[idx]) {
         std::cerr << "Error: Could not unequip" << std::endl;
