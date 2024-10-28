@@ -8,12 +8,13 @@ CLEANUP := rm -rf
 OBJECTS_PATH := obj/
 
 # Source and Object Files
-SOURCE_FILES := main.cpp \
+SOURCE_FILES := main3.cpp \
 				AMateria.cpp \
 				Character.cpp \
 				Cure.cpp \
 				Ice.cpp \
-				MateriaSource.cpp
+				MateriaSource.cpp \
+				Trash.cpp
 
 OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
 

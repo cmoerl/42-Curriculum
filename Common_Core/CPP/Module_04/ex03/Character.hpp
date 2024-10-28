@@ -2,16 +2,14 @@
 #define CHARACTER_HPP
 
 #include "ICharacter.hpp"
+#include "Trash.hpp"
 
 class   Character: public ICharacter
 {
     private:
-        AMateria    *_slots[4];
-        std::string _name;
-        AMateria    *_trash[100];
-        int         _trashCount;
-
-    protected:
+        AMateria        *_slots[4];
+        std::string     _name;
+        static Trash    _trash;
 
     public:
         Character();

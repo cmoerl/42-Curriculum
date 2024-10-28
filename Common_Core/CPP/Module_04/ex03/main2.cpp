@@ -1,13 +1,3 @@
-/* 
-
-  change trash management to static linked list!
-  -> dynamic allocation
-
-*/
-
-
-
-
 #include "AMateria.hpp"
 #include "Character.hpp"
 #include "Cure.hpp"
@@ -16,14 +6,10 @@
 #include "Ice.hpp"
 #include "MateriaSource.hpp"
 
-void log(const char *text, std::ostream &type) {
-  type << RED << text << DEFAULT << std::endl;
-}
-
 
 int main() {
   {
-    T_RED("0. TESTING SUBJECT MAIN:", std::cout);
+    std::cout << "0. TESTING SUBJECT MAIN:" << std::endl;
     IMateriaSource *src = new MateriaSource();
     src->learnMateria(new Ice());
     src->learnMateria(new Cure());
@@ -42,35 +28,35 @@ int main() {
     std::cout << std::endl;
   }
   {
-    log("-Checking deep Copies", std::cout);
-    log("--copy assignment", std::cout);
+    std::cout << "-Checking deep Copies" << std::endl;
+    std::cout << "--copy assignment" << std::endl;
     ICharacter *bob = new Character("bob");
     // Character *bob = new Character("bob");
     bob->equip(new Cure());
     // Character *robbert = new Character(*bob);
     ICharacter *robbert = new Character(*dynamic_cast<Character *>(bob));
-    std::cout << "MATERIAS OF BOB: " << std::endl;
-    bob->print_mat_adress();
-    std::cout << "MATERIAS OF ROBBERT: " << std::endl;
-    robbert->print_mat_adress();
+    // std::cout << "MATERIAS OF BOB: " << std::endl;
+    // print_mat_adress(bob);
+    // std::cout << "MATERIAS OF ROBBERT: " << std::endl;
+    // robbert->print_mat_adress();
     delete robbert;
     delete bob;
     std::cout << std::endl;
-    log("--copy constructor", std::cout);
+    std::cout << "--copy constructor" << std::endl;
     ICharacter *steve = new Character("steve");
     ICharacter *jim = new Character("jim");
     steve->equip(new Ice());
     *jim = *steve;
-    std::cout << "MATERIAS OF JIM: " << std::endl;
-    jim->print_mat_adress();
-    std::cout << "MATERIAS OF STEVE: " << std::endl;
-    steve->print_mat_adress();
+    // std::cout << "MATERIAS OF JIM: " << std::endl;
+    // jim->print_mat_adress();
+    // std::cout << "MATERIAS OF STEVE: " << std::endl;
+    // steve->print_mat_adress();
     delete jim;
     delete steve;
     std::cout << std::endl;
   }
   {
-    log("-Testing LearnMateria. More than 4 spells", std::cout);
+    std::cout << "-Testing LearnMateria. More than 4 spells" << std::endl;
     IMateriaSource *src = new MateriaSource();
     src->learnMateria(new Ice());
     src->learnMateria(new Cure());
@@ -82,7 +68,7 @@ int main() {
     std::cout << std::endl;
   }
   {
-    log("-Testing CreateMateria. Unknown Materia", std::cout);
+    std::cout << "-Testing CreateMateria. Unknown Materia" << std::endl;
     AMateria *test;
     IMateriaSource *book = new MateriaSource();
     book->learnMateria(new Cure());
@@ -99,7 +85,7 @@ int main() {
     std::cout << std::endl;
   }
   {
-    log("-Testing equip/unequip and Max equip", std::cout);
+    std::cout << "-Testing equip/unequip and Max equip" << std::endl;
     AMateria *test;
     IMateriaSource *book = new MateriaSource();
     book->learnMateria(new Cure());
@@ -124,7 +110,7 @@ int main() {
     delete book;
   }
   {
-    log("-Testing use function on different character", std::cout);
+    std::cout << "-Testing use function on different character" << std::endl;
     IMateriaSource *book = new MateriaSource();
     book->learnMateria(new Ice());
     book->learnMateria(new Cure());
@@ -134,7 +120,7 @@ int main() {
     Mac->equip(book->createMateria("cure"));
     Charlie->use(0, *Mac);
     Mac->use(0, *Charlie);
-    log("--Invalid Index in use function", std::cout);
+    std::cout << "--Invalid Index in use function" << std::endl;
     Mac->use(-5, *Mac);
     Mac->use(2, *Mac);
     Mac->use(2000, *Mac);

@@ -3,14 +3,13 @@
 
 #include "ICharacter.hpp"
 #include "IMateriaSource.hpp"
+#include "Trash.hpp"
 
 class   MateriaSource: public IMateriaSource
 {
     private:
-        AMateria    *_materias[4];
-        AMateria    *_trash[100];
-        int         _trashCount;
-
+        AMateria        *_materias[4];
+        static Trash    _trash;
 
     public:
         MateriaSource();
