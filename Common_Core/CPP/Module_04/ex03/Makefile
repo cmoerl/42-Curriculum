@@ -8,7 +8,7 @@ CLEANUP := rm -rf
 OBJECTS_PATH := obj/
 
 # Source and Object Files
-SOURCE_FILES := main3.cpp \
+SOURCE_FILES := main.cpp \
 				AMateria.cpp \
 				Character.cpp \
 				Cure.cpp \
