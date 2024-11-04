@@ -1,4 +1,4 @@
-# ﻿42 Common Core Projects
+# 42 Common Core Projects
 
 Welcome to my 42 Common Core projects repository! This repository contains a collection of projects that I have completed as part of the 42 School curriculum. Each project demonstrates various skills and concepts that I have learned, including algorithmic thinking, low-level programming, and more.
 
@@ -13,7 +13,10 @@ Welcome to my 42 Common Core projects repository! This repository contains a col
         push_swap
         pipex
         fract-ol
+        minishell
         philosophers
+        miniRT
+        CPP
         non-coding projects
             Born2beroot
             NetPractice
@@ -105,6 +108,20 @@ Skills Learned:
 Repository: [fract-ol](Common_Core/fract-ol)
 
 
+### minishell
+
+Description: The minishell project involves creating a simple shell that can execute commands, handle redirections, and manage processes.
+
+Skills Learned:
+
+    Shell scripting
+    Process management
+    Command parsing
+    Signal handling
+
+Repository: [minishell](https://github.com/MarSonyTM/MINISHELL)
+
+
 ### philosophers
 
 Description: The philosophers project involves solving the classic dining philosophers problem.
@@ -116,6 +133,34 @@ Skills Learned:
     Synchronization
 
 Repository: [philosophers](Common_Core/philosophers)
+
+
+### miniRT
+
+Description: The miniRT project involves creating a simple ray tracer to render 3D scenes.
+
+Skills Learned:
+
+    Ray tracing
+    3D graphics programming
+    Mathematical concepts in computer graphics
+
+Repository: [miniRT](https://github.com/cmoerl/miniRT)
+
+
+### CPP
+
+Description: The 10 CPP mini-projects involve various aspects of C++ programming, covering fundamental to advanced concepts.
+
+Skills Learned:
+
+    Object-oriented programming
+    Memory management
+    Template programming
+    Standard Template Library (STL)
+    Design patterns
+
+Repository: [CPP](Common_Core/CPP)
 
 
 ### non-coding projects
