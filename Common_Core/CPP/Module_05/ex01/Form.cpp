@@ -21,8 +21,7 @@ Form::Form(std::string name, int reqSign, int reqEx): _name(name), _signed(false
         throw GradeTooLowException();
     else if (_reqSign < 1 || _reqEx < 1)
         throw GradeTooHighException();
-    std::cout << "Form " << getName() << " was created, with grade " << getReqSign() << 
-    " required to sign it and grade " << getReqEx() << " required to execute it" << std::endl;
+    std::cout << "Form " << getName() << " has been created" << std::endl;
 }
 
 Form::~Form() {
@@ -65,6 +64,6 @@ const char* Form::GradeTooLowException::what() const throw() {
 std::ostream &operator<<(std::ostream &out, const Form &f) {
     out << f.getName() << "\nrequired grade to sign: " << 
     f.getReqSign() << "\nrequired grade to execute: " << 
-    f.getReqEx() << "\n signed: " << f.getSigned();
+    f.getReqEx() << "\nstatus: " << (f.getSigned() ? "signed" : "not signed");
     return (out);
 }
