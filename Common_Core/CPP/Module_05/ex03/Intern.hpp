@@ -9,9 +9,17 @@ public:
     Intern();
     Intern(const Intern &copy);
     Intern &operator=(const Intern &copy);
-    AForm *makeForm(std::string name, std::string target);
     ~Intern();
 
+    AForm *makeForm(std::string name, std::string target);
+
+    class FormNotFoundException : public std::exception
+    {
+        public:
+            virtual const char *what() const throw();
+
+    };
+    
 };
 
 #endif

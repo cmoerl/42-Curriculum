@@ -30,6 +30,10 @@ AForm *createShrubberyCreationForm(std::string target) {
     return (new ShrubberyCreationForm(target));
 }
 
+Intern::~Intern() {
+    std::cout << "Intern destructor" << std::endl;
+}
+
 AForm *Intern::makeForm(std::string name, std::string target) {
     const std::string names[] = {"robotomy request", "presidential pardon", "shrubbery creation"};
     AForm *(*formCreators[])(std::string) = {createRobotomyRequestForm, createPresidentialPardonForm, createShrubberyCreationForm};
@@ -40,10 +44,10 @@ AForm *Intern::makeForm(std::string name, std::string target) {
             return formCreators[i](target);
         }
     }
-    std::cout << "Intern cannot create " << name << std::endl;
+    throw FormNotFoundException();
     return (NULL);
 }
 
-Intern::~Intern() {
-    std::cout << "Intern destructor" << std::endl;
+const char *Intern::FormNotFoundException::what() const throw() {
+    return ("form not found");
 }
