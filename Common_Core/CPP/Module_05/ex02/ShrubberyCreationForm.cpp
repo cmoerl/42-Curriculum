@@ -1,4 +1,5 @@
 #include "ShrubberyCreationForm.hpp"
+#include "Bureaucrat.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm(): AForm("default", 145, 137), _target("default") {
     std::cout << "ShrubberyCreationForm default constructor" << std::endl;
@@ -27,7 +28,11 @@ void ShrubberyCreationForm::beSigned(const Bureaucrat &b) {
     AForm::beSigned(b);
 }
 
-void ShrubberyCreationForm::action(void) const {
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
+    if (executor.getGrade() > _reqEx)
+        throw GradeTooLowException();
+    else if (!_signed)
+        throw FormNotSignedException();
     std::ofstream file((getTarget() + "_shrubbery").c_str());
     if (file.is_open()) {
         file << "      /\\      " << std::endl;
