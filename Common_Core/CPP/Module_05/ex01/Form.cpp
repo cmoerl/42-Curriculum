@@ -48,7 +48,7 @@ void        Form::beSigned(const Bureaucrat &b) {
     if (b.getGrade() <= _reqSign && _signed == false)
         _signed = true;
     else if (_signed == true)
-        std::cerr << "Form cannot be signed multiple times" << std::endl;
+        throw FormAlreadySignedException();
     else
         throw GradeTooLowException();
 }
@@ -59,6 +59,10 @@ const char* Form::GradeTooHighException::what() const throw() {
 
 const char* Form::GradeTooLowException::what() const throw() {
     return ("grade too low");
+}
+
+const char* Form::FormAlreadySignedException::what() const throw() {
+    return ("form already signed");
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &f) {

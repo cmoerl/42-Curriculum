@@ -43,6 +43,8 @@ int main()
         employee.signForm(registration);
 
         std::cout << registration << std::endl;
+
+        employee.signForm(registration);
     }
     catch (std::exception & e)
     {
