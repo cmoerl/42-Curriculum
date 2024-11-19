@@ -32,22 +32,30 @@ int main()
     try
     {
         Intern  someRandomIntern;
-        AForm*   form1;
+        AForm*   form1 = NULL;
 
-        form1 = someRandomIntern.makeForm("form1", "Bender");
-        std::cout << *form1 << std::endl;
+        try
+        {
+            form1 = someRandomIntern.makeForm("form1", "Bender");
+            std::cout << *form1 << std::endl;
 
-        Bureaucrat  employee("employee", 70);
-        std::cout << employee << std::endl;
-        employee.signForm(*form1);
-        employee.executeForm(*form1);
+            Bureaucrat  employee("employee", 70);
+            std::cout << employee << std::endl;
+            employee.signForm(*form1);
+            employee.executeForm(*form1);
 
-        Bureaucrat  boss("boss", 1);
-        std::cout << boss << std::endl;
-        boss.signForm(*form1);
-        boss.executeForm(*form1);
+            Bureaucrat  boss("boss", 1);
+            std::cout << boss << std::endl;
+            boss.signForm(*form1);
+            boss.executeForm(*form1);
+        }
+        catch (std::exception &e)
+        {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
 
-        delete form1;
+        if (form1)
+            delete form1;        
     }
     catch (std::exception &e)
     {
