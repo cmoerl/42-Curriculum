@@ -1,4 +1,6 @@
 #include "ShrubberyCreationForm.hpp"
+#include "Bureaucrat.hpp"
+#include <ios>
 
 ShrubberyCreationForm::ShrubberyCreationForm(): AForm("default", 145, 137), _target("default") {
     std::cout << "ShrubberyCreationForm default constructor" << std::endl;
@@ -27,33 +29,41 @@ void ShrubberyCreationForm::beSigned(const Bureaucrat &b) {
     AForm::beSigned(b);
 }
 
-void ShrubberyCreationForm::action(void) const {
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
+    if (executor.getGrade() > _reqEx)
+        throw GradeTooLowException();
+    else if (!_signed)
+        throw FormNotSignedException();
     std::ofstream file((getTarget() + "_shrubbery").c_str());
-    if (file.is_open()) {
-        file << "      /\\      " << std::endl;
-        file << "     /\\*\\     " << std::endl;
-        file << "    /\\O\\*\\    " << std::endl;
-        file << "   /*/\\/\\/\\   " << std::endl;
-        file << "  /\\O\\/\\*\\/\\  " << std::endl;
-        file << " /\\*\\/\\*\\/\\/\\ " << std::endl;
-        file << "/\\O\\/\\/*/\\/O/\\" << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file.close();
+    if (!file.is_open()) {
+        throw std::ios_base::failure("Failed to open file");
     }
+    try {
+        file << "      /\\      \n"
+            << "     /\\*\\     \n"
+            << "    /\\O\\*\\    \n"
+            << "   /*/\\/\\/\\   \n"
+            << "  /\\O\\/\\*\\/\\  \n"
+            << " /\\*\\/\\*\\/\\/\\ \n"
+            << "/\\O\\/\\/*/\\/O/\\\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n";
+    }
+    catch (const std::ios_base::failure &e) {
+        file.close();
+        throw e;
+    }
+    file.close();
 }
 
 std::string ShrubberyCreationForm::getTarget(void) const {

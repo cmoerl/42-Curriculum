@@ -1,4 +1,5 @@
 #include "PresidentialPardonForm.hpp"
+#include "Bureaucrat.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm(): AForm("default", 25, 5), _target("default") {
     std::cout << "PresidentialPardonForm default constructor" << std::endl;
@@ -27,7 +28,11 @@ void PresidentialPardonForm::beSigned(const Bureaucrat &b) {
     AForm::beSigned(b);
 }
 
-void PresidentialPardonForm::action(void) const {
+void PresidentialPardonForm::execute(Bureaucrat const & executor) const {
+    if (executor.getGrade() > _reqEx)
+        throw GradeTooLowException();
+    else if (!_signed)
+        throw FormNotSignedException();
     std::cout << _target << " has been pardoned by Zafod Beeblebrox" << std::endl;
 }
 

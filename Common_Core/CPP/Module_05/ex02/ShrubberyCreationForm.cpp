@@ -39,28 +39,25 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
         throw std::ios_base::failure("Failed to open file");
     }
     try {
-        file << "      /\\      " << std::endl;
-        file << "     /\\*\\     " << std::endl;
-        file << "    /\\O\\*\\    " << std::endl;
-        file << "   /*/\\/\\/\\   " << std::endl;
-        file << "  /\\O\\/\\*\\/\\  " << std::endl;
-        file << " /\\*\\/\\*\\/\\/\\ " << std::endl;
-        file << "/\\O\\/\\/*/\\/O/\\" << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
-        file << "      ||      " << std::endl;
+        file << "      /\\      \n"
+            << "     /\\*\\     \n"
+            << "    /\\O\\*\\    \n"
+            << "   /*/\\/\\/\\   \n"
+            << "  /\\O\\/\\*\\/\\  \n"
+            << " /\\*\\/\\*\\/\\/\\ \n"
+            << "/\\O\\/\\/*/\\/O/\\\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n\n"
+            << "      ||      \n"
+            << "      ||      \n"
+            << "      ||      \n";
     }
     catch (const std::ios_base::failure &e) {
         file.close();

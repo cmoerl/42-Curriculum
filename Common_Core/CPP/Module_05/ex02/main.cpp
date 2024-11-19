@@ -7,7 +7,7 @@
 int main()
 {
     Bureaucrat b1("Bureaucrat 1", 1);
-    Bureaucrat b2("Bureaucrat 2", 150);
+    Bureaucrat b2("Bureaucrat 2", 130);
 
     PresidentialPardonForm ppf("Hans");
     RobotomyRequestForm rrf("42");
@@ -20,14 +20,6 @@ int main()
     std::cout << rrf << std::endl;
     std::cout << scf << std::endl;
 
-    b1.signForm(ppf);
-    b1.signForm(rrf);
-    b1.signForm(scf);
-
-    b1.executeForm(ppf);
-    b1.executeForm(rrf);
-    b1.executeForm(scf);
-
     b2.signForm(ppf);
     b2.signForm(rrf);
     b2.signForm(scf);
@@ -35,6 +27,14 @@ int main()
     b2.executeForm(ppf);
     b2.executeForm(rrf);
     b2.executeForm(scf);
+
+    b1.signForm(ppf);
+    b1.signForm(rrf);
+    b1.signForm(scf);
+
+    b1.executeForm(ppf);
+    b1.executeForm(rrf);
+    b1.executeForm(scf);
 
     return 0;
 }

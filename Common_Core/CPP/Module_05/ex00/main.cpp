@@ -4,6 +4,15 @@ int main()
 {
     try
     {
+        Bureaucrat b1("b1", 77);
+    }
+    catch (std::exception & e)
+    {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    }
+
+    try
+    {
         Bureaucrat employee("Hans", 150);
 
         employee.incrementGrade();

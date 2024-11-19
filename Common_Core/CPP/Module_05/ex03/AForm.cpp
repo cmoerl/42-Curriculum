@@ -58,10 +58,6 @@ void    AForm::execute(const Bureaucrat &executor) const {
         throw GradeTooLowException();
     else if (!_signed)
         throw FormNotSignedException();
-    action();
-}
-
-void    AForm::action(void) const {
     std::cout << "AForm action" << std::endl;
 }
 

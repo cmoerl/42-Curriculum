@@ -27,10 +27,9 @@ class AForm
         int         getReqSign(void) const;
         int         getReqEx(void) const;
 
-        void    execute(Bureaucrat const & executor) const;
         
-        virtual void        beSigned(const Bureaucrat &b) = 0;
-        virtual void        action(void) const = 0;
+        virtual void    execute(Bureaucrat const & executor) const = 0;
+        virtual void    beSigned(const Bureaucrat &b) = 0;
 
         class   GradeTooHighException: public std::exception {
             public:
