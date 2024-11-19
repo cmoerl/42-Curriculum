@@ -1,5 +1,6 @@
 #include "ShrubberyCreationForm.hpp"
 #include "Bureaucrat.hpp"
+#include <ios>
 
 ShrubberyCreationForm::ShrubberyCreationForm(): AForm("default", 145, 137), _target("default") {
     std::cout << "ShrubberyCreationForm default constructor" << std::endl;
@@ -34,7 +35,10 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
     else if (!_signed)
         throw FormNotSignedException();
     std::ofstream file((getTarget() + "_shrubbery").c_str());
-    if (file.is_open()) {
+    if (!file.is_open()) {
+        throw std::ios_base::failure("Failed to open file");
+    }
+    try {
         file << "      /\\      " << std::endl;
         file << "     /\\*\\     " << std::endl;
         file << "    /\\O\\*\\    " << std::endl;
@@ -57,8 +61,12 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
         file << "      ||      " << std::endl;
         file << "      ||      " << std::endl;
         file << "      ||      " << std::endl;
-        file.close();
     }
+    catch (const std::ios_base::failure &e) {
+        file.close();
+        throw e;
+    }
+    file.close();
 }
 
 std::string ShrubberyCreationForm::getTarget(void) const {
