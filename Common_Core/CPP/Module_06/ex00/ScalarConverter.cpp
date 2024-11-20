@@ -21,35 +21,50 @@ ScalarConverter::~ScalarConverter() {
 }
 
 void    ScalarConverter::convert(const std::string &literal) {
-    char    charLiteral;
-    int     intLiteral;
-    float   floatLiteral;
-    double  doubleLiteral;
+    char                charLiteral;
+    int                 intLiteral;
+    float               floatLiteral;
+    double              doubleLiteral;
+    std::istringstream  iss(literal);
 
     try {
-        charLiteral = static_cast<char>(std::stoi(literal));
-        std::cout << "char: " << charLiteral << std::endl;
+        double  value;
+        if (iss >> value) {
+            charLiteral = static_cast<char>(value);
+            if (value >= 32 && value <= 126)
+                std::cout << "char: '" << charLiteral << "'" << std::endl;
+            else
+                std::cout << "char: Non displayable" << std::endl;
+        } else {
+            throw std::invalid_argument("Invalid input");
+        }
     } catch (std::exception &e) {
-        if (literal == "nan" || literal == "nanf" || literal == "+inf" || literal == "-inf" || literal == "+inff" || literal == "-inff" || literal == "inf" || literal == "inff")
-            std::cout << "char: impossible" << std::endl;
-        else
-            std::cout << "char: non displayable" << std::endl;
+        std::cout << "char: impossible" << std::endl;
     }
 
     try {
-        intLiteral = std::stoi(literal);
+        double  value;
+        iss.clear();
+        iss.seekg(0);
+        if (!(iss >> value)) 
+            throw std::invalid_argument("Invalid input");
+        if (value > INT_MAX || value < INT_MIN)
+            throw std::out_of_range("Int overflow");
+        intLiteral = static_cast<int>(value);
         std::cout << "int: " << intLiteral << std::endl;
-    } catch (std::out_of_range &e) {
-        std::cout << "int: impossible" << std::endl;
     } catch (std::exception &e) {
         std::cout << "int: impossible" << std::endl;
     }
 
     try {
-        floatLiteral = std::stof(literal);
-        std::cout << "float: " << floatLiteral << std::endl;
-    } catch (std::out_of_range &e) {
-        std::cout << "float: impossible" << std::endl;
+        double  value;
+        iss.clear();
+        iss.seekg(0);
+        if (!(iss >> value)) {
+            throw std::invalid_argument("Invalid input");
+        }
+        floatLiteral = static_cast<float>(value);
+        std::cout << "float: " << std::fixed << std::setprecision(1) << floatLiteral << "f" << std::endl;
     } catch (std::exception &e) {
         if (literal == "-inff" || literal == "-inf")
             std::cout << "float: -inff" << std::endl;
@@ -64,10 +79,12 @@ void    ScalarConverter::convert(const std::string &literal) {
     }
 
     try {
-        doubleLiteral = std::stod(literal);
-        std::cout << "double: " << doubleLiteral << std::endl;
-    } catch (std::out_of_range &e) {
-        std::cout << "double: impossible" << std::endl;
+        iss.clear();
+        iss.seekg(0);
+        if (!(iss >> doubleLiteral)) {
+            throw std::invalid_argument("Invalid input");
+        }
+        std::cout << std::fixed << std::setprecision(1) << "double: " << doubleLiteral << std::endl;
     } catch (std::exception &e) {
         if (literal == "-inf")
             std::cout << "double: -inf" << std::endl;

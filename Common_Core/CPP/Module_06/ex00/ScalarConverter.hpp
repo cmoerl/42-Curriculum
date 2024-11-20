@@ -5,6 +5,10 @@
 #include <string>
 #include <exception>
 #include <stdexcept>
+#include <sstream>
+#include <iomanip>
+#include <climits>
+
 
 class   ScalarConverter
 {
