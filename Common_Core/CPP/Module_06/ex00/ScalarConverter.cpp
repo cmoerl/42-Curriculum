@@ -27,6 +27,21 @@ void    ScalarConverter::convert(const std::string &literal) {
     double              doubleLiteral;
     std::istringstream  iss(literal);
 
+    if (literal.length() == 1 && !std::isdigit(literal[0])) {
+        charLiteral = literal[0];
+        if (charLiteral >= 32 && charLiteral <= 126)
+            std::cout << "char: '" << charLiteral << "'" << std::endl;
+        else
+            std::cout << "char: Non displayable" << std::endl;
+        intLiteral = static_cast<int>(charLiteral);
+        std::cout << "int: " << intLiteral << std::endl;
+        floatLiteral = static_cast<float>(charLiteral);
+        std::cout << "float: " << std::fixed << std::setprecision(1) << floatLiteral << "f" << std::endl;
+        doubleLiteral = static_cast<double>(charLiteral);
+        std::cout << "double: " << doubleLiteral << std::endl;
+        return;
+    }
+
     try {
         double  value;
         if (iss >> value) {
@@ -48,8 +63,9 @@ void    ScalarConverter::convert(const std::string &literal) {
         iss.seekg(0);
         if (!(iss >> value)) 
             throw std::invalid_argument("Invalid input");
-        if (value > INT_MAX || value < INT_MIN)
+        if (value > std::numeric_limits<int>::max() || value < -std::numeric_limits<int>::max()) {
             throw std::out_of_range("Int overflow");
+        }
         intLiteral = static_cast<int>(value);
         std::cout << "int: " << intLiteral << std::endl;
     } catch (std::exception &e) {
@@ -62,6 +78,9 @@ void    ScalarConverter::convert(const std::string &literal) {
         iss.seekg(0);
         if (!(iss >> value)) {
             throw std::invalid_argument("Invalid input");
+        }
+        if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max()) {
+            throw std::out_of_range("Float overflow");
         }
         floatLiteral = static_cast<float>(value);
         std::cout << "float: " << std::fixed << std::setprecision(1) << floatLiteral << "f" << std::endl;
@@ -83,6 +102,9 @@ void    ScalarConverter::convert(const std::string &literal) {
         iss.seekg(0);
         if (!(iss >> doubleLiteral)) {
             throw std::invalid_argument("Invalid input");
+        }
+        if (doubleLiteral > std::numeric_limits<double>::max() || doubleLiteral < -std::numeric_limits<double>::max()) {
+            throw std::out_of_range("Double overflow");
         }
         std::cout << std::fixed << std::setprecision(1) << "double: " << doubleLiteral << std::endl;
     } catch (std::exception &e) {
