@@ -9,10 +9,7 @@ OBJECTS_PATH := obj/
 
 # Source and Object Files
 SOURCE_FILES := main.cpp \
-                Base.cpp \
-				A.cpp \
-				B.cpp \
-				c.cpp
+                Base.cpp 
 
 OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
 

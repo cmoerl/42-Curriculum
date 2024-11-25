@@ -2,6 +2,8 @@
 #define BASE_HPP
 
 #include <iostream>
+#include <cstdlib>
+#include <unistd.h>
 
 class   A;
 class   B;
