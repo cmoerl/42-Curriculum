@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <climits>
 #include <limits>
+#include <cmath>
 
 
 class   ScalarConverter
