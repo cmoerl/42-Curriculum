@@ -20,11 +20,15 @@ Base*   generate(void) {
 }
 
 void    identify(Base* p) {
-    if (dynamic_cast<A*>(p) != NULL) {
+    if (!p) {
+        std::cout << "Nullptr" << std::endl;
+        return;
+    }
+    if (dynamic_cast<A*>(p)) {
         std::cout << "A" << std::endl;
-    } else if (dynamic_cast<B*>(p) != NULL) {
+    } else if (dynamic_cast<B*>(p)) {
         std::cout << "B" << std::endl;
-    } else if (dynamic_cast<C*>(p) != NULL) {
+    } else if (dynamic_cast<C*>(p)) {
         std::cout << "C" << std::endl;
     }
     else {
