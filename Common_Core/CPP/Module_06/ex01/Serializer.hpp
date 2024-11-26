@@ -4,7 +4,11 @@
 #include <stdint.h>
 #include <iostream>
 
-class Data;
+struct Data
+{
+    std::string name;
+    int         value;
+};
 
 class Serializer
 {

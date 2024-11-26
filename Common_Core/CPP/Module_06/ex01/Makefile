@@ -9,8 +9,7 @@ OBJECTS_PATH := obj/
 
 # Source and Object Files
 SOURCE_FILES := main.cpp \
-                Serializer.cpp \
-				Data.cpp
+                Serializer.cpp 
 
 OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
 
