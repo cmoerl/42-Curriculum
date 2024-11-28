@@ -8,7 +8,7 @@ CLEANUP := rm -rf
 OBJECTS_PATH := obj/
 
 # Source and Object Files
-SOURCE_FILES := main.cpp
+SOURCE_FILES := src/main.cpp 
 
 OBJECTS := $(SOURCE_FILES:%.cpp=$(OBJECTS_PATH)%.o)
 

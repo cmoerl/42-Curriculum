@@ -14,19 +14,19 @@ class   Array
     public:
         Array();
         Array(unsigned int size);
-        Array(const Array &other);
-        Array &operator = (const Array &other);
+        Array(const Array<T> &other);
+        Array<T> &operator = (const Array<T> &other);
         ~Array();
 
         unsigned int size(void) const;
 
         T &operator [] (unsigned int index);
+        const T &operator [] (unsigned int index) const;
 
 };
 
 template <typename T>
 std::ostream &operator << (std::ostream &out, const Array<T> &array);
-
 
 #include "Array.tpp"
 
