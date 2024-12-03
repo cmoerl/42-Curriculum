@@ -24,5 +24,17 @@ int main() {
     std::cout << ::min(str1, str2) << std::endl;
     std::cout << ::max(str1, str2) << std::endl;
 
+    float num3 = 10.5f;
+    float num4 = 30.5f;
+
+    std::cout << "num3: " << num3 << ", num4: " << num4 << std::endl;
+
+    ::swap(num3, num4);
+
+    std::cout << "num3: " << num3 << ", num4: " << num4 << std::endl;
+
+    std::cout << ::min(num3, num4) << std::endl;
+    std::cout << ::max(num3, num4) << std::endl;
+
     return (0);
 }
