@@ -7,6 +7,7 @@
 #include <cmath>
 #include <ctime>
 #include <limits>
+#include <stdexcept>
 
 class   Span
 {
@@ -27,7 +28,7 @@ class   Span
 
         void    addSpecificNumbers(int amount, int numbers);
         void    addRandomNumbers(int amount, int min, int max);
-
+        void    printNumbers() const;
 };
 
 #endif
