@@ -4,11 +4,6 @@ BitcoinExchange::BitcoinExchange() {
     std::cout << "BitcoinExchange default constructor called" << std::endl;
 }
 
-BitcoinExchange::BitcoinExchange(std::string date, double exchangeRate) {
-    exchangeRates_[date] = exchangeRate;
-    std::cout << "BitcoinExchange constructor called" << std::endl;
-}
-
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) {
     std::cout << "BitcoinExchange copy constructor called" << std::endl;
     *this = other;
@@ -26,19 +21,109 @@ BitcoinExchange::~BitcoinExchange () {
     std::cout << "BitcoinExchange destructor called" << std::endl;
 }
 
-void BitcoinExchange::addRate(const std::string& date, double rate) {
-    exchangeRates_[date] = rate;
-}
-
-double BitcoinExchange::getRate(const std::string& date) const {
-    return exchangeRates_.at(date);
-}
 void BitcoinExchange::display() const {
-    for (const auto& rate : exchangeRates_) {
-        std::cout << rate.first << ": " << rate.second << std::endl;
+    std::map<std::string, double>::const_iterator it;
+    for (it = exchangeRates_.begin(); it != exchangeRates_.end(); ++it) {
+        std::cout << it->first << ": " << it->second << std::endl;
     }
 }
 
-const std::map<std::string, double>& BitcoinExchange::getRates() const {
-    return exchangeRates_;
+void    BitcoinExchange::setRates() 
+{
+    std::ifstream db("data.csv");
+    if (!db.is_open())
+        throw std::runtime_error("Error: could not open data.csv");
+
+    std::string line;
+    std::getline(db, line);
+
+    while (std::getline(db, line)) {
+        std::istringstream ss(line);
+        std::string date;
+        double rate;
+
+        if (std::getline(ss, date, ',') && ss >> rate) {
+            if (validateDate(date) && validateRate(rate)) {
+                exchangeRates_[date] = rate;
+            } else {
+                std::cerr << "Error: invalid data in line: " << line << std::endl;
+            }
+        }
+    }
+    if (exchangeRates_.empty())
+        throw std::runtime_error("Error: no valid data in data.csv");
+}
+
+bool BitcoinExchange::validateDate(std::string date) const
+{
+    if (date.length() != 10)
+        return (false);
+    for (int i = 0; i < 10; i++) {
+        if (i == 4 || i == 7) {
+            if (date[i] != '-')
+                return (false);
+        }
+        else {
+            if (!isdigit(date[i]))
+                return (false);
+        }
+    }
+
+    std::istringstream ssYear(date.substr(0, 4));
+    std::istringstream ssMonth(date.substr(5, 2));
+    std::istringstream ssDay(date.substr(8, 2));
+
+    int year, month, day;
+    ssYear >> year;
+    ssMonth >> month;
+    ssDay >> day;
+
+    if (month < 1 || month > 12)
+        return (false);
+
+    int daysInMonth[] = { 31, (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    if (day < 1 || day > daysInMonth[month - 1])
+        return (false);
+
+    return (true);
+}
+
+bool BitcoinExchange::validateRate(double rate) const
+{
+    if (rate < 0)
+        return (false);
+    if (rate > DBL_MAX || rate == INFINITY || rate != rate)
+        return (false);
+    return (true);
+}
+
+bool    BitcoinExchange::validateAmount(double amount) const
+{
+    if (amount < 0 || amount > 1000)
+        return (false);
+    return (true);
+}
+
+void BitcoinExchange::readInput(std::string filename) const
+{
+    std::ifstream input(filename);
+    if (!input.is_open())
+        throw std::runtime_error("Error: could not open " + filename);
+
+    std::string line;
+    while (std::getline(input, line)) {
+        std::istringstream ss(line);
+        std::string date;
+        double amount;
+
+// trim whitespace for this to work
+        if (std::getline(ss, date, '|') && ss >> amount) {
+            if (validateDate(date) && validateAmount(amount)) {
+                double result = calculate(exchangeRates_, date, amount);
+                std::cout << date << "=> " << amount << " = " << result << std::endl;
+            } else {
+                std::cerr << "Error: invalid data in line: " << line << std::endl;
+            }
+        }
+    }
 }
