@@ -10,6 +10,9 @@
 #include <ctime>
 #include <cfloat>
 #include <cmath>
+#include <algorithm>
+#include <cctype>
+#include <stdexcept>
 
 class   BitcoinExchange 
 {

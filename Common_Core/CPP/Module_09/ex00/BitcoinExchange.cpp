@@ -21,12 +21,13 @@ BitcoinExchange::~BitcoinExchange () {
     std::cout << "BitcoinExchange destructor called" << std::endl;
 }
 
-void BitcoinExchange::display() const {
-    std::map<std::string, double>::const_iterator it;
-    for (it = exchangeRates_.begin(); it != exchangeRates_.end(); ++it) {
-        std::cout << it->first << ": " << it->second << std::endl;
-    }
-}
+// NEEDS TO BE CHANGED ACCORDING TO SUBJECT
+// void BitcoinExchange::display() const {
+//     std::map<std::string, double>::const_iterator it;
+//     for (it = exchangeRates_.begin(); it != exchangeRates_.end(); ++it) {
+//         std::cout << it->first << ": " << it->second << std::endl;
+//     }
+// }
 
 void    BitcoinExchange::setRates() 
 {
@@ -104,9 +105,23 @@ bool    BitcoinExchange::validateAmount(double amount) const
     return (true);
 }
 
+std::string trim(const std::string& str) {
+    std::string::const_iterator start = str.begin();
+    while (start != str.end() && std::isspace(*start)) {
+        ++start;
+    }
+
+    std::string::const_iterator end = str.end();
+    do {
+        --end;
+    } while (std::distance(start, end) > 0 && std::isspace(*end));
+
+    return std::string(start, end + 1);
+}
+
 void BitcoinExchange::readInput(std::string filename) const
 {
-    std::ifstream input(filename);
+    std::ifstream input(filename.c_str());
     if (!input.is_open())
         throw std::runtime_error("Error: could not open " + filename);
 
@@ -116,8 +131,8 @@ void BitcoinExchange::readInput(std::string filename) const
         std::string date;
         double amount;
 
-// trim whitespace for this to work
         if (std::getline(ss, date, '|') && ss >> amount) {
+            date = trim(date);
             if (validateDate(date) && validateAmount(amount)) {
                 double result = calculate(exchangeRates_, date, amount);
                 std::cout << date << "=> " << amount << " = " << result << std::endl;
@@ -126,4 +141,19 @@ void BitcoinExchange::readInput(std::string filename) const
             }
         }
     }
+}
+
+double  BitcoinExchange::calculate(std::map<std::string, double> rates, const std::string& date, double amount) const 
+{
+    if (date < "2009-01-02")
+        return 0.0;
+    std::map<std::string, double>::const_iterator it = rates.lower_bound(date);
+    if (it == rates.end() || it->first != date) {
+        if (it == rates.begin()) {
+            throw std::runtime_error("Error: no exchange rate available for date " + date);
+        }
+        --it;
+    }
+
+    return (amount * it->second);
 }
