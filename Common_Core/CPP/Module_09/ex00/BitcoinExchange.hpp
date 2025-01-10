@@ -29,7 +29,7 @@ class   BitcoinExchange
         void    setRates();
         double  calculate(std::map<std::string, double> rates, const std::string& date, double amount) const;
         void    readInput(std::string filename) const;
-        void    display() const;
+        void    processLine(const std::string& line, const std::string& filename) const;
 
 
         bool validateDate(std::string date) const;

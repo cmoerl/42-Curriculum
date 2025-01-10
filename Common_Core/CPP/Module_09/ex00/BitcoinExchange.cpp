@@ -1,33 +1,19 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() {
-    std::cout << "BitcoinExchange default constructor called" << std::endl;
-}
+BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) {
-    std::cout << "BitcoinExchange copy constructor called" << std::endl;
     *this = other;
 }
 
 BitcoinExchange &BitcoinExchange::operator = (const BitcoinExchange &other) {
-    std::cout << "BitcoinExchange assignment operator called" << std::endl;
     if (this != &other) {
         exchangeRates_ = other.exchangeRates_;
     }
     return *this;
 }
 
-BitcoinExchange::~BitcoinExchange () {
-    std::cout << "BitcoinExchange destructor called" << std::endl;
-}
-
-// NEEDS TO BE CHANGED ACCORDING TO SUBJECT
-// void BitcoinExchange::display() const {
-//     std::map<std::string, double>::const_iterator it;
-//     for (it = exchangeRates_.begin(); it != exchangeRates_.end(); ++it) {
-//         std::cout << it->first << ": " << it->second << std::endl;
-//     }
-// }
+BitcoinExchange::~BitcoinExchange () {}
 
 void    BitcoinExchange::setRates() 
 {
@@ -44,11 +30,17 @@ void    BitcoinExchange::setRates()
         double rate;
 
         if (std::getline(ss, date, ',') && ss >> rate) {
-            if (validateDate(date) && validateRate(rate)) {
+            bool validDate = validateDate(date);
+            bool validRate = validateRate(rate);
+            if (validDate && validRate) {
                 exchangeRates_[date] = rate;
-            } else {
-                std::cerr << "Error: invalid data in line: " << line << std::endl;
+            } else if (!validDate) {
+                std::cerr << "Error: data.csv: invalid date in line: " << line << std::endl;
+            } else if (!validRate) {
+                std::cerr << "Error: data.csv: invalid rate in line: " << line << std::endl;
             }
+        } else {
+            std::cerr << "Error: data.csv: invalid formatting in line: " << line << std::endl;
         }
     }
     if (exchangeRates_.empty())
@@ -119,27 +111,47 @@ std::string trim(const std::string& str) {
     return std::string(start, end + 1);
 }
 
-void BitcoinExchange::readInput(std::string filename) const
+void    BitcoinExchange::processLine(const std::string& line, const std::string& filename) const
+{
+    std::istringstream ss(line);
+    std::string date;
+    double amount;
+
+    if (std::getline(ss, date, '|') && ss >> amount) {
+        date = trim(date);
+        bool validDate = BitcoinExchange().validateDate(date);
+        bool validAmount = BitcoinExchange().validateAmount(amount);
+        if (validDate && validAmount) {
+            double result = calculate(exchangeRates_, date, amount);
+            std::cout << date << "=> " << amount << " = " << result << std::endl;
+        } else if (!validDate) {
+                std::cerr << "Error: " << filename << ": invalid date in line: " << line << std::endl;
+        } else if (!validAmount) {
+            std::cerr << "Error: " << filename << ": invalid amount in line: " << line << std::endl;
+        }
+    } else {
+        std::cerr << "Error: " << filename << ": invalid formatting in line: " << line << std::endl;
+    }
+}
+
+void BitcoinExchange::readInput(std::string const filename) const
 {
     std::ifstream input(filename.c_str());
     if (!input.is_open())
         throw std::runtime_error("Error: could not open " + filename);
 
     std::string line;
-    while (std::getline(input, line)) {
-        std::istringstream ss(line);
-        std::string date;
-        double amount;
-
-        if (std::getline(ss, date, '|') && ss >> amount) {
-            date = trim(date);
-            if (validateDate(date) && validateAmount(amount)) {
-                double result = calculate(exchangeRates_, date, amount);
-                std::cout << date << "=> " << amount << " = " << result << std::endl;
-            } else {
-                std::cerr << "Error: invalid data in line: " << line << std::endl;
-            }
+    if (std::getline(input, line)) {
+        if (line.find("date") != std::string::npos && line.find("value") != std::string::npos) {
+            ;
         }
+        else {
+            processLine(line, filename);
+        }
+    }
+
+    while (std::getline(input, line)) {
+        processLine(line, filename);
     }
 }
 
