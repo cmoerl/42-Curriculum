@@ -8,6 +8,7 @@
 #include <fstream>
 #include <cctype>
 #include <stdexcept>
+#include <limits>
 
 class RPN
 {

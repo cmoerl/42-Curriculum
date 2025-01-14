@@ -23,15 +23,26 @@ bool RPN::checkInput(const std::string &input) const
     size_t i = 0;
     int numbers = 0;
     int operators = 0;
+    bool wasToken = false;
 
     while (i < input.length()) 
     {
-        if (isdigit(input[i]))
+        if (isdigit(input[i])) {
+            if (wasToken)
+                throw std::invalid_argument("Missing space between tokens");
             numbers++;
+            wasToken = true;
+        }
         else if (input[i] == '+' || input[i] == '-' || 
-                 input[i] == '*' || input[i] == '/')
+                 input[i] == '*' || input[i] == '/') {
+            if (wasToken)
+                throw std::invalid_argument("Missing space between tokens");
             operators++;
-        else if (input[i] != ' ')
+            wasToken = true;
+        }
+        else if (input[i] == ' ')
+            wasToken = false;
+        else
             throw std::invalid_argument("Invalid character in input");
         i++;
     }
@@ -68,7 +79,7 @@ void    RPN::calculate(const std::string &input) {
             }
         }
     } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        throw;
     }
 }
 
@@ -77,50 +88,52 @@ void    RPN::pushToStack(double value) {
 }
 
 void    RPN::add() {
-    if (stack_.size() < 2)
-        throw std::runtime_error("Not enough operands for addition");
     double a = stack_.back();
     stack_.pop_back();
     double b = stack_.back();
     stack_.pop_back();
-    stack_.push_back(a + b);
+    double result = a + b;
+    if ((a > 0 && b > 0 && result < 0) || (a < 0 && b < 0 && result > 0))
+        throw std::overflow_error("Addition overflow");
+    stack_.push_back(result);
 }
 
 void    RPN::subtract() {
-    if (stack_.size() < 2)
-        throw std::runtime_error("Not enough operands for subtraction");
     double a = stack_.back();
     stack_.pop_back();
     double b = stack_.back();
     stack_.pop_back();
-    stack_.push_back(b - a);
+    double result = b - a;
+    if ((b > 0 && a < 0 && result < 0) || (b < 0 && a > 0 && result > 0))
+        throw std::overflow_error("Subtraction overflow");
+    stack_.push_back(result);
 }
 
 void    RPN::multiply() {
-    if (stack_.size() < 2)
-        throw std::runtime_error("Not enough operands for multiplication");
     double a = stack_.back();
     stack_.pop_back();
     double b = stack_.back();
     stack_.pop_back();
-    stack_.push_back(a * b);
+    double result = a * b;
+    if (a != 0 && result / a != b)
+        throw std::overflow_error("Multiplication overflow");
+    stack_.push_back(result);
 }
 
 void    RPN::divide() {
-    if (stack_.size() < 2)
-        throw std::runtime_error("Not enough operands for division");
     double a = stack_.back();
     stack_.pop_back();
     double b = stack_.back();
     stack_.pop_back();
     if (a == 0)
         throw std::runtime_error("Division by zero");
-    stack_.push_back(b / a);
+    double result = b / a;
+    if (result == std::numeric_limits<double>::infinity() || result == -std::numeric_limits<double>::infinity())
+        throw std::overflow_error("Division overflow");
+    stack_.push_back(result);
 }
 
 void    RPN::printResult() const {
     if (stack_.size() == 1)
         std::cout << stack_.back() << std::endl;
-    else
-        std::cerr << "Error: invalid expression" << std::endl;
 }
