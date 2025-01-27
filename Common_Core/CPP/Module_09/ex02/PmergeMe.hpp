@@ -1,6 +1,7 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+#include <cstddef>
 #include <vector>
 #include <list>
 #include <string>
@@ -9,6 +10,8 @@
 #include <climits>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
+#include <utility>
 
 class PmergeMe
 {
@@ -17,6 +20,12 @@ class PmergeMe
         std::list<int>      lst_;
         double              timeVec_;
         double              timeLst_;
+
+        std::vector<std::vector<int>>   mainChainVec_;
+        std::vector<std::vector<int>>   pendingChainVec_;
+        std::list<std::list<int>>       mainChainLst_;
+        std::list<std::list<int>>       pendingChainLst_;
+        size_t                          recursionLevel_;
 
     public:
         PmergeMe();
@@ -31,7 +40,12 @@ class PmergeMe
         void    initLst(std::string input);
 
         void    sortVec();
+        void    splitVec();
+        void    mergeVec();
+
         void    sortLst();
+        void    splitLst();
+        void    mergeLst();
 
         void    printVec();
         void    printLst();

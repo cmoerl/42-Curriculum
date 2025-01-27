@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <stdexcept>
 
 PmergeMe::PmergeMe() {}
 
@@ -12,6 +13,11 @@ PmergeMe &PmergeMe::operator = (const PmergeMe &other) {
         lst_ = other.lst_;
         timeVec_ = other.timeVec_;
         timeLst_ = other.timeLst_;
+        mainChainVec_ = other.mainChainVec_;
+        pendingChainVec_ = other.pendingChainVec_;
+        mainChainLst_ = other.mainChainLst_;
+        pendingChainLst_ = other.pendingChainLst_;
+        recursionLevel_ = other.recursionLevel_;
     }
     return *this;
 }
@@ -39,10 +45,28 @@ bool    PmergeMe::checkInput(const std::string &input) const {
     return (true);
 }
 
-int     PmergeMe::getNextJacNum(int n, int i) const {
-    if (n == 0 && i == 1)
-        return (1);
-    return (std::pow(2, i + 1) - n);
+int     PmergeMe::getNextJacNum(int current, int size) const {
+    if (current == 0)
+        return 1;
+    if (current == 1)
+        return 3;
+    int j = 1;
+    int i = 1;
+    std::vector<int> jacobs;
+    while (j <= size) {
+        jacobs.push_back(j);
+        j = pow(2, i + 1) - j;
+        i++;
+    }
+    std::vector<int>::iterator it;
+    it = std::find(jacobs.begin(), jacobs.end(), current - 1);
+    if (it != jacobs.end() && (it + 1) != jacobs.end()) {
+        return *(it + 2);
+    } else if (it != jacobs.end() && (it + 1) == jacobs.end()) {
+        return (size);
+    } else {
+        return (current - 1);
+    }
 }
 
 void    PmergeMe::initVec(std::string input) {
@@ -81,37 +105,83 @@ void    PmergeMe::initLst(std::string input) {
     lst_ = lst;
 }
 
-void    splitVec() {
-// - recursively split container until it has only one element
-    // - pair up elements
-    // - make one container with larger numbers, one with smaller numbers
-    // - keep in mind on which level of recursion which container is
+void    PmergeMe::splitVec() {
+    if (recursionLevel_ == 0) {
+        mainChainVec_.clear();
+        pendingChainVec_.clear();
+        mainChainVec_.push_back(vec_);
+    }
+    
+    std::vector<int>& currentChain = mainChainVec_[recursionLevel_];
+    if (currentChain.size() <= 1)
+        return;
+        
+    std::vector<int> mainChain;
+    std::vector<int> pendingChain;
+    
+    for (size_t i = 0; i < currentChain.size() - 1; i += 2) {
+        if (currentChain[i] > currentChain[i + 1]) {
+            mainChain.push_back(currentChain[i]);
+            pendingChain.push_back(currentChain[i + 1]);
+        } else {
+            mainChain.push_back(currentChain[i + 1]);
+            pendingChain.push_back(currentChain[i]);
+        }
+    }
+    
+    if (currentChain.size() % 2)
+        pendingChain.push_back(currentChain.back());
+        
+    mainChainVec_.push_back(mainChain);
+    pendingChainVec_.push_back(pendingChain);
+    
+    recursionLevel_++;
+    splitVec();
 }
 
-void    mergeVec() {
-// - recursively merge smaller numbers into larger numbers
-    // - take smaller number container of level n
-    // - merge numbers in order of Jacobsthal sequence
-    // - each smaller number goes left of its pair
-    // - utilise binary search to find correct position
+// !!! Indexes will be moved by merging !!!
+void    PmergeMe::mergeVec() {
+    if (recursionLevel_ == 0)
+        return;
+    
+    std::vector<int>& mainChain = mainChainVec_[recursionLevel_];
+    std::vector<int>& pendingChain = pendingChainVec_[recursionLevel_];
+    std::vector<std::pair<int, int>>    pairs;
+
+    int jacNum = 0;
+    for (size_t i = 0; i < mainChain.size(); i++) {
+        jacNum = getNextJacNum(jacNum, mainChain.size());
+        pairs.push_back(std::make_pair(mainChain[jacNum -1], pendingChain[jacNum - 1]));        
+    }
+    int i = 0;
+    while (!pendingChain.empty()) {
+        int index = binarySearch(pairs[i], mainChain);
+        mainChain.insert(mainChain.begin() + index, pairs[i].second);
+    }
+
+    recursionLevel_--;
+    mergeVec();
 }
 
 void    PmergeMe::sortVec() {
     double start = static_cast<double>(clock());
+    recursionLevel_ = 0;
     splitVec();
     mergeVec();
+    if (recursionLevel_ > 0)
+        throw std::runtime_error("Error: recursion level not zero after merge");
     double end = static_cast<double>(clock());
     timeVec_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
-void    splitLst() {
+void    PmergeMe::splitLst() {
 // - recursively split container until it has only one element
     // - pair up elements
     // - make one container with larger numbers, one with smaller numbers
     // - keep in mind on which level of recursion which container is
 }
 
-void    mergeLst() {
+void    PmergeMe::mergeLst() {
 // - recursively merge smaller numbers into larger numbers
     // - take smaller number container of level n
     // - merge numbers in order of Jacobsthal sequence
