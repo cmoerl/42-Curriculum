@@ -12,6 +12,7 @@
 #include <iostream>
 #include <algorithm>
 #include <utility>
+#include <cerrno>
 
 class PmergeMe
 {
@@ -21,10 +22,10 @@ class PmergeMe
         double              timeVec_;
         double              timeLst_;
 
-        std::vector<std::vector<int>>   mainChainVec_;
-        std::vector<std::vector<int>>   pendingChainVec_;
-        std::list<std::list<int>>       mainChainLst_;
-        std::list<std::list<int>>       pendingChainLst_;
+        std::vector< std::vector<int> >   mainChainVec_;
+        std::vector< std::vector<int> >   pendingChainVec_;
+        std::list< std::list<int> >       mainChainLst_;
+        std::list< std::list<int> >       pendingChainLst_;
         size_t                          recursionLevel_;
 
     public:
@@ -43,9 +44,9 @@ class PmergeMe
         void    splitVec();
         void    mergeVec();
 
-        void    sortLst();
+/*         void    sortLst();
         void    splitLst();
-        void    mergeLst();
+        void    mergeLst(); */
 
         void    printVec();
         void    printLst();

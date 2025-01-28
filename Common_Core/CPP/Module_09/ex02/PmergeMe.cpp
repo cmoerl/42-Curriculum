@@ -1,5 +1,4 @@
 #include "PmergeMe.hpp"
-#include <stdexcept>
 
 PmergeMe::PmergeMe() {}
 
@@ -106,6 +105,8 @@ void    PmergeMe::initLst(std::string input) {
 }
 
 void    PmergeMe::splitVec() {
+    std::cout << "recursion level: " << recursionLevel_ << std::endl;
+
     if (recursionLevel_ == 0) {
         mainChainVec_.clear();
         pendingChainVec_.clear();
@@ -139,25 +140,65 @@ void    PmergeMe::splitVec() {
     splitVec();
 }
 
-// !!! Indexes will be moved by merging !!!
+int binarySearch(std::pair<int, int> pair, std::vector<int> vec, int value) {
+    std::cout << "binary search" << std::endl;
+
+    int left = 0;
+    int right = pair.first - 1;
+    if (pair.first == -1)
+        right = vec.size() - 1;
+    int mid = 0;
+    while (left <= right) {
+        mid = left + (right - left) / 2;
+        if (vec[mid] == value)
+            return mid;
+        if (vec[mid] < value)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return left;
+}
+
+// How to update mainChain after recursion but keep correct pairs?
 void    PmergeMe::mergeVec() {
+    std::cout << "recursion level: " << recursionLevel_ << std::endl;
+
     if (recursionLevel_ == 0)
         return;
     
     std::vector<int>& mainChain = mainChainVec_[recursionLevel_];
-    std::vector<int>& pendingChain = pendingChainVec_[recursionLevel_];
-    std::vector<std::pair<int, int>>    pairs;
+    std::vector<int>& pendingChain = pendingChainVec_[recursionLevel_ - 1];
+    std::vector< std::pair<int, int> >    pairs; // first - main index, second - pending index
+
+    std::cout << "initialising pairs" << std::endl;
 
     int jacNum = 0;
     for (size_t i = 0; i < mainChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, mainChain.size());
-        pairs.push_back(std::make_pair(mainChain[jacNum -1], pendingChain[jacNum - 1]));        
+        if (mainChain[jacNum - 1] == '\0')
+            pairs.push_back(std::make_pair(-1, jacNum - 1));
+        pairs.push_back(std::make_pair(jacNum -1, jacNum - 1));        
     }
+
+    std::cout << "sorting pairs" << std::endl;
+
     int i = 0;
     while (!pendingChain.empty()) {
-        int index = binarySearch(pairs[i], mainChain);
-        mainChain.insert(mainChain.begin() + index, pairs[i].second);
+        int index = binarySearch(pairs[i], mainChain, pendingChain[pairs[i].second]);
+        std::cout << "merging" << std::endl;
+        mainChain.insert(mainChain.begin() + index, pendingChain[pairs[i].second]);
+        for (size_t j = 0; j < pairs.size(); j++) {
+            std::cout << "pair before: " << pairs[j].first << " " << pairs[j].second << std::endl;
+            if (pairs[j].first >= index)
+                pairs[j].first++;
+            std::cout << "pair after: " << pairs[j].first << " " << pairs[j].second << std::endl;
+        }
+        pendingChain.erase(pendingChain.begin() + pairs[i].second);
+        i++;
     }
+
+    std::cout << "recursion" << std::endl;
 
     recursionLevel_--;
     mergeVec();
@@ -174,28 +215,28 @@ void    PmergeMe::sortVec() {
     timeVec_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
-void    PmergeMe::splitLst() {
+/* void    PmergeMe::splitLst() {
 // - recursively split container until it has only one element
     // - pair up elements
     // - make one container with larger numbers, one with smaller numbers
     // - keep in mind on which level of recursion which container is
-}
+} */
 
-void    PmergeMe::mergeLst() {
+/* void    PmergeMe::mergeLst() {
 // - recursively merge smaller numbers into larger numbers
     // - take smaller number container of level n
     // - merge numbers in order of Jacobsthal sequence
     // - each smaller number goes left of its pair
     // - utilise binary search to find correct position
-}
+} */
 
-void    PmergeMe::sortLst() {
+/* void    PmergeMe::sortLst() {
     double start = static_cast<double>(clock());
     splitLst();
     mergeLst();
     double end = static_cast<double>(clock());
     timeLst_ = (end - start) / CLOCKS_PER_SEC * 1000000;
-}
+} */
 
 void    PmergeMe::printVec() {
     for (size_t i = 0; i < vec_.size(); i++) {

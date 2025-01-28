@@ -1,5 +1,5 @@
 # Project Name and Compiler Settings
-NAME := PMergeMe
+NAME := PmergeMe
 CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -g -std=c++98 -pedantic
 CLEANUP := rm -rf
