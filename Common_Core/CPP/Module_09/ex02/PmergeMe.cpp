@@ -105,8 +105,7 @@ void    PmergeMe::initLst(std::string input) {
 }
 
 void    PmergeMe::splitVec() {
-    std::cout << "recursion level: " << recursionLevel_ << std::endl;
-
+    std::cout << "recursionLevel_ = " << recursionLevel_ << std::endl;
     if (recursionLevel_ == 0) {
         mainChainVec_.clear();
         pendingChainVec_.clear();
@@ -114,8 +113,10 @@ void    PmergeMe::splitVec() {
     }
     
     std::vector<int>& currentChain = mainChainVec_[recursionLevel_];
-    if (currentChain.size() <= 1)
+    if (currentChain.size() <= 1) {
+        lowestLevel_ = true;
         return;
+    }
         
     std::vector<int> mainChain;
     std::vector<int> pendingChain;
@@ -141,8 +142,6 @@ void    PmergeMe::splitVec() {
 }
 
 int binarySearch(std::pair<int, int> pair, std::vector<int> vec, int value) {
-    std::cout << "binary search" << std::endl;
-
     int left = 0;
     int right = pair.first - 1;
     if (pair.first == -1)
@@ -160,10 +159,20 @@ int binarySearch(std::pair<int, int> pair, std::vector<int> vec, int value) {
     return left;
 }
 
-// How to update mainChain after recursion but keep correct pairs?
-void    PmergeMe::mergeVec() {
-    std::cout << "recursion level: " << recursionLevel_ << std::endl;
+void updatePairs(std::vector<std::pair<int, int> > &pairs, std::vector<int> &current, std::vector<int> &sorted) {
+    for (size_t i = 0; i < pairs.size(); i++) {
+        if (pairs[i].first == -1)
+            continue;
+            
+        std::vector<int>::iterator it = std::find(sorted.begin(), sorted.end(), current[pairs[i].first]);
+        if (it != sorted.end())
+            pairs[i].first = std::distance(sorted.begin(), it);
+    }
+}
 
+// final vector is not sorted fully, I believe the cause is leaving recursion too early
+void    PmergeMe::mergeVec() {
+    std::cout << "recursionLevel_ = " << recursionLevel_ << std::endl;
     if (recursionLevel_ == 0)
         return;
     
@@ -171,35 +180,31 @@ void    PmergeMe::mergeVec() {
     std::vector<int>& pendingChain = pendingChainVec_[recursionLevel_ - 1];
     std::vector< std::pair<int, int> >    pairs; // first - main index, second - pending index
 
-    std::cout << "initialising pairs" << std::endl;
-
     int jacNum = 0;
     for (size_t i = 0; i < mainChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, mainChain.size());
-        if (mainChain[jacNum - 1] == '\0')
-            pairs.push_back(std::make_pair(-1, jacNum - 1));
-        pairs.push_back(std::make_pair(jacNum -1, jacNum - 1));        
+        pairs.push_back(std::make_pair(jacNum -1, jacNum - 1));
+    }
+    if (pairs.size() % 2)
+        pairs.push_back(std::make_pair(-1, pairs.size()));
+
+    if (!lowestLevel_) {
+        updatePairs(pairs, mainChainVec_[recursionLevel_], mainChainVec_[recursionLevel_ + 1]);
+        mainChain = mainChainVec_[recursionLevel_ + 1];
     }
 
-    std::cout << "sorting pairs" << std::endl;
-
-    int i = 0;
-    while (!pendingChain.empty()) {
+    size_t i = 0;
+    while (i < pairs.size()) {
         int index = binarySearch(pairs[i], mainChain, pendingChain[pairs[i].second]);
-        std::cout << "merging" << std::endl;
         mainChain.insert(mainChain.begin() + index, pendingChain[pairs[i].second]);
         for (size_t j = 0; j < pairs.size(); j++) {
-            std::cout << "pair before: " << pairs[j].first << " " << pairs[j].second << std::endl;
             if (pairs[j].first >= index)
                 pairs[j].first++;
-            std::cout << "pair after: " << pairs[j].first << " " << pairs[j].second << std::endl;
         }
-        pendingChain.erase(pendingChain.begin() + pairs[i].second);
         i++;
     }
 
-    std::cout << "recursion" << std::endl;
-
+    lowestLevel_ = false;
     recursionLevel_--;
     mergeVec();
 }
@@ -209,6 +214,7 @@ void    PmergeMe::sortVec() {
     recursionLevel_ = 0;
     splitVec();
     mergeVec();
+    vec_ = mainChainVec_[0];
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
     double end = static_cast<double>(clock());

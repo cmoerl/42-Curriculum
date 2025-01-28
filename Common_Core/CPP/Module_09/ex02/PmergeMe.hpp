@@ -22,11 +22,12 @@ class PmergeMe
         double              timeVec_;
         double              timeLst_;
 
-        std::vector< std::vector<int> >   mainChainVec_;
-        std::vector< std::vector<int> >   pendingChainVec_;
-        std::list< std::list<int> >       mainChainLst_;
-        std::list< std::list<int> >       pendingChainLst_;
-        size_t                          recursionLevel_;
+        std::vector< std::vector<int> >     mainChainVec_;
+        std::vector< std::vector<int> >     pendingChainVec_;
+        std::list< std::list<int> >         mainChainLst_;
+        std::list< std::list<int> >         pendingChainLst_;
+        size_t                              recursionLevel_;
+        bool                                lowestLevel_;
 
     public:
         PmergeMe();
