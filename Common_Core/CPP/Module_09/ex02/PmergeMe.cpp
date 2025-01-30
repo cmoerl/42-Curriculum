@@ -47,8 +47,11 @@ bool    PmergeMe::checkInput(const std::string &input) const {
 int     PmergeMe::getNextJacNum(int current, int size) const {
     if (current == 0)
         return 1;
-    if (current == 1)
+    if (current == 1) {
+        if (size == 2)
+            return 2;
         return 3;
+    }
     int j = 1;
     int i = 1;
     std::vector<int> jacobs;
@@ -59,9 +62,9 @@ int     PmergeMe::getNextJacNum(int current, int size) const {
     }
     std::vector<int>::iterator it;
     it = std::find(jacobs.begin(), jacobs.end(), current - 1);
-    if (it != jacobs.end() && (it + 1) != jacobs.end()) {
+    if (it != jacobs.end() && (it + 2) != jacobs.end()) {
         return *(it + 2);
-    } else if (it != jacobs.end() && (it + 1) == jacobs.end()) {
+    } else if (it != jacobs.end() && (it + 2) == jacobs.end()) {
         return (size);
     } else {
         return (current - 1);
@@ -105,7 +108,6 @@ void    PmergeMe::initLst(std::string input) {
 }
 
 void    PmergeMe::splitVec() {
-    std::cout << "recursionLevel_ = " << recursionLevel_ << std::endl;
     if (recursionLevel_ == 0) {
         mainChainVec_.clear();
         pendingChainVec_.clear();
@@ -170,23 +172,25 @@ void updatePairs(std::vector<std::pair<int, int> > &pairs, std::vector<int> &cur
     }
 }
 
-// final vector is not sorted fully, I believe the cause is leaving recursion too early
 void    PmergeMe::mergeVec() {
-    std::cout << "recursionLevel_ = " << recursionLevel_ << std::endl;
-    if (recursionLevel_ == 0)
+    if (recursionLevel_ == 0) {
+        if (!lowestLevel_)
+            mainChainVec_[0] = mainChainVec_[1];
         return;
+    }
     
     std::vector<int>& mainChain = mainChainVec_[recursionLevel_];
     std::vector<int>& pendingChain = pendingChainVec_[recursionLevel_ - 1];
     std::vector< std::pair<int, int> >    pairs; // first - main index, second - pending index
 
-    int jacNum = 0;
-    for (size_t i = 0; i < mainChain.size(); i++) {
-        jacNum = getNextJacNum(jacNum, mainChain.size());
-        pairs.push_back(std::make_pair(jacNum -1, jacNum - 1));
+    size_t jacNum = 0;
+    for (size_t i = 0; i <= mainChain.size(); i++) {
+        jacNum = getNextJacNum(jacNum, pendingChain.size());
+        if (jacNum == mainChain.size())
+            pairs.push_back(std::make_pair(-1, jacNum - 1));
+        else
+            pairs.push_back(std::make_pair(jacNum -1, jacNum - 1));
     }
-    if (pairs.size() % 2)
-        pairs.push_back(std::make_pair(-1, pairs.size()));
 
     if (!lowestLevel_) {
         updatePairs(pairs, mainChainVec_[recursionLevel_], mainChainVec_[recursionLevel_ + 1]);
