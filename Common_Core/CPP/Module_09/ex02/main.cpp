@@ -53,9 +53,32 @@ int main() {
         std::cout << e.what() << std::endl;
     }
 
-// added zeros!!
     try {
         pmm.initVec("100 7 42 45");
+        std::cout << "Before: ";
+        pmm.printVec();
+        pmm.sortVec();
+        std::cout << "After: ";
+        pmm.printVec();
+        pmm.printTimeVec();
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+
+    try {
+        pmm.initVec("100 7 42 45 100");
+        std::cout << "Before: ";
+        pmm.printVec();
+        pmm.sortVec();
+        std::cout << "After: ";
+        pmm.printVec();
+        pmm.printTimeVec();
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+
+    try {
+        pmm.initVec("1 1 1 1");
         std::cout << "Before: ";
         pmm.printVec();
         pmm.sortVec();

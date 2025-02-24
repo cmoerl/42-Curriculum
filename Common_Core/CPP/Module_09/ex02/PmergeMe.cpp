@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <iostream>
 
 PmergeMe::PmergeMe() {}
 
@@ -184,12 +185,12 @@ void    PmergeMe::mergeVec() {
     std::vector< std::pair<int, int> >    pairs; // first - main index, second - pending index
 
     size_t jacNum = 0;
-    for (size_t i = 0; i <= mainChain.size(); i++) {
+    for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, pendingChain.size());
         if (jacNum == mainChain.size())
             pairs.push_back(std::make_pair(-1, jacNum - 1));
         else
-            pairs.push_back(std::make_pair(jacNum -1, jacNum - 1));
+            pairs.push_back(std::make_pair(jacNum - 1, jacNum - 1));
     }
 
     if (!lowestLevel_) {
@@ -219,6 +220,7 @@ void    PmergeMe::sortVec() {
     splitVec();
     mergeVec();
     vec_ = mainChainVec_[0];
+
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
     double end = static_cast<double>(clock());
