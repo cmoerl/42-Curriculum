@@ -144,7 +144,7 @@ void    PmergeMe::splitVec() {
     splitVec();
 }
 
-int binarySearch(std::pair<int, int> pair, std::vector<int> vec, int value) {
+int binarySearchVec(std::pair<int, int> pair, std::vector<int> vec, int value) {
     int left = 0;
     int right = pair.first - 1;
     if (pair.first == -1)
@@ -162,7 +162,7 @@ int binarySearch(std::pair<int, int> pair, std::vector<int> vec, int value) {
     return left;
 }
 
-void updatePairs(std::vector<std::pair<int, int> > &pairs, std::vector<int> &current, std::vector<int> &sorted) {
+void updatePairsVec(std::vector<std::pair<int, int> > &pairs, std::vector<int> &current, std::vector<int> &sorted) {
     for (size_t i = 0; i < pairs.size(); i++) {
         if (pairs[i].first == -1)
             continue;
@@ -194,13 +194,13 @@ void    PmergeMe::mergeVec() {
     }
 
     if (!lowestLevel_) {
-        updatePairs(pairs, mainChainVec_[recursionLevel_], mainChainVec_[recursionLevel_ + 1]);
+        updatePairsVec(pairs, mainChainVec_[recursionLevel_], mainChainVec_[recursionLevel_ + 1]);
         mainChain = mainChainVec_[recursionLevel_ + 1];
     }
 
     size_t i = 0;
     while (i < pairs.size()) {
-        int index = binarySearch(pairs[i], mainChain, pendingChain[pairs[i].second]);
+        int index = binarySearchVec(pairs[i], mainChain, pendingChain[pairs[i].second]);
         mainChain.insert(mainChain.begin() + index, pendingChain[pairs[i].second]);
         for (size_t j = 0; j < pairs.size(); j++) {
             if (pairs[j].first >= index)
@@ -227,28 +227,170 @@ void    PmergeMe::sortVec() {
     timeVec_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
-/* void    PmergeMe::splitLst() {
-// - recursively split container until it has only one element
-    // - pair up elements
-    // - make one container with larger numbers, one with smaller numbers
-    // - keep in mind on which level of recursion which container is
-} */
+void PmergeMe::splitLst() {
+    if (recursionLevel_ == 0) {
+        mainChainLst_.clear();
+        pendingChainLst_.clear();
+        mainChainLst_.push_back(lst_);
+    }
 
-/* void    PmergeMe::mergeLst() {
-// - recursively merge smaller numbers into larger numbers
-    // - take smaller number container of level n
-    // - merge numbers in order of Jacobsthal sequence
-    // - each smaller number goes left of its pair
-    // - utilise binary search to find correct position
-} */
+    std::list<int>& currentChain = mainChainLst_.back();
+    if (currentChain.size() <= 1) {
+        lowestLevel_ = true;
+        return;
+    }
 
-/* void    PmergeMe::sortLst() {
+    std::list<int> mainChain;
+    std::list<int> pendingChain;
+
+    std::list<int>::iterator it = currentChain.begin();
+    while (it != currentChain.end()) {
+        int first = *it;
+        ++it;
+        if (it != currentChain.end()) {
+            int second = *it;
+            if (first > second) {
+                mainChain.push_back(first);
+                pendingChain.push_back(second);
+            } else {
+                mainChain.push_back(second);
+                pendingChain.push_back(first);
+            }
+            ++it;
+        } else {
+            pendingChain.push_back(first);
+        }
+    }
+
+    mainChainLst_.push_back(mainChain);
+    pendingChainLst_.push_back(pendingChain);
+
+    recursionLevel_++;
+    splitLst();
+}
+
+void updatePairsLst(std::vector<std::pair<int, int> > &pairs, std::list<int> &current, std::list<int> &sorted) {
+    for (size_t i = 0; i < pairs.size(); i++) {
+        if (pairs[i].first == -1)
+            continue;
+            
+        std::list<int>::iterator itCurrent = current.begin();
+        std::advance(itCurrent, pairs[i].first);
+        std::list<int>::iterator itSorted = std::find(sorted.begin(), sorted.end(), *itCurrent);
+        if (itSorted != sorted.end())
+            pairs[i].first = std::distance(sorted.begin(), itSorted);
+    }
+}
+
+int binarySearchLst(std::list<int> &lst, int value) {
+    int left = 0;
+    int right = lst.size() - 1;
+    int mid = 0;
+    while (left <= right) {
+        mid = left + (right - left) / 2;
+        std::list<int>::iterator it = lst.begin();
+        std::advance(it, mid);
+        if (*it == value)
+            return mid;
+        if (*it < value)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return left;
+}
+
+void PmergeMe::mergeLst() {
+    std::cout << "recursionLevel_ = " << recursionLevel_ << std::endl;
+
+// if upper level is reached, overwrite the first list with the second
+    if (recursionLevel_ == 0) {
+        if (!lowestLevel_) {
+            std::list<std::list<int> >::iterator it = mainChainLst_.begin();
+            if (it != mainChainLst_.end()) {  // Ensure list is not empty
+                std::list<std::list<int> >::iterator next = it;
+                ++next;
+                if (next != mainChainLst_.end()) {  // Ensure there is a second element
+                    *it = *next;  // Assign the second list to the first
+                }
+            }
+        }
+        return;
+    }
+
+// set iterators to the current main and pending chains, and create a list of pairs
+    std::list<int>& mainChain = mainChainLst_.back();
+    std::list<int>& pendingChain = pendingChainLst_.back();
+    std::vector<std::pair<int, int> > pairs; // first - main index, second - pending index
+
+// fill the pairs with indexes of the main and pending chains
+    size_t jacNum = 0;
+    for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
+        jacNum = getNextJacNum(jacNum, pendingChain.size());
+        if (jacNum == mainChain.size() + 1)
+            pairs.push_back(std::make_pair(-1, jacNum - 1));
+        else
+            pairs.push_back(std::make_pair(jacNum - 1, jacNum - 1));
+    }
+
+// if not at the lowest level, update the pairs with the indexes of the previous sorted main chain
+    if (!lowestLevel_) {
+        std::list<int>& nextMainChain = *(++mainChainLst_.rbegin());
+        updatePairsLst(pairs, mainChain, nextMainChain);
+        mainChain = nextMainChain;
+    }
+
+    std::cout << "pairs: " << std::endl;
+    for (size_t i = 0; i < pairs.size(); i++) {
+        std::cout << pairs[i].first << " " << pairs[i].second << std::endl;
+    }
+    std::cout << std::endl;
+
+    size_t i = 0;
+    while (i < pairs.size()) {
+        std::list<int>::iterator it = pendingChain.begin();
+        std::advance(it, pairs[i].second);
+        int index = binarySearchLst(mainChain, *it);
+        std::list<int>::iterator insertIt = mainChain.begin();
+        std::advance(insertIt, index);
+        mainChain.insert(insertIt, *it);
+        for (size_t j = 0; j < pairs.size(); j++) {
+            if (pairs[j].first >= index)
+                pairs[j].first++;
+        }
+        i++;
+    }
+
+    std::cout << "mainChain: ";
+    for (std::list<int>::iterator it = mainChain.begin(); it != mainChain.end(); it++) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "pendingChain: ";
+    for (std::list<int>::iterator it = pendingChain.begin(); it != pendingChain.end(); it++) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+
+    lowestLevel_ = false;
+    recursionLevel_--;
+    pendingChainLst_.pop_back();
+    mainChainLst_.pop_back();
+    mergeLst();
+}
+
+void PmergeMe::sortLst() {
     double start = static_cast<double>(clock());
+    recursionLevel_ = 0;
     splitLst();
     mergeLst();
+    lst_ = mainChainLst_.front();
+    if (recursionLevel_ > 0)
+        throw std::runtime_error("Error: recursion level not zero after merge");
     double end = static_cast<double>(clock());
     timeLst_ = (end - start) / CLOCKS_PER_SEC * 1000000;
-} */
+}
 
 void    PmergeMe::printVec() {
     for (size_t i = 0; i < vec_.size(); i++) {

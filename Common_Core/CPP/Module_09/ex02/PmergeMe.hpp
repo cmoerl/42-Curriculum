@@ -45,9 +45,9 @@ class PmergeMe
         void    splitVec();
         void    mergeVec();
 
-/*         void    sortLst();
+        void    sortLst();
         void    splitLst();
-        void    mergeLst(); */
+        void    mergeLst();
 
         void    printVec();
         void    printLst();
