@@ -282,9 +282,11 @@ void updatePairsLst(std::vector<std::pair<int, int> > &pairs, std::list<int> &cu
     }
 }
 
-int binarySearchLst(std::list<int> &lst, int value) {
+int binarySearchLst(std::pair<int, int> pair, std::list<int> &lst, int value) {
     int left = 0;
-    int right = lst.size() - 1;
+    int right = pair.first - 1;
+    if (pair.first == -1)
+        right = lst.size() - 1;
     int mid = 0;
     while (left <= right) {
         mid = left + (right - left) / 2;
@@ -301,26 +303,26 @@ int binarySearchLst(std::list<int> &lst, int value) {
 }
 
 void PmergeMe::mergeLst() {
-    std::cout << "recursionLevel_ = " << recursionLevel_ << std::endl;
-
 // if upper level is reached, overwrite the first list with the second
     if (recursionLevel_ == 0) {
-        if (!lowestLevel_) {
+        if (!lowestLevel_ && mainChainLst_.size() > 1) {
             std::list<std::list<int> >::iterator it = mainChainLst_.begin();
-            if (it != mainChainLst_.end()) {  // Ensure list is not empty
-                std::list<std::list<int> >::iterator next = it;
-                ++next;
-                if (next != mainChainLst_.end()) {  // Ensure there is a second element
-                    *it = *next;  // Assign the second list to the first
-                }
-            }
+            std::list<std::list<int> >::iterator next = it;
+            ++next;
+            mainChainLst_.splice(it, mainChainLst_, next);
         }
         return;
     }
 
 // set iterators to the current main and pending chains, and create a list of pairs
-    std::list<int>& mainChain = mainChainLst_.back();
-    std::list<int>& pendingChain = pendingChainLst_.back();
+    std::list<std::list<int> >::iterator mainIt = mainChainLst_.begin();
+    std::advance(mainIt, recursionLevel_);
+    std::list<int>& mainChain = *mainIt;
+
+    std::list<std::list<int> >::iterator pendingIt = mainChainLst_.begin();
+    std::advance(pendingIt, recursionLevel_ - 1);
+    std::list<int>& pendingChain = *pendingIt;
+
     std::vector<std::pair<int, int> > pairs; // first - main index, second - pending index
 
 // fill the pairs with indexes of the main and pending chains
@@ -335,7 +337,9 @@ void PmergeMe::mergeLst() {
 
 // if not at the lowest level, update the pairs with the indexes of the previous sorted main chain
     if (!lowestLevel_) {
-        std::list<int>& nextMainChain = *(++mainChainLst_.rbegin());
+        std::list<std::list<int> >::iterator it = mainChainLst_.begin();
+        std::advance(it, recursionLevel_ + 1);
+        std::list<int>& nextMainChain = *it;
         updatePairsLst(pairs, mainChain, nextMainChain);
         mainChain = nextMainChain;
     }
@@ -350,7 +354,7 @@ void PmergeMe::mergeLst() {
     while (i < pairs.size()) {
         std::list<int>::iterator it = pendingChain.begin();
         std::advance(it, pairs[i].second);
-        int index = binarySearchLst(mainChain, *it);
+        int index = binarySearchLst(pairs[i], mainChain, *it);
         std::list<int>::iterator insertIt = mainChain.begin();
         std::advance(insertIt, index);
         mainChain.insert(insertIt, *it);
@@ -386,6 +390,7 @@ void PmergeMe::sortLst() {
     splitLst();
     mergeLst();
     lst_ = mainChainLst_.front();
+    
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
     double end = static_cast<double>(clock());
