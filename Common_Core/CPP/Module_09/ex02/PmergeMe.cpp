@@ -357,8 +357,6 @@ void PmergeMe::mergeLst() {
 
     lowestLevel_ = false;
     recursionLevel_--;
-    // pendingChainLst_.pop_back();
-    // mainChainLst_.pop_back();
     mergeLst();
 }
 
