@@ -303,7 +303,6 @@ int binarySearchLst(std::pair<int, int> pair, std::list<int> &lst, int value) {
 }
 
 void PmergeMe::mergeLst() {
-// if upper level is reached, overwrite the first list with the second
     if (recursionLevel_ == 0) {
         if (!lowestLevel_ && mainChainLst_.size() > 1) {
             std::list<std::list<int> >::iterator it = mainChainLst_.begin();
@@ -314,18 +313,16 @@ void PmergeMe::mergeLst() {
         return;
     }
 
-// set iterators to the current main and pending chains, and create a list of pairs
     std::list<std::list<int> >::iterator mainIt = mainChainLst_.begin();
     std::advance(mainIt, recursionLevel_);
     std::list<int>& mainChain = *mainIt;
 
-    std::list<std::list<int> >::iterator pendingIt = mainChainLst_.begin();
+    std::list<std::list<int> >::iterator pendingIt = pendingChainLst_.begin();
     std::advance(pendingIt, recursionLevel_ - 1);
     std::list<int>& pendingChain = *pendingIt;
 
     std::vector<std::pair<int, int> > pairs; // first - main index, second - pending index
 
-// fill the pairs with indexes of the main and pending chains
     size_t jacNum = 0;
     for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, pendingChain.size());
@@ -335,7 +332,6 @@ void PmergeMe::mergeLst() {
             pairs.push_back(std::make_pair(jacNum - 1, jacNum - 1));
     }
 
-// if not at the lowest level, update the pairs with the indexes of the previous sorted main chain
     if (!lowestLevel_) {
         std::list<std::list<int> >::iterator it = mainChainLst_.begin();
         std::advance(it, recursionLevel_ + 1);
@@ -343,12 +339,6 @@ void PmergeMe::mergeLst() {
         updatePairsLst(pairs, mainChain, nextMainChain);
         mainChain = nextMainChain;
     }
-
-    std::cout << "pairs: " << std::endl;
-    for (size_t i = 0; i < pairs.size(); i++) {
-        std::cout << pairs[i].first << " " << pairs[i].second << std::endl;
-    }
-    std::cout << std::endl;
 
     size_t i = 0;
     while (i < pairs.size()) {
@@ -365,22 +355,10 @@ void PmergeMe::mergeLst() {
         i++;
     }
 
-    std::cout << "mainChain: ";
-    for (std::list<int>::iterator it = mainChain.begin(); it != mainChain.end(); it++) {
-        std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-
-    std::cout << "pendingChain: ";
-    for (std::list<int>::iterator it = pendingChain.begin(); it != pendingChain.end(); it++) {
-        std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-
     lowestLevel_ = false;
     recursionLevel_--;
-    pendingChainLst_.pop_back();
-    mainChainLst_.pop_back();
+    // pendingChainLst_.pop_back();
+    // mainChainLst_.pop_back();
     mergeLst();
 }
 
