@@ -17,8 +17,8 @@ RPN::~RPN() {}
 
 bool RPN::checkInput(const std::string &input) const 
 {
-    if (input.empty() || input.size() < 3)
-        throw std::invalid_argument("Input is empty or too short");
+    if (input.empty())
+        throw std::invalid_argument("Input is empty");
 
     size_t i = 0;
     int numbers = 0;
@@ -47,8 +47,6 @@ bool RPN::checkInput(const std::string &input) const
         i++;
     }
 
-    if (numbers < 2)
-        throw std::invalid_argument("Not enough numbers in input");
     if (operators != numbers - 1)
         throw std::invalid_argument("Mismatch between numbers and operators");
 
