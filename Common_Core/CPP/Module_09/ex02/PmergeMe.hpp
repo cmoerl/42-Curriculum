@@ -19,8 +19,6 @@ class PmergeMe
     private:
         std::vector<int>    vec_;
         std::list<int>      lst_;
-        double              timeVec_;
-        double              timeLst_;
 
         std::vector< std::vector<int> >     mainChainVec_;
         std::vector< std::vector<int> >     pendingChainVec_;
@@ -30,6 +28,9 @@ class PmergeMe
         bool                                lowestLevel_;
 
     public:
+        double              timeVec;
+        double              timeLst;
+
         PmergeMe();
         PmergeMe(const PmergeMe &other);
         PmergeMe &operator = (const PmergeMe &other);
@@ -54,6 +55,8 @@ class PmergeMe
         void    printTimeVec();
         void    printTimeLst();
 
+        bool    checkResult() const;
+
 };
 
 #endif
@@ -64,9 +67,9 @@ Rough draft:
 
 - validate input
 - for vector and list:
+    - start timer
     - fill container with input numbers
     - print container
-    - start timer
     - recursively split container until it has only one element
         - pair up elements
         - make one container with larger numbers, one with smaller numbers

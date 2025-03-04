@@ -11,13 +11,14 @@ PmergeMe &PmergeMe::operator = (const PmergeMe &other) {
     if (this != &other) {
         vec_ = other.vec_;
         lst_ = other.lst_;
-        timeVec_ = other.timeVec_;
-        timeLst_ = other.timeLst_;
+        timeVec = other.timeVec;
+        timeLst = other.timeLst;
         mainChainVec_ = other.mainChainVec_;
         pendingChainVec_ = other.pendingChainVec_;
         mainChainLst_ = other.mainChainLst_;
         pendingChainLst_ = other.pendingChainLst_;
         recursionLevel_ = other.recursionLevel_;
+        lowestLevel_ = other.lowestLevel_;
     }
     return *this;
 }
@@ -215,7 +216,7 @@ void    PmergeMe::mergeVec() {
 }
 
 void    PmergeMe::sortVec() {
-    double start = static_cast<double>(clock());
+    // double start = static_cast<double>(clock());
     recursionLevel_ = 0;
     splitVec();
     mergeVec();
@@ -223,8 +224,8 @@ void    PmergeMe::sortVec() {
 
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
-    double end = static_cast<double>(clock());
-    timeVec_ = (end - start) / CLOCKS_PER_SEC * 1000000;
+    // double end = static_cast<double>(clock());
+    // timeVec_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
 void PmergeMe::splitLst() {
@@ -361,7 +362,7 @@ void PmergeMe::mergeLst() {
 }
 
 void PmergeMe::sortLst() {
-    double start = static_cast<double>(clock());
+    // double start = static_cast<double>(clock());
     recursionLevel_ = 0;
     splitLst();
     mergeLst();
@@ -369,8 +370,8 @@ void PmergeMe::sortLst() {
     
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
-    double end = static_cast<double>(clock());
-    timeLst_ = (end - start) / CLOCKS_PER_SEC * 1000000;
+    // double end = static_cast<double>(clock());
+    // timeLst_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
 void    PmergeMe::printVec() {
@@ -392,10 +393,25 @@ void    PmergeMe::printLst() {
 }
 
 void    PmergeMe::printTimeVec() {
-    std::cout << "Time to process a range of " << vec_.size() << " elements with std::vector : " << timeVec_ << " us" << std::endl;
+    std::cout << "Time to process a range of " << vec_.size() << " elements with std::vector : " << timeVec << " us" << std::endl;
 }
 
 void    PmergeMe::printTimeLst() {
-    std::cout << "Time to process a range of " << lst_.size() << " elements with std::list : " << timeLst_ << " us" << std::endl;
+    std::cout << "Time to process a range of " << lst_.size() << " elements with std::list : " << timeLst << " us" << std::endl;
 }
 
+bool    PmergeMe::checkResult() const {
+    for (size_t i = 0; i < vec_.size() - 1; i++) {
+        if (vec_[i] > vec_[i + 1])
+            return false;
+    }
+    for (size_t i = 0; i < lst_.size() - 1; i++) {
+        std::list<int>::const_iterator it = lst_.begin();
+        std::advance(it, i);
+        std::list<int>::const_iterator next = it;
+        ++next;
+        if (*it > *next)
+            return false;
+    }
+    return true;
+}
