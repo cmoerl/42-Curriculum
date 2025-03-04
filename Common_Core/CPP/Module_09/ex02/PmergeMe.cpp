@@ -216,7 +216,6 @@ void    PmergeMe::mergeVec() {
 }
 
 void    PmergeMe::sortVec() {
-    // double start = static_cast<double>(clock());
     recursionLevel_ = 0;
     splitVec();
     mergeVec();
@@ -224,8 +223,6 @@ void    PmergeMe::sortVec() {
 
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
-    // double end = static_cast<double>(clock());
-    // timeVec_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
 void PmergeMe::splitLst() {
@@ -362,7 +359,6 @@ void PmergeMe::mergeLst() {
 }
 
 void PmergeMe::sortLst() {
-    // double start = static_cast<double>(clock());
     recursionLevel_ = 0;
     splitLst();
     mergeLst();
@@ -370,8 +366,6 @@ void PmergeMe::sortLst() {
     
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
-    // double end = static_cast<double>(clock());
-    // timeLst_ = (end - start) / CLOCKS_PER_SEC * 1000000;
 }
 
 void    PmergeMe::printVec() {

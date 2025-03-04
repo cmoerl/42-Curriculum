@@ -6,7 +6,7 @@
 #    By: csturm <csturm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 12:31:01 by marianfurni       #+#    #+#              #
-#    Updated: 2025/03/04 11:56:11 by csturm           ###   ########.fr        #
+#    Updated: 2025/03/04 13:55:28 by csturm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ test_rpn "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 
 
 # Division special cases
 test_rpn "5 0 /" "Error" "Division by zero"
-test_rpn "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 0 /" "Error" "Division by zero after overflow"
+test_rpn "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 0 /" "Error" "Division by zero after overflow"
 
 # Mixed overflow cases
 test_rpn "9 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 * 9 +" "Error" "Addition after overflow"
