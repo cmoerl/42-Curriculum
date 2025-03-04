@@ -37,6 +37,8 @@ bool RPN::checkInput(const std::string &input) const
                  input[i] == '*' || input[i] == '/') {
             if (wasToken)
                 throw std::invalid_argument("Missing space between tokens");
+            if (numbers < 2)
+                throw std::invalid_argument("Not enough numbers for operator");
             operators++;
             wasToken = true;
         }
