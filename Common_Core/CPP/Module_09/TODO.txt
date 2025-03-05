@@ -1,0 +1,40 @@
+generally:
+    make sure functions that aren't used from the outside are private
+
+ex00:
+    for database: check first rate instead of assuming it will not be before 2009
+    1......1 and 1sdjkf are accepted --> fix
+
+ex02:
+    change handling of indexes (updating them)
+    pairs seem to be one off, leading to too many comparisons in binarySearch
+    invalid read of size 4 --> should be handled when updatePairs is changed
+
+example valgrind:
+
+    ==950182== Invalid read of size 4
+    ==950182==    at 0x40B4DA: bool __gnu_cxx::__ops::_Iter_equals_val<int const>::operator()<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > > >(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >) (predefined_ops.h:270)
+    ==950182==    by 0x40B2D8: __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > > std::__find_if<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__ops::_Iter_equals_val<int const> >(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__ops::_Iter_equals_val<int const>, std::random_access_iterator_tag) (stl_algobase.h:2069)
+    ==950182==    by 0x40B245: __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > > std::__find_if<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__ops::_Iter_equals_val<int const> >(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__ops::_Iter_equals_val<int const>) (stl_algobase.h:2114)
+    ==950182==    by 0x406911: __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > > std::find<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&) (stl_algo.h:3884)
+    ==950182==    by 0x40422C: updatePairsVec(std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >&, std::vector<int, std::allocator<int> >&, std::vector<int, std::allocator<int> >&) (PmergeMe.cpp:177)
+    ==950182==    by 0x4047F5: PmergeMe::mergeVec() (PmergeMe.cpp:214)
+    ==950182==    by 0x404CCB: PmergeMe::mergeVec() (PmergeMe.cpp:236)
+    ==950182==    by 0x404CCB: PmergeMe::mergeVec() (PmergeMe.cpp:236)
+    ==950182==    by 0x404CCB: PmergeMe::mergeVec() (PmergeMe.cpp:236)
+    ==950182==    by 0x404D3C: PmergeMe::sortVec() (PmergeMe.cpp:242)
+    ==950182==    by 0x40263C: main (main.cpp:16)
+    ==950182==  Address 0x4de5f30 is 0 bytes after a block of size 32 alloc'd
+    ==950182==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+    ==950182==    by 0x40863F: __gnu_cxx::new_allocator<int>::allocate(unsigned long, void const*) (new_allocator.h:127)
+    ==950182==    by 0x4085D0: __gnu_cxx::__alloc_traits<std::allocator<int>, int>::allocate(std::allocator<int>&, unsigned long) (alloc_traits.h:133)
+    ==950182==    by 0x40854F: std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned long) (stl_vector.h:346)
+    ==950182==    by 0x40CA70: std::_Vector_base<int, std::allocator<int> >::_M_create_storage(unsigned long) (stl_vector.h:361)
+    ==950182==    by 0x40C9F4: std::_Vector_base<int, std::allocator<int> >::_Vector_base(unsigned long, std::allocator<int> const&) (stl_vector.h:305)
+    ==950182==    by 0x406E25: std::vector<int, std::allocator<int> >::vector(std::vector<int, std::allocator<int> > const&) (stl_vector.h:554)
+    ==950182==    by 0x409AFC: void std::_Construct<std::vector<int, std::allocator<int> >, std::vector<int, std::allocator<int> > >(std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> > const&) (stl_construct.h:128)
+    ==950182==    by 0x40A13E: std::vector<int, std::allocator<int> >* std::__uninitialized_copy<false>::__uninit_copy<std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*>(std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*) (stl_uninitialized.h:92)
+    ==950182==    by 0x40A0F8: std::vector<int, std::allocator<int> >* std::uninitialized_copy<std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*>(std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*) (stl_uninitialized.h:148)
+    ==950182==    by 0x4097E8: std::vector<int, std::allocator<int> >* std::__uninitialized_copy_a<std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> > >(std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> > >&) (stl_uninitialized.h:333)
+    ==950182==    by 0x40BC5C: std::vector<int, std::allocator<int> >* std::__uninitialized_move_if_noexcept_a<std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> > > >(std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> > >&) (stl_uninitialized.h:354)
+    ==950182== 
