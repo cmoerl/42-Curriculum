@@ -15,6 +15,20 @@ BitcoinExchange &BitcoinExchange::operator = (const BitcoinExchange &other) {
 
 BitcoinExchange::~BitcoinExchange () {}
 
+std::string trim(const std::string& str) {
+    std::string::const_iterator start = str.begin();
+    while (start != str.end() && std::isspace(*start)) {
+        ++start;
+    }
+
+    std::string::const_iterator end = str.end();
+    do {
+        --end;
+    } while (std::distance(start, end) > 0 && std::isspace(*end));
+
+    return std::string(start, end + 1);
+}
+
 void    BitcoinExchange::setRates() 
 {
     std::ifstream db("data.csv");
@@ -27,11 +41,21 @@ void    BitcoinExchange::setRates()
     while (std::getline(db, line)) {
         std::istringstream ss(line);
         std::string date;
-        double rate;
+        std::string rateStr;
 
-        if (std::getline(ss, date, ',') && ss >> rate) {
+        if (std::getline(ss, date, ',') && std::getline (ss, rateStr)) {
+            date = trim(date);
+            rateStr = trim(rateStr);
+
             bool validDate = validateDate(date);
-            bool validRate = validateRate(rate);
+            bool validRate = false;
+            double rate = 0.0;
+
+            std::istringstream rateStream(rateStr);
+            if (rateStream >> rate && rateStream.eof()) {
+                validRate = validateRate(rate);
+            }
+
             if (validDate && validRate) {
                 exchangeRates_[date] = rate;
             } else if (!validDate) {
@@ -97,30 +121,25 @@ bool    BitcoinExchange::validateAmount(double amount) const
     return (true);
 }
 
-std::string trim(const std::string& str) {
-    std::string::const_iterator start = str.begin();
-    while (start != str.end() && std::isspace(*start)) {
-        ++start;
-    }
-
-    std::string::const_iterator end = str.end();
-    do {
-        --end;
-    } while (std::distance(start, end) > 0 && std::isspace(*end));
-
-    return std::string(start, end + 1);
-}
-
 void    BitcoinExchange::processLine(const std::string& line, const std::string& filename) const
 {
     std::istringstream ss(line);
     std::string date;
-    double amount;
+    std::string amountStr;
 
-    if (std::getline(ss, date, '|') && ss >> amount) {
+    if (std::getline(ss, date, '|') && std::getline(ss, amountStr)) {
         date = trim(date);
-        bool validDate = BitcoinExchange().validateDate(date);
-        bool validAmount = BitcoinExchange().validateAmount(amount);
+        amountStr = trim(amountStr);
+
+        bool validDate = validateDate(date);
+        bool validAmount = false;
+        double amount = 0.0;
+
+        std::istringstream amountStream(amountStr);
+        if (amountStream >> amount && amountStream.eof()) {
+            validAmount = validateAmount(amount);
+        }
+
         if (validDate && validAmount) {
             double result = calculate(exchangeRates_, date, amount);
             std::cout << date << "=> " << amount << " = " << result << std::endl;
