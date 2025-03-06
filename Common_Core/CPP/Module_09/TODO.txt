@@ -1,9 +1,9 @@
 X generally:
 X     make sure functions that aren't used from the outside are private
 
-ex00:
-    for database: check first rate instead of assuming it will not be before 2009
-X    1......1 and 1sdjkf are accepted --> fix
+X ex00:
+X     for database: check first rate instead of assuming it will not be before 2009
+X     1......1 and 1sdjkf are accepted --> fix
 
 ex02:
     change handling of indexes (updating them)

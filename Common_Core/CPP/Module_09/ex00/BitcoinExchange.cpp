@@ -174,14 +174,16 @@ void BitcoinExchange::readInput(std::string const filename) const
     }
 }
 
-double  BitcoinExchange::calculate(std::map<std::string, double> rates, const std::string& date, double amount) const 
+double BitcoinExchange::calculate(const std::map<std::string, double>& rates, const std::string& date, double amount) const 
 {
-    if (date < "2009-01-02")
-        return 0.0;
+    if (rates.empty()) {
+        throw std::runtime_error("Error: no exchange rates available");
+    }
+
     std::map<std::string, double>::const_iterator it = rates.lower_bound(date);
     if (it == rates.end() || it->first != date) {
         if (it == rates.begin()) {
-            throw std::runtime_error("Error: no exchange rate available for date " + date);
+            throw std::runtime_error("Error: input.csv: no exchange rate available for date " + date);
         }
         --it;
     }
