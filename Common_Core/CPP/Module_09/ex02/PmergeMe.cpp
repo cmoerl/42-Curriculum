@@ -145,6 +145,47 @@ void    PmergeMe::splitVec() {
     splitVec();
 }
 
+/* potential solution for index saving:
+
+void    PmergeMe::splitVec() {
+    if (recursionLevel_ == 0) {
+        mainChainVec_.clear();
+        pendingChainVec_.clear();
+        mainChainVec_.push_back(vec_);
+    }
+    
+    std::vector<int>& currentChain = mainChainVec_[recursionLevel_];
+    if (currentChain.size() <= 1) {
+        lowestLevel_ = true;
+        return;
+    }
+        
+    std::vector< std::pair <int, int> > mainChain;
+    std::vector< std::pair <int, int> > pendingChain;
+    
+    for (size_t i = 0; i < currentChain.size() - 1; i += 2) {
+        if (currentChain[i] > currentChain[i + 1]) {
+            mainChain.push_back(std::make_pair(currentChain[i], i));
+            pendingChain.push_back(std::make_pair(currentChain[i + 1], i + 1));
+        } else {
+            mainChain.push_back(std::make_pair(currentChain[i + 1], i));
+            pendingChain.push_back(std::make_pair(currentChain[i], i + 1));
+        }
+    }
+    
+    if (currentChain.size() % 2)
+        pendingChain.push_back(std::make_pair(currentChain.back(), currentChain.size() - 1));
+
+    std::vector <int> mainVec;
+    std::vector <int> pendingVec;
+        
+    mainChainVec_.push_back(std::move(mainVec));
+    pendingChainVec_.push_back(std::move(pendingVec));
+    
+    recursionLevel_++;
+    splitVec();
+} */
+
 int binarySearchVec(std::pair<int, int> pair, std::vector<int> vec, int value) {
     int left = 0;
     int right = pair.first - 1;
