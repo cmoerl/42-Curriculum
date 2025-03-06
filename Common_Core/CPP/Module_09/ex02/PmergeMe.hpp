@@ -27,6 +27,15 @@ class PmergeMe
         size_t                              recursionLevel_;
         bool                                lowestLevel_;
 
+        bool    checkInput(const std::string &input) const;
+        int     getNextJacNum(int n, int i) const;
+
+        void    splitVec();
+        void    mergeVec();
+
+        void    splitLst();
+        void    mergeLst();
+
     public:
         double              timeVec;
         double              timeLst;
@@ -36,19 +45,11 @@ class PmergeMe
         PmergeMe &operator = (const PmergeMe &other);
         ~PmergeMe();
 
-        bool    checkInput(const std::string &input) const;
-        int     getNextJacNum(int n, int i) const;
-
         void    initVec(std::string input);
         void    initLst(std::string input);
 
         void    sortVec();
-        void    splitVec();
-        void    mergeVec();
-
         void    sortLst();
-        void    splitLst();
-        void    mergeLst();
 
         void    printVec();
         void    printLst();

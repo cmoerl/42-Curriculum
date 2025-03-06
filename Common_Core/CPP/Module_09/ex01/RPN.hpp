@@ -15,6 +15,13 @@ class RPN
     private:
         std::deque<double>  stack_;
 
+        void    pushToStack(double value);
+
+        void    add();
+        void    subtract();
+        void    multiply();
+        void    divide();
+
     public:
         RPN();
         RPN(const RPN &other);
@@ -25,13 +32,6 @@ class RPN
         void    calculate(const std::string &expression);
         void    printResult() const;
 
-        void    pushToStack(double value);
-
-        void    add();
-        void    subtract();
-        void    multiply();
-        void    divide();
-        
 };
 
 #endif
