@@ -20,12 +20,12 @@ class PmergeMe
         std::vector<int>    vec_;
         std::list<int>      lst_;
 
-        std::vector< std::vector<int> >     mainChainVec_;
-        std::vector< std::vector<int> >     pendingChainVec_;
-        std::list< std::list<int> >         mainChainLst_;
-        std::list< std::list<int> >         pendingChainLst_;
-        size_t                              recursionLevel_;
-        bool                                lowestLevel_;
+        std::vector< std::vector< std::pair<int, int> > >       mainChainVec_;
+        std::vector< std::vector< std::pair<int, int> > >       pendingChainVec_;
+        std::list< std::list< std::pair<int, int> > >           mainChainLst_;
+        std::list< std::list< std::pair<int, int> > >           pendingChainLst_;
+        size_t                                                  recursionLevel_;
+        bool                                                    lowestLevel_;
 
         bool    checkInput(const std::string &input) const;
         int     getNextJacNum(int n, int i) const;
@@ -33,8 +33,8 @@ class PmergeMe
         void    splitVec();
         void    mergeVec();
 
-        void    splitLst();
-        void    mergeLst();
+        // void    splitLst();
+        // void    mergeLst();
 
     public:
         double              timeVec;
@@ -46,17 +46,17 @@ class PmergeMe
         ~PmergeMe();
 
         void    initVec(std::string input);
-        void    initLst(std::string input);
+        // void    initLst(std::string input);
 
         void    sortVec();
-        void    sortLst();
+        // void    sortLst();
 
         void    printVec();
-        void    printLst();
+        // void    printLst();
         void    printTimeVec();
-        void    printTimeLst();
+        // void    printTimeLst();
 
-        bool    checkResult() const;
+        // bool    checkResult() const;
 
 };
 

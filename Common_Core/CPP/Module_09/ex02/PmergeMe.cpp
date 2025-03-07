@@ -91,52 +91,46 @@ void    PmergeMe::initVec(std::string input) {
     vec_ = vec;
 }
 
-void    PmergeMe::initLst(std::string input) {
-    std::list<int> lst;
-    std::istringstream ss(input);
-    std::string token;
+// void    PmergeMe::initLst(std::string input) {
+//     std::list<int> lst;
+//     std::istringstream ss(input);
+//     std::string token;
 
-    while (ss >> token) {
-        char *endptr;
-        errno = 0;
-        long value = strtol(token.c_str(), &endptr, 10);
+//     while (ss >> token) {
+//         char *endptr;
+//         errno = 0;
+//         long value = strtol(token.c_str(), &endptr, 10);
         
-        if (errno == ERANGE || value > INT_MAX || value < 0)
-            throw std::invalid_argument("Error: number out of range");
+//         if (errno == ERANGE || value > INT_MAX || value < 0)
+//             throw std::invalid_argument("Error: number out of range");
             
-        lst.push_back(static_cast<int>(value));
-    }
-    lst_ = lst;
-}
+//         lst.push_back(static_cast<int>(value));
+//     }
+//     lst_ = lst;
+// }
 
-void    PmergeMe::splitVec() {
-    if (recursionLevel_ == 0) {
-        mainChainVec_.clear();
-        pendingChainVec_.clear();
-        mainChainVec_.push_back(vec_);
-    }
-    
-    std::vector<int>& currentChain = mainChainVec_[recursionLevel_];
+void    PmergeMe::splitVec() {    
+    std::vector< std::pair<int, int> >& currentChain = mainChainVec_[recursionLevel_];
     if (currentChain.size() <= 1) {
         lowestLevel_ = true;
         return;
     }
         
-    std::vector<int> mainChain;
-    std::vector<int> pendingChain;
+    std::vector< std::pair<int, int> > mainChain; // first - value, second - index
+    std::vector< std::pair<int, int> > pendingChain;
     
     for (size_t i = 0; i < currentChain.size() - 1; i += 2) {
         if (currentChain[i] > currentChain[i + 1]) {
-            mainChain.push_back(currentChain[i]);
-            pendingChain.push_back(currentChain[i + 1]);
+            mainChain.push_back(std::make_pair(currentChain[i].first, i));
+            pendingChain.push_back(std::make_pair(currentChain[i + 1].first, i + 1));
         } else {
-            mainChain.push_back(currentChain[i + 1]);
-            pendingChain.push_back(currentChain[i]);
+            mainChain.push_back(std::make_pair(currentChain[i + 1].first, i + 1));
+            pendingChain.push_back(std::make_pair(currentChain[i].first, i));
         }
     }
     
     if (currentChain.size() % 2)
-        pendingChain.push_back(currentChain.back());
+        pendingChain.push_back(std::make_pair(currentChain.back().first, currentChain.size() - 1));
         
     mainChainVec_.push_back(mainChain);
     pendingChainVec_.push_back(pendingChain);
@@ -145,48 +139,7 @@ void    PmergeMe::splitVec() {
     splitVec();
 }
 
-/* potential solution for index saving:
-
-void    PmergeMe::splitVec() {
-    if (recursionLevel_ == 0) {
-        mainChainVec_.clear();
-        pendingChainVec_.clear();
-        mainChainVec_.push_back(vec_);
-    }
-    
-    std::vector<int>& currentChain = mainChainVec_[recursionLevel_];
-    if (currentChain.size() <= 1) {
-        lowestLevel_ = true;
-        return;
-    }
-        
-    std::vector< std::pair <int, int> > mainChain;
-    std::vector< std::pair <int, int> > pendingChain;
-    
-    for (size_t i = 0; i < currentChain.size() - 1; i += 2) {
-        if (currentChain[i] > currentChain[i + 1]) {
-            mainChain.push_back(std::make_pair(currentChain[i], i));
-            pendingChain.push_back(std::make_pair(currentChain[i + 1], i + 1));
-        } else {
-            mainChain.push_back(std::make_pair(currentChain[i + 1], i));
-            pendingChain.push_back(std::make_pair(currentChain[i], i + 1));
-        }
-    }
-    
-    if (currentChain.size() % 2)
-        pendingChain.push_back(std::make_pair(currentChain.back(), currentChain.size() - 1));
-
-    std::vector <int> mainVec;
-    std::vector <int> pendingVec;
-        
-    mainChainVec_.push_back(std::move(mainVec));
-    pendingChainVec_.push_back(std::move(pendingVec));
-    
-    recursionLevel_++;
-    splitVec();
-} */
-
-int binarySearchVec(std::pair<int, int> pair, std::vector<int> vec, int value) {
+int binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> > vec, int value) {
     int left = 0;
     int right = pair.first - 1;
     if (pair.first == -1)
@@ -194,9 +147,9 @@ int binarySearchVec(std::pair<int, int> pair, std::vector<int> vec, int value) {
     int mid = 0;
     while (left <= right) {
         mid = left + (right - left) / 2;
-        if (vec[mid] == value)
+        if (vec[mid].first == value)
             return mid;
-        if (vec[mid] < value)
+        if (vec[mid].first < value)
             left = mid + 1;
         else
             right = mid - 1;
@@ -204,14 +157,17 @@ int binarySearchVec(std::pair<int, int> pair, std::vector<int> vec, int value) {
     return left;
 }
 
-void updatePairsVec(std::vector<std::pair<int, int> > &pairs, std::vector<int> &current, std::vector<int> &sorted) {
+void updatePairsVec(std::vector<std::pair<int, int> > &pairs, std::vector< std::pair<int, int> > &sorted) {
     for (size_t i = 0; i < pairs.size(); i++) {
         if (pairs[i].first == -1)
             continue;
-            
-        std::vector<int>::iterator it = std::find(sorted.begin(), sorted.end(), current[pairs[i].first]);
-        if (it != sorted.end())
-            pairs[i].first = std::distance(sorted.begin(), it);
+
+        for (size_t j = 0; j < sorted.size(); j++) {
+            if (sorted[j].second == pairs[i].first) {
+                pairs[i].first = j;
+                break;
+            }
+        }
     }
 }
 
@@ -222,9 +178,9 @@ void    PmergeMe::mergeVec() {
         return;
     }
     
-    std::vector<int>& mainChain = mainChainVec_[recursionLevel_];
-    std::vector<int>& pendingChain = pendingChainVec_[recursionLevel_ - 1];
-    std::vector< std::pair<int, int> >    pairs; // first - main index, second - pending index
+    std::vector< std::pair<int, int> >&     mainChain = mainChainVec_[recursionLevel_];
+    std::vector< std::pair<int, int> >&     pendingChain = pendingChainVec_[recursionLevel_ - 1];
+    std::vector< std::pair<int, int> >      pairs; // first - main index, second - pending index
 
     size_t jacNum = 0;
     for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
@@ -236,13 +192,13 @@ void    PmergeMe::mergeVec() {
     }
 
     if (!lowestLevel_) {
-        updatePairsVec(pairs, mainChainVec_[recursionLevel_], mainChainVec_[recursionLevel_ + 1]);
+        updatePairsVec(pairs, mainChainVec_[recursionLevel_ + 1]);
         mainChain = mainChainVec_[recursionLevel_ + 1];
     }
 
     size_t i = 0;
     while (i < pairs.size()) {
-        int index = binarySearchVec(pairs[i], mainChain, pendingChain[pairs[i].second]);
+        int index = binarySearchVec(pairs[i], mainChain, pendingChain[pairs[i].second].first);
         mainChain.insert(mainChain.begin() + index, pendingChain[pairs[i].second]);
         for (size_t j = 0; j < pairs.size(); j++) {
             if (pairs[j].first >= index)
@@ -258,15 +214,24 @@ void    PmergeMe::mergeVec() {
 
 void    PmergeMe::sortVec() {
     recursionLevel_ = 0;
+    mainChainVec_.clear();
+    pendingChainVec_.clear();
+
+    mainChainVec_.push_back(std::vector< std::pair<int, int> >());
+    for (size_t i = 0; i < vec_.size(); i++)
+        mainChainVec_[0].push_back(std::make_pair(vec_[i], -1));
+
     splitVec();
     mergeVec();
-    vec_ = mainChainVec_[0];
+
+    for (size_t i = 0; i < mainChainVec_[0].size(); i++)
+        vec_[i] = mainChainVec_[0][i].first;
 
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
 }
 
-void PmergeMe::splitLst() {
+/* void PmergeMe::splitLst() {
     if (recursionLevel_ == 0) {
         mainChainLst_.clear();
         pendingChainLst_.clear();
@@ -407,7 +372,7 @@ void PmergeMe::sortLst() {
     
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
-}
+} */
 
 void    PmergeMe::printVec() {
     for (size_t i = 0; i < vec_.size(); i++) {
@@ -418,35 +383,35 @@ void    PmergeMe::printVec() {
     std::cout << std::endl;
 }
 
-void    PmergeMe::printLst() {
-    for (std::list<int>::iterator it = lst_.begin(); it != lst_.end(); it++) {
-        std::cout << *it;
-        if (it != --lst_.end())
-            std::cout << " ";
-    }
-    std::cout << std::endl;
-}
+// void    PmergeMe::printLst() {
+//     for (std::list<int>::iterator it = lst_.begin(); it != lst_.end(); it++) {
+//         std::cout << *it;
+//         if (it != --lst_.end())
+//             std::cout << " ";
+//     }
+//     std::cout << std::endl;
+// }
 
 void    PmergeMe::printTimeVec() {
     std::cout << "Time to process a range of " << vec_.size() << " elements with std::vector : " << timeVec << " us" << std::endl;
 }
 
-void    PmergeMe::printTimeLst() {
-    std::cout << "Time to process a range of " << lst_.size() << " elements with std::list : " << timeLst << " us" << std::endl;
-}
+// void    PmergeMe::printTimeLst() {
+//     std::cout << "Time to process a range of " << lst_.size() << " elements with std::list : " << timeLst << " us" << std::endl;
+// }
 
-bool    PmergeMe::checkResult() const {
-    for (size_t i = 0; i < vec_.size() - 1; i++) {
-        if (vec_[i] > vec_[i + 1])
-            return false;
-    }
-    for (size_t i = 0; i < lst_.size() - 1; i++) {
-        std::list<int>::const_iterator it = lst_.begin();
-        std::advance(it, i);
-        std::list<int>::const_iterator next = it;
-        ++next;
-        if (*it > *next)
-            return false;
-    }
-    return true;
-}
+// bool    PmergeMe::checkResult() const {
+//     for (size_t i = 0; i < vec_.size() - 1; i++) {
+//         if (vec_[i] > vec_[i + 1])
+//             return false;
+//     }
+//     for (size_t i = 0; i < lst_.size() - 1; i++) {
+//         std::list<int>::const_iterator it = lst_.begin();
+//         std::advance(it, i);
+//         std::list<int>::const_iterator next = it;
+//         ++next;
+//         if (*it > *next)
+//             return false;
+//     }
+//     return true;
+// }
