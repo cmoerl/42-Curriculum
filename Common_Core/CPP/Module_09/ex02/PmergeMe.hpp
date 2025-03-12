@@ -20,6 +20,8 @@ class PmergeMe
         std::vector<int>    vec_;
         std::list<int>      lst_;
 
+        int                 count_;
+
         std::vector< std::vector< std::pair<int, int> > >       mainChainVec_;
         std::vector< std::vector< std::pair<int, int> > >       pendingChainVec_;
         std::list< std::list< std::pair<int, int> > >           mainChainLst_;
@@ -57,6 +59,8 @@ class PmergeMe
         // void    printTimeLst();
 
         // bool    checkResult() const;
+
+        int binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> > vec, int value);
 
 };
 

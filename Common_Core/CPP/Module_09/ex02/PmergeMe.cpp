@@ -120,6 +120,7 @@ void    PmergeMe::splitVec() {
     std::vector< std::pair<int, int> > pendingChain;
     
     for (size_t i = 0; i < currentChain.size() - 1; i += 2) {
+        count_++;
         if (currentChain[i] > currentChain[i + 1]) {
             mainChain.push_back(std::make_pair(currentChain[i].first, i));
             pendingChain.push_back(std::make_pair(currentChain[i + 1].first, i + 1));
@@ -139,13 +140,14 @@ void    PmergeMe::splitVec() {
     splitVec();
 }
 
-int binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> > vec, int value) {
+int PmergeMe::binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> > vec, int value) {
     int left = 0;
     int right = pair.first - 1;
     if (pair.first == -1)
         right = vec.size() - 1;
     int mid = 0;
     while (left <= right) {
+        count_++;
         mid = left + (right - left) / 2;
         if (vec[mid].first == value)
             return mid;
@@ -185,7 +187,7 @@ void    PmergeMe::mergeVec() {
     size_t jacNum = 0;
     for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, pendingChain.size());
-        if (jacNum == mainChain.size())
+        if (jacNum == mainChain.size() + 1)
             pairs.push_back(std::make_pair(-1, jacNum - 1));
         else
             pairs.push_back(std::make_pair(jacNum - 1, jacNum - 1));
@@ -194,7 +196,7 @@ void    PmergeMe::mergeVec() {
     if (!lowestLevel_) {
         updatePairsVec(pairs, mainChainVec_[recursionLevel_ + 1]);
         mainChain = mainChainVec_[recursionLevel_ + 1];
-    }
+    }    
 
     size_t i = 0;
     while (i < pairs.size()) {
@@ -217,6 +219,8 @@ void    PmergeMe::sortVec() {
     mainChainVec_.clear();
     pendingChainVec_.clear();
 
+    count_ = 0;
+
     mainChainVec_.push_back(std::vector< std::pair<int, int> >());
     for (size_t i = 0; i < vec_.size(); i++)
         mainChainVec_[0].push_back(std::make_pair(vec_[i], -1));
@@ -226,6 +230,8 @@ void    PmergeMe::sortVec() {
 
     for (size_t i = 0; i < mainChainVec_[0].size(); i++)
         vec_[i] = mainChainVec_[0][i].first;
+
+    std::cout << "Count: " << count_ << std::endl;
 
     if (recursionLevel_ > 0)
         throw std::runtime_error("Error: recursion level not zero after merge");
