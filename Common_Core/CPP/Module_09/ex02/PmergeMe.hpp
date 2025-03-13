@@ -35,8 +35,8 @@ class PmergeMe
         void    splitVec();
         void    mergeVec();
 
-        // void    splitLst();
-        // void    mergeLst();
+        void    splitLst();
+        void    mergeLst();
 
     public:
         double              timeVec;
@@ -48,19 +48,17 @@ class PmergeMe
         ~PmergeMe();
 
         void    initVec(std::string input);
-        // void    initLst(std::string input);
+        void    initLst(std::string input);
 
         void    sortVec();
-        // void    sortLst();
+        void    sortLst();
 
         void    printVec();
-        // void    printLst();
+        void    printLst();
         void    printTimeVec();
-        // void    printTimeLst();
+        void    printTimeLst();
 
-        // bool    checkResult() const;
-
-        int binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> > vec, int value);
+        bool    checkResult() const;
 
 };
 
