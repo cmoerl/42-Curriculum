@@ -174,8 +174,8 @@ void    PmergeMe::mergeVec() {
     if (recursionLevel_ == 0) {
         if (!lowestLevel_ && mainChainVec_.size() > 1) {
             mainChainVec_[0] = mainChainVec_[1];
-        return;
         }
+        return;
     }
     
     std::vector< std::pair<int, int> >&     mainChain = mainChainVec_[recursionLevel_];
@@ -194,11 +194,22 @@ void    PmergeMe::mergeVec() {
     if (!lowestLevel_) {
         updatePairsVec(pairs, mainChainVec_[recursionLevel_ + 1]);
         mainChain = mainChainVec_[recursionLevel_ + 1];
-    }    
+    }
+
+    for (size_t i = 0; i < mainChain.size(); i++) {
+        std::cout << mainChain[i].first << " ";
+    }
+    std::cout << std::endl;
+    for (size_t i = 0; i < pendingChain.size(); i++) {
+        std::cout << pendingChain[i].first << " ";
+    }
+    std::cout << std::endl;
 
     size_t i = 0;
+    std::cout << "index: ";
     while (i < pairs.size()) {
         int index = binarySearchVec(pairs[i], mainChain, pendingChain[pairs[i].second].first);
+        std::cout << index << " ";
         mainChain.insert(mainChain.begin() + index, pendingChain[pairs[i].second]);
         for (size_t j = 0; j < pairs.size(); j++) {
             if (pairs[j].first >= index)
@@ -206,6 +217,7 @@ void    PmergeMe::mergeVec() {
         }
         i++;
     }
+    std::cout << std::endl;
 
     lowestLevel_ = false;
     recursionLevel_--;
@@ -242,22 +254,24 @@ void PmergeMe::splitLst() {
     std::list< std::pair<int, int> > pendingChain;
 
     std::list< std::pair<int, int> >::iterator it = currentChain.begin();
+    int i = 0;
     while (it != currentChain.end()) {
         std::pair<int, int> first = *it;
         ++it;
         if (it != currentChain.end()) {
             std::pair<int, int> second = *it;
             if (first.first > second.first) {
-                mainChain.push_back(first);
-                pendingChain.push_back(second);
+                mainChain.push_back(std::make_pair(first.first, i));
+                pendingChain.push_back(std::make_pair(second.first, i + 1));
             } else {
-                mainChain.push_back(second);
-                pendingChain.push_back(first);
+                mainChain.push_back(std::make_pair(second.first, i + 1));
+                pendingChain.push_back(std::make_pair(first.first, i));
             }
             ++it;
         } else {
-            pendingChain.push_back(first);
+            pendingChain.push_back(std::make_pair(first.first, currentChain.size() - 1));
         }
+        i += 2;
     }
 
     mainChainLst_.push_back(mainChain);

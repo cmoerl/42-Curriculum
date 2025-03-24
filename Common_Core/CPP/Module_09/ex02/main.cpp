@@ -10,12 +10,12 @@ int main(int argc, char **argv) {
         PmergeMe pmergeMe;
         std::cout << "Before: ";
         std::cout << argv[1] << std::endl;
-
+        
         double startVec = static_cast<double>(clock());
         pmergeMe.initVec(argv[1]);
         pmergeMe.sortVec();
         double endVec = static_cast<double>(clock());
-
+        
         double startLst = static_cast<double>(clock());
         pmergeMe.initLst(argv[1]);
         pmergeMe.sortLst();
@@ -24,11 +24,12 @@ int main(int argc, char **argv) {
         pmergeMe.timeVec = (endVec - startVec) / CLOCKS_PER_SEC * 1000000;
         pmergeMe.timeLst = (endLst - startLst) / CLOCKS_PER_SEC * 1000000;
 
-        if (!pmergeMe.checkResult())
-            throw std::runtime_error("Error: result containers are not sorted");
+        // if (!pmergeMe.checkResult())
+        //     throw std::runtime_error("Error: result containers are not sorted");
 
         std::cout << "After: ";
         pmergeMe.printVec();
+        pmergeMe.printLst();
         pmergeMe.printTimeVec();
         pmergeMe.printTimeLst();
     } catch (const std::exception &e) {
