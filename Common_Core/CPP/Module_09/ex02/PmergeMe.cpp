@@ -243,11 +243,11 @@ void PmergeMe::splitLst() {
 
     std::list< std::pair<int, int> >::iterator it = currentChain.begin();
     while (it != currentChain.end()) {
-        int first = it->first;
+        std::pair<int, int> first = *it;
         ++it;
         if (it != currentChain.end()) {
-            int second = it->first;
-            if (first > second) {
+            std::pair<int, int> second = *it;
+            if (first.first > second.first) {
                 mainChain.push_back(first);
                 pendingChain.push_back(second);
             } else {
@@ -267,22 +267,23 @@ void PmergeMe::splitLst() {
     splitLst();
 }
 
-void updatePairsLst(std::vector<std::pair<int, int> > &pairs, std::list<int> &sorted) {
+void updatePairsLst(std::vector<std::pair<int, int> > &pairs, std::list< std::pair<int, int> > &sorted) {
     for (size_t i = 0; i < pairs.size(); i++) {
         if (pairs[i].first == -1)
             continue;
             
         std::list< std::pair<int, int> >::iterator itSorted = sorted.begin();
         while (itSorted != sorted.end()) {
-            if (*itSorted.second == pairs[i].first) {
+            if (itSorted->second == pairs[i].first) {
                 pairs[i].first = std::distance(sorted.begin(), itSorted);
                 break;
             }
             ++itSorted;
+        }
     }
 }
 
-int binarySearchLst(std::pair<int, int> pair, std::list<int> &lst, int value) {
+int binarySearchLst(std::pair<int, int> pair, std::list< std::pair<int, int> > &lst, int value) {
     int left = 0;
     int right = pair.first - 1;
     if (pair.first == -1)
@@ -292,9 +293,9 @@ int binarySearchLst(std::pair<int, int> pair, std::list<int> &lst, int value) {
         mid = left + (right - left) / 2;
         std::list< std::pair<int, int> >::iterator it = lst.begin();
         std::advance(it, mid);
-        if (*it == value)
+        if (it->first == value)
             return mid;
-        if (*it < value)
+        if (it->first < value)
             left = mid + 1;
         else
             right = mid - 1;
@@ -305,8 +306,8 @@ int binarySearchLst(std::pair<int, int> pair, std::list<int> &lst, int value) {
 void PmergeMe::mergeLst() {
     if (recursionLevel_ == 0) {
         if (!lowestLevel_ && mainChainLst_.size() > 1) {
-            std::list<std::list<int> >::iterator it = mainChainLst_.begin();
-            std::list<std::list<int> >::iterator next = it;
+            std::list< std::list< std::pair<int, int> > >::iterator it = mainChainLst_.begin();
+            std::list< std::list< std::pair<int, int> > >::iterator next = it;
             ++next;
             mainChainLst_.splice(it, mainChainLst_, next);
         }
@@ -344,7 +345,7 @@ void PmergeMe::mergeLst() {
     while (i < pairs.size()) {
         std::list< std::pair<int, int> >::iterator it = pendingChain.begin();
         std::advance(it, pairs[i].second);
-        int index = binarySearchLst(pairs[i], mainChain, *it.first);
+        int index = binarySearchLst(pairs[i], mainChain, it->first);
         std::list< std::pair<int, int> >::iterator insertIt = mainChain.begin();
         std::advance(insertIt, index);
         mainChain.insert(insertIt, *it);
@@ -367,15 +368,18 @@ void PmergeMe::sortLst() {
 
     mainChainLst_.push_back(std::list< std::pair<int, int> >());
     for (std::list<int>::iterator it = lst_.begin(); it != lst_.end(); it++)
-        mainChainLst_[0].push_back(std::make_pair(*it, -1));
+        mainChainLst_.back().push_back(std::make_pair(*it, -1));
 
     splitLst();
     mergeLst();
 
-    for (size_t i = 0; i < mainChainLst_.front().size(); i++) {
-        std::list<int>::iterator it = lst_.begin();
-        std::advance(it, i);
-        *it = mainChainLst_.front()[i].first;
+    std::list< std::pair<int, int> >& sortedLst = mainChainLst_.front();
+    std::list< std::pair<int, int> >::iterator it = sortedLst.begin();
+    std::list<int>::iterator lstIt = lst_.begin();
+    while (it != sortedLst.end() && lstIt != lst_.end()) {
+        *lstIt = it->first;
+        ++it;
+        ++lstIt;
     }
     
     if (recursionLevel_ > 0)
