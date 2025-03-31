@@ -117,31 +117,37 @@ void    PmergeMe::splitVec() {
         
     std::vector< std::pair<int, int> > mainChain; // first - value, second - index
     std::vector< std::pair<int, int> > pendingChain;
+    std::vector< std::pair<int, int> > pairs; // first - main index, second - pending index
     
     for (size_t i = 0; i < currentChain.size() - 1; i += 2) {
         if (currentChain[i] > currentChain[i + 1]) {
-            mainChain.push_back(std::make_pair(currentChain[i].first, i));
-            pendingChain.push_back(std::make_pair(currentChain[i + 1].first, i + 1));
+            pairs.push_back(std::make_pair(currentChain[i].second, currentChain[i + 1].second));
+            mainChain.push_back(currentChain[i]);
+            pendingChain.push_back(currentChain[i + 1]);
         } else {
-            mainChain.push_back(std::make_pair(currentChain[i + 1].first, i + 1));
-            pendingChain.push_back(std::make_pair(currentChain[i].first, i));
+            pairs.push_back(std::make_pair(currentChain[i + 1].second, currentChain[i].second));
+            mainChain.push_back(currentChain[i + 1]);
+            pendingChain.push_back(currentChain[i]);
         }
     }
     
-    if (currentChain.size() % 2)
-        pendingChain.push_back(std::make_pair(currentChain.back().first, currentChain.size() - 1));
+    if (currentChain.size() % 2) {
+        pairs.push_back(std::make_pair(-1, currentChain.size() - 1));
+        pendingChain.push_back(currentChain.back());
+    }
         
     mainChainVec_.push_back(mainChain);
     pendingChainVec_.push_back(pendingChain);
+    pairsVec_.push_back(pairs);
     
     recursionLevel_++;
     splitVec();
 }
 
-int binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> > vec, int value) {
+int binarySearchVec(std::pair<int, int> toSort, std::vector< std::pair<int, int> > vec, int value) {
     int left = 0;
-    int right = pair.first - 1;
-    if (pair.first == -1)
+    int right = toSort.first - 1;
+    if (toSort.first == -1)
         right = vec.size() - 1;
     int mid = 0;
     while (left <= right) {
@@ -156,14 +162,19 @@ int binarySearchVec(std::pair<int, int> pair, std::vector< std::pair<int, int> >
     return left;
 }
 
-void updatePairsVec(std::vector<std::pair<int, int> > &pairs, std::vector< std::pair<int, int> > &sorted) {
-    for (size_t i = 0; i < pairs.size(); i++) {
-        if (pairs[i].first == -1)
-            continue;
-
-        for (size_t j = 0; j < sorted.size(); j++) {
-            if (sorted[j].second == pairs[i].first) {
-                pairs[i].first = j;
+void updateToSortVec(std::vector<std::pair<int, int> > &pairs, std::vector< std::pair<int, int> > &sorted,
+                         std::vector< std::pair<int, int> > &toSort, std::vector< std::pair<int, int> > &pendingChain) {
+    for (size_t i = 0; i < toSort.size(); i++) {
+        int pendingIndex = pendingChain[toSort[i].second].second;
+        for (size_t j = 0; j < pairs.size(); j++) {
+            if (pairs[j].second == pendingIndex) {
+                int mainIndex = pairs[j].first;
+                for (size_t k = 0; k < sorted.size(); k++) {
+                    if (sorted[k].second == mainIndex) {
+                        toSort[i].first = k;
+                        break;
+                    }
+                }
                 break;
             }
         }
@@ -180,44 +191,33 @@ void    PmergeMe::mergeVec() {
     
     std::vector< std::pair<int, int> >&     mainChain = mainChainVec_[recursionLevel_];
     std::vector< std::pair<int, int> >&     pendingChain = pendingChainVec_[recursionLevel_ - 1];
-    std::vector< std::pair<int, int> >      pairs; // first - main index, second - pending index
+    std::vector< std::pair<int, int> >&     pairs = pairsVec_[recursionLevel_ - 1]; // first - main index, second - pending index
+    std::vector< std::pair<int, int> >      toSort;
 
     size_t jacNum = 0;
     for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, pendingChain.size());
         if (jacNum == mainChain.size() + 1)
-            pairs.push_back(std::make_pair(-1, jacNum - 1));
+            toSort.push_back(std::make_pair(-1, jacNum - 1));
         else
-            pairs.push_back(std::make_pair(jacNum - 1, jacNum - 1));
+            toSort.push_back(std::make_pair(jacNum - 1, jacNum - 1));
     }
 
     if (!lowestLevel_) {
-        updatePairsVec(pairs, mainChainVec_[recursionLevel_ + 1]);
+        updateToSortVec(pairs, mainChainVec_[recursionLevel_ + 1], toSort, pendingChain);
         mainChain = mainChainVec_[recursionLevel_ + 1];
     }
 
-    for (size_t i = 0; i < mainChain.size(); i++) {
-        std::cout << mainChain[i].first << " ";
-    }
-    std::cout << std::endl;
-    for (size_t i = 0; i < pendingChain.size(); i++) {
-        std::cout << pendingChain[i].first << " ";
-    }
-    std::cout << std::endl;
-
     size_t i = 0;
-    std::cout << "index: ";
-    while (i < pairs.size()) {
-        int index = binarySearchVec(pairs[i], mainChain, pendingChain[pairs[i].second].first);
-        std::cout << index << " ";
-        mainChain.insert(mainChain.begin() + index, pendingChain[pairs[i].second]);
-        for (size_t j = 0; j < pairs.size(); j++) {
-            if (pairs[j].first >= index)
-                pairs[j].first++;
+    while (i < toSort.size()) {
+        int index = binarySearchVec(toSort[i], mainChain, pendingChain[toSort[i].second].first);
+        mainChain.insert(mainChain.begin() + index, pendingChain[toSort[i].second]);
+        for (size_t j = 0; j < toSort.size(); j++) {
+            if (toSort[j].first >= index)
+                toSort[j].first++;
         }
         i++;
     }
-    std::cout << std::endl;
 
     lowestLevel_ = false;
     recursionLevel_--;
@@ -228,10 +228,11 @@ void    PmergeMe::sortVec() {
     recursionLevel_ = 0;
     mainChainVec_.clear();
     pendingChainVec_.clear();
+    pairsVec_.clear();
 
     mainChainVec_.push_back(std::vector< std::pair<int, int> >());
     for (size_t i = 0; i < vec_.size(); i++)
-        mainChainVec_[0].push_back(std::make_pair(vec_[i], -1));
+        mainChainVec_[0].push_back(std::make_pair(vec_[i], i));
 
     splitVec();
     mergeVec();

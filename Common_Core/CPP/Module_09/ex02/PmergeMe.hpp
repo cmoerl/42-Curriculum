@@ -26,6 +26,7 @@ class PmergeMe
         std::vector< std::vector< std::pair<int, int> > >       pendingChainVec_;
         std::list< std::list< std::pair<int, int> > >           mainChainLst_;
         std::list< std::list< std::pair<int, int> > >           pendingChainLst_;
+        std::vector< std::vector< std::pair<int, int> > >       pairsVec_;
         size_t                                                  recursionLevel_;
         bool                                                    lowestLevel_;
 
