@@ -24,14 +24,14 @@ int main(int argc, char **argv) {
         pmergeMe.timeVec = (endVec - startVec) / CLOCKS_PER_SEC * 1000000;
         pmergeMe.timeLst = (endLst - startLst) / CLOCKS_PER_SEC * 1000000;
 
-        // if (!pmergeMe.checkResult())
-        //     throw std::runtime_error("Error: result containers are not sorted");
+        if (!pmergeMe.checkResult())
+            throw std::runtime_error("Error: result containers are not sorted");
 
         std::cout << "After: ";
         pmergeMe.printVec();
-        pmergeMe.printLst();
         pmergeMe.printTimeVec();
         pmergeMe.printTimeLst();
+        
     } catch (const std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 1;
