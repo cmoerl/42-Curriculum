@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <cstddef>
 
 PmergeMe::PmergeMe() {}
 
@@ -253,6 +254,7 @@ void PmergeMe::splitLst() {
 
     std::list< std::pair<int, int> > mainChain;
     std::list< std::pair<int, int> > pendingChain;
+    std::list< std::pair<int, int> > pairs; // first - main index, second - pending index
 
     std::list< std::pair<int, int> >::iterator it = currentChain.begin();
     int i = 0;
@@ -262,46 +264,56 @@ void PmergeMe::splitLst() {
         if (it != currentChain.end()) {
             std::pair<int, int> second = *it;
             if (first.first > second.first) {
-                mainChain.push_back(std::make_pair(first.first, i));
-                pendingChain.push_back(std::make_pair(second.first, i + 1));
+                pairs.push_back(std::make_pair(first.second, second.second));
+                mainChain.push_back(first);
+                pendingChain.push_back(second);
             } else {
-                mainChain.push_back(std::make_pair(second.first, i + 1));
-                pendingChain.push_back(std::make_pair(first.first, i));
+                pairs.push_back(std::make_pair(second.second, first.second));
+                mainChain.push_back(second);
+                pendingChain.push_back(first);
             }
             ++it;
         } else {
-            pendingChain.push_back(std::make_pair(first.first, currentChain.size() - 1));
+            pairs.push_back(std::make_pair(-1, currentChain.size() - 1));
+            pendingChain.push_back(first);
         }
         i += 2;
     }
 
     mainChainLst_.push_back(mainChain);
     pendingChainLst_.push_back(pendingChain);
+    pairsLst_.push_back(pairs);
 
     recursionLevel_++;
     splitLst();
 }
 
-void updatePairsLst(std::vector<std::pair<int, int> > &pairs, std::list< std::pair<int, int> > &sorted) {
-    for (size_t i = 0; i < pairs.size(); i++) {
-        if (pairs[i].first == -1)
-            continue;
-            
-        std::list< std::pair<int, int> >::iterator itSorted = sorted.begin();
-        while (itSorted != sorted.end()) {
-            if (itSorted->second == pairs[i].first) {
-                pairs[i].first = std::distance(sorted.begin(), itSorted);
+void updateToSortLst(std::list<std::pair<int, int> > &pairs, std::list< std::pair<int, int> > &sorted, 
+                     std::vector< std::pair<int, int> > &toSort, std::list< std::pair<int, int> > &pendingChain) {
+    for (size_t i = 0; i < toSort.size(); i++) {
+        std::list < std::pair<int, int> >::iterator pendingIt = pendingChain.begin();
+        std::advance(pendingIt, toSort[i].second);
+        int pendingIndex = pendingIt->second;
+        for (std::list< std::pair<int, int> >::iterator pairsIt = pairs.begin(); pairsIt != pairs.end(); ++pairsIt) {
+            if (pairsIt->second == pendingIndex) {
+                int mainIndex = pairsIt->first;
+                std::list< std::pair<int, int> >::iterator sortedIt = sorted.begin();
+                for (size_t j = 0; j < sorted.size(); j++, ++sortedIt) {
+                    if (sortedIt->second == mainIndex) {
+                        toSort[i].first = j;
+                        break;
+                    }
+                }
                 break;
             }
-            ++itSorted;
         }
     }
 }
 
-int binarySearchLst(std::pair<int, int> pair, std::list< std::pair<int, int> > &lst, int value) {
+int binarySearchLst(std::pair<int, int> toSort, std::list< std::pair<int, int> > lst, int value) {
     int left = 0;
-    int right = pair.first - 1;
-    if (pair.first == -1)
+    int right = toSort.first - 1;
+    if (toSort.first == -1)
         right = lst.size() - 1;
     int mid = 0;
     while (left <= right) {
@@ -337,36 +349,40 @@ void PmergeMe::mergeLst() {
     std::advance(pendingIt, recursionLevel_ - 1);
     std::list< std::pair <int, int> >& pendingChain = *pendingIt;
 
-    std::vector< std::pair<int, int> > pairs; // first - main index, second - pending index
+    std::list< std::list< std::pair<int, int> > >::iterator pairsIt = pairsLst_.begin();
+    std::advance(pairsIt, recursionLevel_ - 1); 
+    std::list< std::pair<int, int> >& pairs = *pairsIt;
+
+    std::vector < std::pair<int, int> > toSort;
 
     size_t jacNum = 0;
     for (size_t i = 0; i < mainChain.size() || i < pendingChain.size(); i++) {
         jacNum = getNextJacNum(jacNum, pendingChain.size());
         if (jacNum == mainChain.size() + 1)
-            pairs.push_back(std::make_pair(-1, jacNum - 1));
+            toSort.push_back(std::make_pair(-1, jacNum - 1));
         else
-            pairs.push_back(std::make_pair(jacNum - 1, jacNum - 1));
+            toSort.push_back(std::make_pair(jacNum - 1, jacNum - 1));
     }
 
     if (!lowestLevel_) {
         std::list< std::list< std::pair<int, int> > >::iterator it = mainChainLst_.begin();
         std::advance(it, recursionLevel_ + 1);
         std::list< std::pair<int, int> >& nextMainChain = *it;
-        updatePairsLst(pairs, nextMainChain);
+        updateToSortLst(pairs, nextMainChain, toSort, pendingChain);
         mainChain = nextMainChain;
     }
 
     size_t i = 0;
-    while (i < pairs.size()) {
+    while (i < toSort.size()) {
         std::list< std::pair<int, int> >::iterator it = pendingChain.begin();
-        std::advance(it, pairs[i].second);
-        int index = binarySearchLst(pairs[i], mainChain, it->first);
+        std::advance(it, toSort[i].second);
+        int index = binarySearchLst(toSort[i], mainChain, it->first);
         std::list< std::pair<int, int> >::iterator insertIt = mainChain.begin();
         std::advance(insertIt, index);
         mainChain.insert(insertIt, *it);
-        for (size_t j = 0; j < pairs.size(); j++) {
-            if (pairs[j].first >= index)
-                pairs[j].first++;
+        for (size_t j = 0; j < toSort.size(); j++) {
+            if (toSort[j].first >= index)
+                toSort[j].first++;
         }
         i++;
     }
@@ -380,10 +396,14 @@ void PmergeMe::sortLst() {
     recursionLevel_ = 0;
     mainChainLst_.clear();
     pendingChainLst_.clear();
+    pairsLst_.clear();
 
     mainChainLst_.push_back(std::list< std::pair<int, int> >());
-    for (std::list<int>::iterator it = lst_.begin(); it != lst_.end(); it++)
-        mainChainLst_.back().push_back(std::make_pair(*it, -1));
+    size_t i = 0;
+    for (std::list<int>::iterator it = lst_.begin(); it != lst_.end(); it++) {
+        mainChainLst_.back().push_back(std::make_pair(*it, i));
+        i++;
+    }
 
     splitLst();
     mergeLst();
