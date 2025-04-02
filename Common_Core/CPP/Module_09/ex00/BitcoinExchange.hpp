@@ -19,7 +19,7 @@ class   BitcoinExchange
     private:
         std::map <std::string, double> exchangeRates_;
 
-        double  calculate(const std::map<std::string, double>& rates, const std::string& date, double amount) const;
+        double  calculate(const std::map<std::string, double>& rates, const std::string& date, double amount, bool *validRate) const;
         void    processLine(const std::string& line, const std::string& filename) const;
 
         bool validateDate(std::string date) const;

@@ -141,7 +141,10 @@ void    BitcoinExchange::processLine(const std::string& line, const std::string&
         }
 
         if (validDate && validAmount) {
-            double result = calculate(exchangeRates_, date, amount);
+            bool validRate = true;
+            double result = calculate(exchangeRates_, date, amount, &validRate);
+            if (!validRate)
+                return;
             std::cout << date << "=> " << amount << " = " << result << std::endl;
         } else if (!validDate) {
                 std::cerr << "Error: " << filename << ": invalid date in line: " << line << std::endl;
@@ -174,16 +177,20 @@ void BitcoinExchange::readInput(std::string const filename) const
     }
 }
 
-double BitcoinExchange::calculate(const std::map<std::string, double>& rates, const std::string& date, double amount) const 
+double BitcoinExchange::calculate(const std::map<std::string, double>& rates, const std::string& date, double amount, bool *validRate) const 
 {
     if (rates.empty()) {
-        throw std::runtime_error("Error: no exchange rates available");
+        std::cerr << "Error: no exchange rates available" << std::endl;
+        *validRate = false;
+        return 0.0;
     }
 
     std::map<std::string, double>::const_iterator it = rates.lower_bound(date);
     if (it == rates.end() || it->first != date) {
         if (it == rates.begin()) {
-            throw std::runtime_error("Error: input.csv: no exchange rate available for date " + date);
+            std::cerr << "Error: input.csv: no exchange rate available for date " + date << std::endl;
+            *validRate = false;
+            return 0.0;
         }
         --it;
     }
