@@ -26,8 +26,8 @@ PmergeMe &PmergeMe::operator = (const PmergeMe &other) {
 PmergeMe::~PmergeMe() {}
 
 bool    PmergeMe::checkInput(const std::string &input) const {
-    if (input.empty() || input.size() < 3)
-        throw std::invalid_argument("Input is empty or too short");
+    if (input.empty())
+        throw std::invalid_argument("Error: Input cannot be empty");
 
     size_t i = 0;
     int numbers = 0;
@@ -40,7 +40,7 @@ bool    PmergeMe::checkInput(const std::string &input) const {
         } else if (input[i] == ' ')
             i++;
         else
-            throw std::invalid_argument("Invalid character in input");
+            throw std::invalid_argument("Error: Invalid character in input");
     }
 
     return (true);

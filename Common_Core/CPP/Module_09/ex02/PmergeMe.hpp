@@ -29,7 +29,6 @@ class PmergeMe
         size_t                                                  recursionLevel_;
         bool                                                    lowestLevel_;
 
-        bool    checkInput(const std::string &input) const;
         int     getNextJacNum(int n, int i) const;
 
         void    splitVec();
@@ -58,6 +57,7 @@ class PmergeMe
         void    printTimeVec();
         void    printTimeLst();
 
+        bool    checkInput(const std::string &input) const;
         bool    checkResult() const;
 
 };

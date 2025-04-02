@@ -7,7 +7,10 @@ int main(int argc, char **argv) {
     }
 
     try {
+
         PmergeMe pmergeMe;
+        pmergeMe.checkInput(argv[1]);
+        
         std::cout << "Before: ";
         std::cout << argv[1] << std::endl;
         
